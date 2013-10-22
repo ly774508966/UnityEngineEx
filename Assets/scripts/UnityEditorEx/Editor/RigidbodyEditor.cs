@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Threading;
 using System.Collections.Generic;
  
-[CustomEditor(typeof(Rigidbody))]
+//[CustomEditor(typeof(Rigidbody))]
 public class RigidbodyEditor : Editor
 {
 	struct Value<T> {

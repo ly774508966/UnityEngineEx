@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -7,14 +8,14 @@ namespace UnityEngineEx
 {
 	public static class GameObjectEx
 	{
-		public static GameObject Instantinate(this GameObject o, string name)
+		public static GameObject Instantinate(this GameObject o, string name, params Type[] components)
 		{
-			return o.Instantinate(name, Vector3.zero);
+			return o.Instantinate(name, Vector3.zero, components);
 		}
 
-		public static GameObject Instantinate(this GameObject o, string name, Vector3 po)
+		public static GameObject Instantinate(this GameObject o, string name, Vector3 po, params Type[] components)
 		{
-			GameObject i = new GameObject(name);
+			GameObject i = new GameObject(name, components);
 			i.transform.parent = o.transform;
 			i.transform.localPosition = po;
 			return i;
