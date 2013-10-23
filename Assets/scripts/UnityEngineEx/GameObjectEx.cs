@@ -44,6 +44,10 @@ namespace UnityEngineEx
 					field.SetValue(c, property.GetValue(parameters, null));
 				}
 			}
+			var awakeEx = typeof(T).GetMethod("AwakeEx", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+			if (awakeEx != null) {
+				awakeEx.Invoke(c, null);
+			}
 			return c;
 		}
 	}
