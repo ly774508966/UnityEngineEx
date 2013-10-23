@@ -5,7 +5,17 @@ namespace UnityEngineEx
 {
 	public static class MeshEx
 	{
-		const float Pi = 3.141592f;
+		public static Mesh Translate(this Mesh mesh, Vector3 Translation)
+		{
+			Vector3[] vertices = new Vector3[mesh.vertexCount];
+			for (int i = 0; i < mesh.vertexCount; i++) {
+				vertices[i] = mesh.vertices[i] + Translation;
+			}
+
+			mesh.vertices = vertices;
+
+			return mesh;
+		}
 
 		public static Mesh Cylinder(this Mesh mesh, float Radius, int Sectors, int Rows)
 		{
@@ -26,7 +36,7 @@ namespace UnityEngineEx
 			int ti = 0;
 			int[] triangles = new int[Triangles * 3];
 			for (int i = 0; i < Sectors; i++) {
-				float a = i * 2 * Pi / Sectors;
+				float a = i * 2 * Mathf.PI / Sectors;
 				float x = Mathf.Cos(a);
 				float y = Mathf.Sin(a);
 				for (int j = 0; j < Rows + 1; j++) {
