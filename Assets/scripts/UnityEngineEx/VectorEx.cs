@@ -11,6 +11,10 @@ namespace UnityEngineEx
 			return new Vector3(l.x - r.x, l.y - r.y, l.z);
 		}
 
+		public static IEnumerable<Vector3> Circle(this Vector3 v, float Radius, int Sectors)
+		{
+			return v.Circle(Radius, Sectors, 0);
+		}
 
 		public static IEnumerable<Vector3> Circle(this Vector3 v, float Radius, int Sectors, float dA0)
 		{

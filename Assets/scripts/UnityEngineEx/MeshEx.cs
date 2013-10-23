@@ -62,10 +62,12 @@ namespace UnityEngineEx
 			return mesh;
 		}
 
-		public static Mesh Recangle(this Mesh mesh, Rect R, Vector2 Grid, Vector2 Dimensions)
+		public static Mesh Recangle(this Mesh mesh, Vector2 Dimensions, Vector2 Grid)
 		{
 			Vector2 dV = new Vector2(Dimensions.x / Grid.x, Dimensions.y / Grid.y);
-			int Vertices = (int)((Grid.x + 1) * (Grid.y + 1));
+			int Columns = (int)(Grid.x + 1);
+			int Rows = (int)(Grid.y + 1);
+			int Vertices = Columns * Rows;
 			int Triangles = (int)(Grid.x * Grid.y * 2);
 			int vi = 0;
 			Vector3[] vs = new Vector3[Vertices];
@@ -73,29 +75,30 @@ namespace UnityEngineEx
 			Vector3[] ns = new Vector3[Vertices];
 			int uvi = 0;
 			Vector2[] uvs = new Vector2[Vertices];
-			for (int i = 0; i < (int)(Grid.x + 1); i++) {
+			for (int i = 0; i < Columns; i++) {
 				float x = i * dV.x;
-				for (int j = 0; j < (int)(Grid.y + 1); j++) {
+				for (int j = 0; j < Rows; j++) {
 					float y = j * dV.y;
 					vs[vi++] = new Vector3(x, y, 0).Sub(Dimensions/2);
-					ns[ni++] = new Vector3(x, y, 0).Sub(Dimensions/2).normalized;
+					ns[ni++] = new Vector3(0, 0, -1);
 					uvs[uvi++] = new Vector2(i % 2, j % 2);
 				}
 			}
-			Debug.Log(vi);
 
 			vi = 0;
 			int ti = 0;
 			int[] triangles = new int[Triangles * 3];
-			for (int i = 0; i < Triangles / 2; i++, vi+=4) {
+			for (int i = 0; i < Triangles / 2; i++, vi++) {
+				if (((vi + 1) % Rows) == 0)
+					vi++;
+
 				triangles[ti++] = vi + 0;
 				triangles[ti++] = vi + 1;
-				triangles[ti++] = vi + 0 + (int)(Grid.y + 1);
-				triangles[ti++] = vi + 0 + (int)(Grid.y + 1);
+				triangles[ti++] = vi + 0 + Rows;
+				triangles[ti++] = vi + 0 + Rows;
 				triangles[ti++] = vi + 1;
-				triangles[ti++] = vi + 1 + (int)(Grid.y + 1);
+				triangles[ti++] = vi + 1 + Rows;
 			}
-			Debug.Log(vi);
 
 			mesh.vertices = vs;
 			mesh.normals = ns;
