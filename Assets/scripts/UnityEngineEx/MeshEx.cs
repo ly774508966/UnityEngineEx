@@ -17,6 +17,47 @@ namespace UnityEngineEx
 			return mesh;
 		}
 
+		public static Mesh Rotate(this Mesh mesh, Quaternion Rotation)
+		{
+			Vector3[] vertices = new Vector3[mesh.vertexCount];
+			for (int i = 0; i < mesh.vertexCount; i++) {
+				vertices[i] = Rotation * mesh.vertices[i];
+			}
+
+			Vector3[] normals = new Vector3[mesh.normals.Length];
+			for (int i = 0; i < mesh.normals.Length; i++) {
+				normals[i] = Rotation * mesh.normals[i];
+			}
+
+			mesh.vertices = vertices;
+			mesh.normals = normals;
+
+			return mesh;
+		}
+
+		public static Mesh Add(this Mesh mesh, Mesh add)
+		{
+			Vector3[] vs = new Vector3[mesh.vertices.Length + add.vertices.Length];
+			Array.Copy(mesh.vertices, vs, mesh.vertices.Length); Array.Copy(add.vertices, 0, vs, mesh.vertices.Length, add.vertices.Length);
+			Vector3[] ns = new Vector3[mesh.normals.Length + add.normals.Length];
+			Array.Copy(mesh.normals, ns, mesh.normals.Length); Array.Copy(add.normals, 0, ns, mesh.normals.Length, add.normals.Length);
+			Vector2[] uvs = new Vector2[mesh.uv.Length + add.uv.Length];
+			Array.Copy(mesh.uv, uvs, mesh.uv.Length); Array.Copy(add.uv, 0, uvs, mesh.uv.Length, add.uv.Length);
+
+			int tc = mesh.vertices.Length;
+			int[] ts = new int[mesh.triangles.Length + add.triangles.Length];
+			Array.Copy(mesh.triangles, ts, mesh.triangles.Length); Array.Copy(add.triangles, 0, ts, mesh.triangles.Length, add.triangles.Length);
+			for (int i = mesh.triangles.Length; i < ts.Length; i++)
+				ts[i] += tc;
+
+			mesh.vertices = vs;
+			mesh.normals = ns;
+			mesh.uv = uvs;
+			mesh.triangles = ts;
+
+			return mesh;
+		}
+
 		public static Mesh Finalize(this Mesh mesh)
 		{
 			mesh.Optimize();
@@ -121,6 +162,18 @@ namespace UnityEngineEx
 			mesh.normals = ns;
 			mesh.uv = uvs;
 			mesh.triangles = triangles;
+
+			return mesh;
+		}
+
+		public static Mesh Box(this Mesh mesh, Vector3 Dimensions, Vector3 Grid)
+		{
+			mesh.Recangle(Dimensions.xy(), Grid.xy()).Translate(-Vector3.forward * Dimensions.z / 2).Add(
+				new Mesh().Recangle(Dimensions.xz(), Grid.xz()).Rotate(Quaternion.Euler(new Vector3(90, 0, 0))).Translate(Vector3.up * Dimensions.y / 2)).Add(
+				new Mesh().Recangle(Dimensions.zy(), Grid.zy()).Rotate(Quaternion.Euler(new Vector3(0, 270, 0))).Translate(Vector3.right * Dimensions.x / 2)).Add(
+				new Mesh().Recangle(Dimensions.xy(), Grid.xy()).Rotate(Quaternion.Euler(new Vector3(180, 0, 0))).Translate(Vector3.forward * Dimensions.z / 2)).Add(
+				new Mesh().Recangle(Dimensions.xz(), Grid.xz()).Rotate(Quaternion.Euler(new Vector3(270, 0, 0))).Translate(-Vector3.up * Dimensions.y / 2)).Add(
+				new Mesh().Recangle(Dimensions.zy(), Grid.zy()).Rotate(Quaternion.Euler(new Vector3(0, 90, 0))).Translate(-Vector3.right * Dimensions.x / 2));
 
 			return mesh;
 		}

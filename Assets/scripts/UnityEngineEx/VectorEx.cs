@@ -6,6 +6,47 @@ namespace UnityEngineEx
 {
 	public static class VectorEx
 	{
+		public static Vector3 xyz(this Vector2 v, float z)
+		{
+			return new Vector3(v.x, v.y, z);
+		}
+
+		public static Vector3 xzy(this Vector2 v, float z)
+		{
+			return new Vector3(v.x, z, v.y);
+		}
+
+		public static Vector3 zxy(this Vector2 v, float z)
+		{
+			return new Vector3(z, v.x, v.y);
+		}
+
+
+		public static Vector2 xy(this Vector3 v)
+		{
+			return new Vector2(v.x, v.y);
+		}
+
+		public static Vector2 xz(this Vector3 v)
+		{
+			return new Vector2(v.x, v.z);
+		}
+
+		public static Vector2 zx(this Vector3 v)
+		{
+			return new Vector2(v.z, v.x);
+		}
+
+		public static Vector2 yz(this Vector3 v)
+		{
+			return new Vector2(v.y, v.z);
+		}
+
+		public static Vector2 zy(this Vector3 v)
+		{
+			return new Vector2(v.z, v.y);
+		}
+
 		public static Vector3 Sub(this Vector3 l, Vector2 r)
 		{
 			return new Vector3(l.x - r.x, l.y - r.y, l.z);
@@ -26,9 +67,14 @@ namespace UnityEngineEx
 			return v.x == 0 && v.y == 0 && v.z == 0 && v.w == 0;
 		}
 
+		public static Vector4 ToVector4(this Vector3 v, float w)
+		{
+			return new Vector4(v.x, v.y, v.z, w);
+		}
+
 		public static Vector4 ToPoint(this Vector2 v)
 		{
-			return new Vector4(v.x, v.y, 0, 1.0f);
+			return new Vector4(v.x, v.y, 0.0f, 1.0f);
 		}
 
 		public static Vector4 ToPoint(this Vector3 v)
