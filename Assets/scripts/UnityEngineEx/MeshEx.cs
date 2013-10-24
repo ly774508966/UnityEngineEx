@@ -17,6 +17,13 @@ namespace UnityEngineEx
 			return mesh;
 		}
 
+		public static Mesh Finalize(this Mesh mesh)
+		{
+			mesh.Optimize();
+			mesh.RecalculateBounds();
+			return mesh;
+		}
+
 		public static Mesh Cylinder(this Mesh mesh, float Radius, int Sectors, int Rows)
 		{
 			return mesh.Cylinder(Radius, Sectors, Rows, 1.0f);
