@@ -32,6 +32,9 @@ namespace UnityEngineEx
 
 		public static T AddComponent<T>(this GameObject o, object parameters) where T : Component
 		{
+			bool a = o.activeSelf;
+			o.SetActive(false);
+
 			var c = o.AddComponent<T>();
 
 			var fields = new Dictionary<string, FieldInfo>();
@@ -48,6 +51,8 @@ namespace UnityEngineEx
 			if (awakeEx != null) {
 				awakeEx.Invoke(c, null);
 			}
+
+			o.SetActive(a);
 			return c;
 		}
 	}

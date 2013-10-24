@@ -11,6 +11,21 @@ namespace UnityEngineEx
 			return new Vector3(l.x - r.x, l.y - r.y, l.z);
 		}
 
+		public static bool IsZero(this Vector2 v)
+		{
+			return v.x == 0 && v.y == 0;
+		}
+
+		public static bool IsZero(this Vector3 v)
+		{
+			return v.x == 0 && v.y == 0 && v.z == 0;
+		}
+
+		public static bool IsZero(this Vector4 v)
+		{
+			return v.x == 0 && v.y == 0 && v.z == 0 && v.w == 0;
+		}
+
 		public static Vector4 ToPoint(this Vector2 v)
 		{
 			return new Vector4(v.x, v.y, 0, 1.0f);
