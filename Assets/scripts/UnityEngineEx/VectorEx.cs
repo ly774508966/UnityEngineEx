@@ -20,8 +20,7 @@ namespace UnityEngineEx
 		{
 			return new Vector3(z, v.x, v.y);
 		}
-
-
+		
 		public static Vector2 xy(this Vector3 v)
 		{
 			return new Vector2(v.x, v.y);
@@ -50,6 +49,11 @@ namespace UnityEngineEx
 		public static Vector3 Sub(this Vector3 l, Vector2 r)
 		{
 			return new Vector3(l.x - r.x, l.y - r.y, l.z);
+		}
+
+		public static Vector3 Mul(this Vector3 l, Vector3 r)
+		{
+			return new Vector3(l.x * r.x, l.y * r.y, l.z * r.z);
 		}
 
 		public static bool IsZero(this Vector2 v)
@@ -135,6 +139,16 @@ namespace UnityEngineEx
 			}
 			yield return Vector3.Slerp(a, b, 1);
 			yield break;
+		}
+
+		public static Vector2 Random(this Vector2 v)
+		{
+			return new Vector2(UnityEngine.Random.value * v.x, UnityEngine.Random.value * v.y);
+		}
+
+		public static Vector3 Random(this Vector3 v)
+		{
+			return new Vector3(UnityEngine.Random.value * v.x, UnityEngine.Random.value * v.y, UnityEngine.Random.value * v.z);
 		}
 	}
 }
