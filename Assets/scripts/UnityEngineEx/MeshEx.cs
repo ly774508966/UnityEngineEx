@@ -35,6 +35,20 @@ namespace UnityEngineEx
 			return mesh;
 		}
 
+		public static Mesh ShiftUV(this Mesh mesh, Rect uv)
+		{
+			Vector2 shift = new Vector2(uv.xMin, uv.yMin);
+			Vector2 scale = new Vector2(uv.width, uv.height);
+			Vector2[] uvs = new Vector2[mesh.uv.Length];
+			for (int i = 0; i < mesh.uv.Length; i++) {
+				uvs[i] = shift + mesh.uv[i].Mul(scale);
+			}
+
+			mesh.uv = uvs;
+
+			return mesh;
+		}
+
 		public static Mesh Add(this Mesh mesh, Mesh add)
 		{
 			Vector3[] vs = new Vector3[mesh.vertices.Length + add.vertices.Length];
@@ -168,12 +182,12 @@ namespace UnityEngineEx
 
 		public static Mesh Box(this Mesh mesh, Vector3 Dimensions, Vector3 Grid)
 		{
-			mesh.Recangle(Dimensions.xy(), Grid.xy()).Translate(-Vector3.forward * Dimensions.z / 2).Add(
-				new Mesh().Recangle(Dimensions.xz(), Grid.xz()).Rotate(Quaternion.Euler(new Vector3(90, 0, 0))).Translate(Vector3.up * Dimensions.y / 2)).Add(
-				new Mesh().Recangle(Dimensions.zy(), Grid.zy()).Rotate(Quaternion.Euler(new Vector3(0, 270, 0))).Translate(Vector3.right * Dimensions.x / 2)).Add(
-				new Mesh().Recangle(Dimensions.xy(), Grid.xy()).Rotate(Quaternion.Euler(new Vector3(180, 0, 0))).Translate(Vector3.forward * Dimensions.z / 2)).Add(
-				new Mesh().Recangle(Dimensions.xz(), Grid.xz()).Rotate(Quaternion.Euler(new Vector3(270, 0, 0))).Translate(-Vector3.up * Dimensions.y / 2)).Add(
-				new Mesh().Recangle(Dimensions.zy(), Grid.zy()).Rotate(Quaternion.Euler(new Vector3(0, 90, 0))).Translate(-Vector3.right * Dimensions.x / 2));
+			mesh.Recangle(Dimensions.xy(), Grid.xy()).Translate(-Vector3.forward * Dimensions.z / 2).ShiftUV(new Rect(0.5f, 0, 0.5f, 0.25f)).Add(
+				new Mesh().Recangle(Dimensions.xz(), Grid.xz()).Rotate(Quaternion.Euler(new Vector3(90, 0, 0))).Translate(Vector3.up * Dimensions.y / 2).ShiftUV(new Rect(0, 0.25f, 0.5f, 0.25f))).Add(
+				new Mesh().Recangle(Dimensions.zy(), Grid.zy()).Rotate(Quaternion.Euler(new Vector3(0, 270, 0))).Translate(Vector3.right * Dimensions.x / 2).ShiftUV(new Rect(0, 0.5f, 0.5f, 0.25f))).Add(
+				new Mesh().Recangle(Dimensions.xy(), Grid.xy()).Rotate(Quaternion.Euler(new Vector3(180, 0, 0))).Translate(Vector3.forward * Dimensions.z / 2).ShiftUV(new Rect(0, 0, 0.5f, 0.25f))).Add(
+				new Mesh().Recangle(Dimensions.xz(), Grid.xz()).Rotate(Quaternion.Euler(new Vector3(270, 0, 0))).Translate(-Vector3.up * Dimensions.y / 2).ShiftUV(new Rect(0.5f, 0.25f, 0.5f, 0.25f))).Add(
+				new Mesh().Recangle(Dimensions.zy(), Grid.zy()).Rotate(Quaternion.Euler(new Vector3(0, 90, 0))).Translate(-Vector3.right * Dimensions.x / 2).ShiftUV(new Rect(0.5f, 0.5f, 0.5f, 0.25f)));
 
 			return mesh;
 		}
