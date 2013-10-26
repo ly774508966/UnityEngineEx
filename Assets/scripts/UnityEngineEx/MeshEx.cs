@@ -35,6 +35,15 @@ namespace UnityEngineEx
 			return mesh;
 		}
 
+		public static Mesh Color(this Mesh mesh, Color color)
+		{
+			Color[] colors = new Color[mesh.vertexCount];
+			for (int i = 0; i < colors.Length; i++)
+				colors[i] = color;
+			mesh.colors = colors;
+			return mesh;
+		}
+
 		public static Mesh ShiftUV(this Mesh mesh, Rect uv)
 		{
 			Vector2 shift = new Vector2(uv.xMin, uv.yMin);
