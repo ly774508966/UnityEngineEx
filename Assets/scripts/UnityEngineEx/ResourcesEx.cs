@@ -18,7 +18,7 @@ namespace UnityEngineEx
 		{
 			if (typeof(T) == typeof(Material)) {
 				if (color_ == null) {
-					color_ = new Material("Shader \".color\" { Properties {} SubShader { Pass { ColorMaterial AmbientAndDiffuse } } }");
+					color_ = new Material("Shader \".color\" { SubShader { Pass { ColorMaterial AmbientAndDiffuse } } }");
 				}
 				return color_ as T;
 			}

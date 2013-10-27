@@ -35,6 +35,32 @@ namespace UnityEngineEx
 			return mesh;
 		}
 
+		public static Mesh Twist(this Mesh mesh, float dA)
+		{
+			Vector3[] vertices = new Vector3[mesh.vertexCount];
+			for (int i = 0; i < mesh.vertices.Length; i++) {
+				float a = mesh.vertices[i].z * dA;
+				vertices[i] = mesh.vertices[i].Rotate(new Vector3(0, 0, a));
+			}
+
+			mesh.vertices = vertices;
+
+			return mesh;
+		}
+
+		public static Mesh Twist(this Mesh mesh, Vector3 x, float dA)
+		{
+			Vector3[] vertices = new Vector3[mesh.vertexCount];
+			for (int i = 0; i < mesh.vertices.Length; i++) {
+				float a = Vector3.Project(mesh.vertices[i], x).z * dA;
+				vertices[i] = mesh.vertices[i].Rotate(x * a);
+			}
+
+			mesh.vertices = vertices;
+
+			return mesh;
+		}
+
 		public static Mesh Color(this Mesh mesh, Color color)
 		{
 			Color[] colors = new Color[mesh.vertexCount];
@@ -88,51 +114,55 @@ namespace UnityEngineEx
 			return mesh;
 		}
 
-		public static Mesh Cylinder(this Mesh mesh, float Radius, int Sectors, int Rows)
+		public static Mesh Cylinder(this Mesh mesh, float Radius, Vector2 Grid)
 		{
-			return mesh.Cylinder(Radius, Sectors, Rows, 1.0f);
+			return mesh.Cylinder(new Vector2(Radius, 1.0f), Grid);
 		}
 
-		public static Mesh Cylinder(this Mesh mesh, float Radius, int Sectors, int Rows, float Height)
+		/// <summary>
+		/// Cylinder the specified mesh, Dimensions and Grid.
+		/// </summary>
+		/// <param name="mesh">Mesh.</param>
+		/// <param name="Dimensions">Dimensions. X - radius. Y - Length.</param>
+		/// <param name="Grid">Grid.</param>
+		public static Mesh Cylinder(this Mesh mesh, Vector2 Dimensions, Vector2 Grid)
 		{
-			float dH = Height / Rows;
-			int Vertices = Sectors * (Rows + 1);
-			int Triangles = Sectors * Rows * 2;
+			int Columns = (int)(Grid.x);
+			int Rows = (int)(Grid.y + 1);
+			float dH = Dimensions.y / Grid.y;
+			int Vertices = Columns * Rows;
+			int Triangles = (int)(Grid.x * Grid.y * 2);
+
 			int vi = 0;
 			Vector3[] vs = new Vector3[Vertices];
 			int ni = 0;
 			Vector3[] ns = new Vector3[Vertices];
 			int uvi = 0;
 			Vector2[] uvs = new Vector2[Vertices];
-			int ti = 0;
-			int[] triangles = new int[Triangles * 3];
-			for (int i = 0; i < Sectors; i++) {
-				float a = i * 2 * Mathf.PI / Sectors;
+			for (int i = 0; i < Columns; i++) {
+				float a = i * 2 * Mathf.PI / Columns;
 				float x = Mathf.Cos(a);
 				float y = Mathf.Sin(a);
-				for (int j = 0; j < Rows + 1; j++) {
-					vs[vi++] = new Vector3(x*Radius, y*Radius, j*dH);
+				for (int j = 0; j < Rows; j++) {
+					vs[vi++] = new Vector3(x*Dimensions.x, y*Dimensions.x, j*dH);
 					ns[ni++] = new Vector3(x, y, 0);
 					uvs[uvi++] = new Vector2(i % 2, j % 2);
 				}
-				if (i > 0) {
-					for (int d = (Rows + 1) * 2; d > (Rows + 1) * 2 - Rows; d--) {
-						triangles[ti++] = (vi - d) + 0;
-						triangles[ti++] = (vi - d) + 1;
-						triangles[ti++] = (vi - d) + 0 + (Rows + 1);
-						triangles[ti++] = (vi - d) + 0 + (Rows + 1);
-						triangles[ti++] = (vi - d) + 1;
-						triangles[ti++] = (vi - d) + 1 + (Rows + 1);
-					}
-				}
 			}
-			for (int d = (Rows + 1); d > 1; d--) {
-				triangles[ti++] = (vi - d) + 0;
-				triangles[ti++] = (vi - d) + 1;
-				triangles[ti++] = ( 0 - d) + 0 + (Rows + 1);
-				triangles[ti++] = ( 0 - d) + 0 + (Rows + 1);
-				triangles[ti++] = (vi - d) + 1;
-				triangles[ti++] = ( 0 - d) + 1 + (Rows + 1);
+
+			vi = 0;
+			int ti = 0;
+			int[] triangles = new int[Triangles * 3];
+			for (int i = 0; i < Triangles / 2; i++, vi++) {
+				if (((vi + 1) % Rows) == 0)
+					vi++;
+
+				triangles[ti++] = vi + 0;
+				triangles[ti++] = (vi + 0 + Rows) % vs.Length;
+				triangles[ti++] = vi + 1;
+				triangles[ti++] = vi + 1;
+				triangles[ti++] = (vi + 0 + Rows) % vs.Length;
+				triangles[ti++] = (vi + 1 + Rows) % vs.Length;
 			}
 
 			mesh.vertices = vs;
@@ -143,6 +173,27 @@ namespace UnityEngineEx
 			return mesh;
 		}
 
+		public static Mesh Recangle(this Mesh mesh)
+		{
+			return mesh.Recangle(Vector2.one, Vector2.one);
+		}
+
+		public static Mesh Recangle(this Mesh mesh, float width)
+		{
+			return mesh.Recangle(new Vector2(width, 1.0f), Vector2.one);
+		}
+
+		public static Mesh Recangle(this Mesh mesh, Vector2 Dimensions)
+		{
+			return mesh.Recangle(Dimensions, Vector2.one);
+		}
+
+		/// <summary>
+		/// Recangle the specified mesh, Dimensions and Grid.
+		/// </summary>
+		/// <param name="mesh">Mesh.</param>
+		/// <param name="Dimensions">Dimensions. X - Width. Y - Height.</param>
+		/// <param name="Grid">Grid.</param>
 		public static Mesh Recangle(this Mesh mesh, Vector2 Dimensions, Vector2 Grid)
 		{
 			Vector2 dV = new Vector2(Dimensions.x / Grid.x, Dimensions.y / Grid.y);

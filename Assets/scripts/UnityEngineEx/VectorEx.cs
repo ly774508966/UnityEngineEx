@@ -6,6 +6,20 @@ namespace UnityEngineEx
 {
 	public static class VectorEx
 	{
+		/// <summary>
+		/// guiZ 1 / 2 ^ (log2(float)/2)
+		/// 0.000000100000
+		/// 0.000000110000
+		/// 0.000000111000
+		/// |
+		/// v
+		/// log2(float)/2 z levels.
+		/// </summary>
+		/// <value>The GUI z.</value>
+		public static Vector3 guiZ {
+			get { return new Vector3(0, 0, 1.0f / (2 << 8)); }
+		}
+
 		public static Vector3 xyz(this Vector2 v, float z)
 		{
 			return new Vector3(v.x, v.y, z);
@@ -22,6 +36,11 @@ namespace UnityEngineEx
 		}
 		
 		public static Vector2 xy(this Vector3 v)
+		{
+			return new Vector2(v.x, v.y);
+		}
+
+		public static Vector2 xy(this Vector4 v)
 		{
 			return new Vector2(v.x, v.y);
 		}
@@ -91,6 +110,22 @@ namespace UnityEngineEx
 			return new Vector4(v.x, v.y, v.z, 1.0f);
 		}
 
+		public static Vector3 Rotate(this Vector3 v, Vector3 euler)
+		{
+			return Quaternion.Euler(euler) * v;
+		}
+
+		#region Vector enumrators
+
+		public static IEnumerable<Vector3> Line(this Vector3 v, Vector3 Direction, float Step, float Distance)
+		{
+			for (float d = 0; d < Distance; d += Step) {
+				yield return v + Direction * d;
+			}
+			yield return v + Direction * Distance;
+			yield break;
+		}
+
 		public static IEnumerable<Vector3> Circle(this Vector3 v, float Radius, int Sectors)
 		{
 			return v.Circle(Radius, Sectors, 0);
@@ -145,6 +180,8 @@ namespace UnityEngineEx
 			yield return Vector3.Slerp(a, b, 1);
 			yield break;
 		}
+
+		#endregion
 
 		public static Vector2 Random(this Vector2 v)
 		{

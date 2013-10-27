@@ -8,17 +8,30 @@ namespace UnityEngineEx
 {
 	public static class GameObjectEx
 	{
-		public static GameObject Instantinate(this GameObject o, string name, params Type[] components)
+		public static GameObject Instantiate(this GameObject o, string name, params Type[] components)
 		{
-			return o.Instantinate(name, Vector3.zero, components);
+			return o.Instantiate(name, Vector3.zero, components);
 		}
 
-		public static GameObject Instantinate(this GameObject o, string name, Vector3 po, params Type[] components)
+		public static GameObject Instantiate(this GameObject o, string name, Vector3 po, params Type[] components)
 		{
 			GameObject i = new GameObject(name, components);
 			i.transform.parent = o.transform;
 			i.transform.localPosition = po;
 			return i;
+		}
+
+		public static GameObject Instantiate(this GameObject o, string name, Mesh mesh, params Type[] components)
+		{
+			return o.Instantiate(name, Vector3.zero, mesh, components);
+		}
+
+		public static GameObject Instantiate(this GameObject o, string name, Vector3 po, Mesh mesh, params Type[] components)
+		{
+			var go = o.Instantiate(name, po, components);
+			go.AddComponent<MeshRenderer>();
+			go.AddComponent<MeshFilter>().mesh = mesh;
+			return go;
 		}
 
 
