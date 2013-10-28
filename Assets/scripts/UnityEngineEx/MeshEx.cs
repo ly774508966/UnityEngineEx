@@ -70,6 +70,8 @@ namespace UnityEngineEx
 			return mesh;
 		}
 
+		#region UV Mapping
+
 		public static Mesh ShiftUV(this Mesh mesh, Rect uv)
 		{
 			Vector2 shift = new Vector2(uv.xMin, uv.yMin);
@@ -83,6 +85,53 @@ namespace UnityEngineEx
 
 			return mesh;
 		}
+
+		public static Mesh ProjectionUVMap(this Mesh mesh)
+		{
+			Vector2[] uvs = new Vector2[mesh.vertexCount];
+
+			Rect bound = RectEx.CreateEmptyRect();
+			for (int i = 0; i < uvs.Length; i++) {
+				uvs[i] = mesh.vertices[i].xy();
+				bound = bound.Extend(uvs[i]);
+			}
+
+			for (int i = 0; i < uvs.Length; i++) {
+				uvs[i] = bound.Normalize(uvs[i]);
+			}
+
+			mesh.uv = uvs;
+
+			return mesh;
+		}
+
+		public static Mesh CylindricalUVMap(this Mesh mesh)
+		{
+			Vector2[] uvs = new Vector2[mesh.vertexCount];
+
+			Rect bound = RectEx.CreateEmptyRect();
+			for (int i = 0; i < uvs.Length; i++) {
+				CylinderVector3 cv = mesh.vertices[i];
+				uvs[i] = new Vector2(cv.e, cv.n);
+				bound = bound.Extend(uvs[i]);
+				Debug.Log(uvs[i].ToString());
+			}
+			bound = bound.Extend(new Vector2(-Mathf.PI, bound.yMin));
+			bound = bound.Extend(new Vector2(+Mathf.PI, bound.yMin));
+
+			Debug.Log(bound);
+			for (int i = 0; i < uvs.Length; i++) {
+				uvs[i] = bound.Normalize(uvs[i]);
+				Debug.Log(uvs[i].ToString());
+			}
+
+			mesh.uv = uvs;
+
+			return mesh;
+		}
+
+
+		#endregion
 
 		public static Mesh Add(this Mesh mesh, Mesh add)
 		{
@@ -114,64 +163,7 @@ namespace UnityEngineEx
 			return mesh;
 		}
 
-		public static Mesh Cylinder(this Mesh mesh, float Radius, Vector2 Grid)
-		{
-			return mesh.Cylinder(new Vector2(Radius, 1.0f), Grid);
-		}
-
-		/// <summary>
-		/// Cylinder the specified mesh, Dimensions and Grid.
-		/// </summary>
-		/// <param name="mesh">Mesh.</param>
-		/// <param name="Dimensions">Dimensions. X - radius. Y - Length.</param>
-		/// <param name="Grid">Grid.</param>
-		public static Mesh Cylinder(this Mesh mesh, Vector2 Dimensions, Vector2 Grid)
-		{
-			int Columns = (int)(Grid.x);
-			int Rows = (int)(Grid.y + 1);
-			float dH = Dimensions.y / Grid.y;
-			int Vertices = Columns * Rows;
-			int Triangles = (int)(Grid.x * Grid.y * 2);
-
-			int vi = 0;
-			Vector3[] vs = new Vector3[Vertices];
-			int ni = 0;
-			Vector3[] ns = new Vector3[Vertices];
-			int uvi = 0;
-			Vector2[] uvs = new Vector2[Vertices];
-			for (int i = 0; i < Columns; i++) {
-				float a = i * 2 * Mathf.PI / Columns;
-				float x = Mathf.Cos(a);
-				float y = Mathf.Sin(a);
-				for (int j = 0; j < Rows; j++) {
-					vs[vi++] = new Vector3(x*Dimensions.x, y*Dimensions.x, j*dH);
-					ns[ni++] = new Vector3(x, y, 0);
-					uvs[uvi++] = new Vector2(i % 2, j % 2);
-				}
-			}
-
-			vi = 0;
-			int ti = 0;
-			int[] triangles = new int[Triangles * 3];
-			for (int i = 0; i < Triangles / 2; i++, vi++) {
-				if (((vi + 1) % Rows) == 0)
-					vi++;
-
-				triangles[ti++] = vi + 0;
-				triangles[ti++] = (vi + 0 + Rows) % vs.Length;
-				triangles[ti++] = vi + 1;
-				triangles[ti++] = vi + 1;
-				triangles[ti++] = (vi + 0 + Rows) % vs.Length;
-				triangles[ti++] = (vi + 1 + Rows) % vs.Length;
-			}
-
-			mesh.vertices = vs;
-			mesh.normals = ns;
-			mesh.uv = uvs;
-			mesh.triangles = triangles;
-
-			return mesh;
-		}
+		#region Primitive
 
 		public static Mesh Recangle(this Mesh mesh)
 		{
@@ -201,19 +193,21 @@ namespace UnityEngineEx
 			int Rows = (int)(Grid.y + 1);
 			int Vertices = Columns * Rows;
 			int Triangles = (int)(Grid.x * Grid.y * 2);
+
 			int vi = 0;
 			Vector3[] vs = new Vector3[Vertices];
 			int ni = 0;
 			Vector3[] ns = new Vector3[Vertices];
 			int uvi = 0;
 			Vector2[] uvs = new Vector2[Vertices];
+
 			for (int i = 0; i < Columns; i++) {
 				float x = i * dV.x;
 				for (int j = 0; j < Rows; j++) {
 					float y = j * dV.y;
 					vs[vi++] = new Vector3(x, y, 0).Sub(Dimensions/2);
-					ns[ni++] = new Vector3(0, 0, -1);
-					uvs[uvi++] = new Vector2(i % 2, j % 2);
+					ns[ni++] = Vector3.forward;
+					uvs[uvi++] = new Vector2(i / Grid.x, j / Grid.y);
 				}
 			}
 
@@ -225,10 +219,10 @@ namespace UnityEngineEx
 					vi++;
 
 				triangles[ti++] = vi + 0;
-				triangles[ti++] = vi + 1;
-				triangles[ti++] = vi + 0 + Rows;
 				triangles[ti++] = vi + 0 + Rows;
 				triangles[ti++] = vi + 1;
+				triangles[ti++] = vi + 1;
+				triangles[ti++] = vi + 0 + Rows;
 				triangles[ti++] = vi + 1 + Rows;
 			}
 
@@ -240,14 +234,154 @@ namespace UnityEngineEx
 			return mesh;
 		}
 
+		public static Mesh Cylinder(this Mesh mesh, float Radius, Vector2 Grid)
+		{
+			return mesh.Cylinder(new Vector2(Radius, 1.0f), Grid);
+		}
+
+		/// <summary>
+		/// Cylinder the specified mesh, Dimensions and Grid.
+		/// </summary>
+		/// <param name="mesh">Mesh.</param>
+		/// <param name="Dimensions">Dimensions. X - radius. Y - Length.</param>
+		/// <param name="Grid">Grid.</param>
+		public static Mesh Cylinder(this Mesh mesh, Vector2 Dimensions, Vector2 Grid)
+		{
+			int Columns = (int)(Grid.x);
+			int Rows = (int)(Grid.y + 1);
+			int Vertices = Columns * Rows + Rows;
+			int Triangles = (int)(Grid.x * Grid.y * 2);
+
+			int vi = 0;
+			Vector3[] vs = new Vector3[Vertices];
+			int ni = 0;
+			Vector3[] ns = new Vector3[Vertices];
+			int uvi = 0;
+			Vector2[] uvs = new Vector2[Vertices];
+
+
+			float a = 0;
+			float dA = 2 * Mathf.PI / Columns;
+			float dH = Dimensions.y / Grid.y;
+			for (int i = 0; i < Columns; i++, a += dA) {
+				float x = Mathf.Cos(a);
+				float y = Mathf.Sin(a);
+				for (int j = 0; j < Rows; j++) {
+					vs[vi++] = new Vector3(x*Dimensions.x, y*Dimensions.x, j*dH);
+					ns[ni++] = new Vector3(x, y, 0);
+					uvs[uvi++] = new Vector2(i / (float)(Columns), j / Grid.y);
+				}
+			}
+			{
+				a = 0;
+				float x = Mathf.Cos(a);
+				float y = Mathf.Sin(a);
+				for (int j = 0; j < Rows; j++) {
+					vs[vi++] = new Vector3(x * Dimensions.x, y * Dimensions.x, j * dH);
+					ns[ni++] = new Vector3(x, y, 0);
+					uvs[uvi++] = new Vector2(1.0f, j / Grid.y);
+				}
+			}
+
+
+			vi = 0;
+			int ti = 0;
+			int[] triangles = new int[Triangles * 3];
+			for (int i = 0; i < Triangles / 2; i++, vi++) {
+				if (((vi + 1) % Rows) == 0)
+					vi++;
+
+				triangles[ti++] = vi + 0;
+				triangles[ti++] = vi + 0 + Rows;
+				triangles[ti++] = vi + 1;
+				triangles[ti++] = vi + 1;
+				triangles[ti++] = vi + 0 + Rows;
+				triangles[ti++] = vi + 1 + Rows;
+			}
+
+			mesh.vertices = vs;
+			mesh.normals = ns;
+			mesh.uv = uvs;
+			mesh.triangles = triangles;
+
+			return mesh;
+		}
+
+		#region Platonic solids
+
+		public static Mesh Tetrahedron(this Mesh mesh)
+		{
+			return mesh;
+		}
+
+		public static Mesh Icosahedron(this Mesh mesh)
+		{
+			float g = (1 + Mathf.Sqrt(5)) / 2;
+
+			Vector3[] vs = {
+				new Vector3( 0, +1, -g),
+				new Vector3( 0, -1, -g),
+				new Vector3(+g,  0, -1),
+				new Vector3(-g,  0, -1),
+				new Vector3(-1, -g,  0),
+				new Vector3(+1, -g,  0),
+				new Vector3(-1, +g,  0),
+				new Vector3(+1, +g,  0),
+				new Vector3(+g,  0, +1),
+				new Vector3(-g,  0, +1),
+				new Vector3( 0, +1, +g),
+				new Vector3( 0, -1, +g),
+			};
+
+			Vector3[] ns = new Vector3[vs.Length];
+			for (int i = 0; i < ns.Length; i++) {
+				ns[i] = vs[i].normalized;
+			}
+
+
+
+			int[] triangles = {
+				0, 2, 1,
+				0, 1, 3,
+				0, 7, 2,
+				0, 3, 6,
+				0, 6, 7,
+				1, 2, 5,
+				1, 4, 3,
+				1, 5, 4,
+				9, 6, 3,
+				9, 3, 4,
+				8, 2, 7,
+				8, 5, 2,
+				10, 7, 6,
+				10, 6, 9,
+				10, 8, 7,
+				10, 9, 11,
+				10, 11, 8,
+				11, 9, 4,
+				11, 4, 5,
+				11, 5, 8,
+			};
+
+			mesh.vertices = vs;
+			mesh.normals = ns;
+			mesh.triangles = triangles;
+
+			return mesh;
+		}
+
+		#endregion
+
+		#endregion
+
 		public static Mesh Box(this Mesh mesh, Vector3 Dimensions, Vector3 Grid)
 		{
-			mesh.Recangle(Dimensions.xy(), Grid.xy()).Translate(-Vector3.forward * Dimensions.z / 2).ShiftUV(new Rect(0.5f, 0, 0.5f, 0.25f)).Add(
-				new Mesh().Recangle(Dimensions.xz(), Grid.xz()).Rotate(Quaternion.Euler(new Vector3(90, 0, 0))).Translate(Vector3.up * Dimensions.y / 2).ShiftUV(new Rect(0, 0.25f, 0.5f, 0.25f))).Add(
+			mesh.Recangle(Dimensions.xy(), Grid.xy()).Translate(Vector3.forward * Dimensions.z / 2).ShiftUV(new Rect(0.5f, 0, 0.5f, 0.25f)).Add(
+				new Mesh().Recangle(Dimensions.xz(), Grid.xz()).Rotate(Quaternion.Euler(new Vector3(90, 0, 0))).Translate(-Vector3.up * Dimensions.y / 2).ShiftUV(new Rect(0, 0.25f, 0.5f, 0.25f))).Add(
 				new Mesh().Recangle(Dimensions.zy(), Grid.zy()).Rotate(Quaternion.Euler(new Vector3(0, 270, 0))).Translate(Vector3.right * Dimensions.x / 2).ShiftUV(new Rect(0, 0.5f, 0.5f, 0.25f))).Add(
-				new Mesh().Recangle(Dimensions.xy(), Grid.xy()).Rotate(Quaternion.Euler(new Vector3(180, 0, 0))).Translate(Vector3.forward * Dimensions.z / 2).ShiftUV(new Rect(0, 0, 0.5f, 0.25f))).Add(
-				new Mesh().Recangle(Dimensions.xz(), Grid.xz()).Rotate(Quaternion.Euler(new Vector3(270, 0, 0))).Translate(-Vector3.up * Dimensions.y / 2).ShiftUV(new Rect(0.5f, 0.25f, 0.5f, 0.25f))).Add(
-				new Mesh().Recangle(Dimensions.zy(), Grid.zy()).Rotate(Quaternion.Euler(new Vector3(0, 90, 0))).Translate(-Vector3.right * Dimensions.x / 2).ShiftUV(new Rect(0.5f, 0.5f, 0.5f, 0.25f)));
+				new Mesh().Recangle(Dimensions.xy(), Grid.xy()).Rotate(Quaternion.Euler(new Vector3(180, 0, 0))).Translate(-Vector3.forward * Dimensions.z / 2).ShiftUV(new Rect(0, 0, 0.5f, 0.25f))).Add(
+				new Mesh().Recangle(Dimensions.xz(), Grid.xz()).Rotate(Quaternion.Euler(new Vector3(270, 0, 0))).Translate(Vector3.up * Dimensions.y / 2).ShiftUV(new Rect(0.5f, 0.25f, 0.5f, 0.25f))).Add(
+				new Mesh().Recangle(Dimensions.zy(), Grid.zy()).Rotate(Quaternion.Euler(new Vector3(0, 90, 0))).Translate(Vector3.right * Dimensions.x / 2).ShiftUV(new Rect(0.5f, 0.5f, 0.5f, 0.25f)));
 
 			return mesh;
 		}
