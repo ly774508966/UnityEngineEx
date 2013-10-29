@@ -38,12 +38,15 @@ namespace UnityEngineEx
 		public static Mesh Twist(this Mesh mesh, float dA)
 		{
 			Vector3[] vertices = new Vector3[mesh.vertexCount];
+			Vector3[] normals = new Vector3[mesh.vertexCount];
 			for (int i = 0; i < mesh.vertices.Length; i++) {
 				float a = mesh.vertices[i].z * dA;
 				vertices[i] = mesh.vertices[i].Rotate(new Vector3(0, 0, a));
+				normals[i] = mesh.normals[i].Rotate(new Vector3(0, 0, a));
 			}
 
 			mesh.vertices = vertices;
+			mesh.normals = normals;
 
 			return mesh;
 		}
@@ -51,12 +54,15 @@ namespace UnityEngineEx
 		public static Mesh Twist(this Mesh mesh, Vector3 x, float dA)
 		{
 			Vector3[] vertices = new Vector3[mesh.vertexCount];
+			Vector3[] normals = new Vector3[mesh.vertexCount];
 			for (int i = 0; i < mesh.vertices.Length; i++) {
 				float a = Vector3.Project(mesh.vertices[i], x).z * dA;
 				vertices[i] = mesh.vertices[i].Rotate(x * a);
+				normals[i] = mesh.normals[i].Rotate(x * a);
 			}
 
 			mesh.vertices = vertices;
+			mesh.normals = normals;
 
 			return mesh;
 		}
