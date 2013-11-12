@@ -192,6 +192,30 @@ namespace UnityEngineEx
 		{
 			return new Vector3(UnityEngine.Random.value * v.x, UnityEngine.Random.value * v.y, UnityEngine.Random.value * v.z);
 		}
+
+		#region Vector collection enumrators
+
+		public static IEnumerable<Vector3> Bezier(this ICollection<Vector3> ps, int steps)
+		{
+			Bezier b = new Bezier(ps);
+
+			for (int i = 0; i < steps; i++) {
+				yield return b.Evaluate((float)(i) / (steps - 1));
+			}
+
+			yield break;
+		}
+
+		public static IEnumerable<Vector3> Spline(this ICollection<Vector3> ps, int steps)
+		{
+			for (int i = 0; i < steps; i++) {
+
+			}
+
+			yield break;
+		}
+
+		#endregion
 	}
 }
 
