@@ -224,12 +224,12 @@ namespace UnityEngineEx
 				if (((vi + 1) % Rows) == 0)
 					vi++;
 
+				triangles[ti++] = vi + 1;
+				triangles[ti++] = vi + 0 + Rows;
 				triangles[ti++] = vi + 0;
-				triangles[ti++] = vi + 0 + Rows;
 				triangles[ti++] = vi + 1;
-				triangles[ti++] = vi + 1;
-				triangles[ti++] = vi + 0 + Rows;
 				triangles[ti++] = vi + 1 + Rows;
+				triangles[ti++] = vi + 0 + Rows;
 			}
 
 			mesh.vertices = vs;
