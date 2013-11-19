@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace UnityEngineEx
 {
@@ -34,6 +31,24 @@ namespace UnityEngineEx
 			return go;
 		}
 
+		public static GameObject Instantiate(this GameObject o, GameObject instance, params Tuple<Type, object>[] initializers)
+		{
+			bool a = instance.activeSelf;
+			instance.SetActive(false);
+
+			var go = GameObject.Instantiate(instance) as GameObject;
+
+			foreach (var i in initializers) {
+				var c = go.GetComponent(i.Item1);
+				if (c != null)
+					c.Setup(i.Item2);
+			}
+
+			instance.SetActive(a);
+			go.SetActive(a);
+			return o;
+		}
+
 
 		public static GameObject Add(this GameObject o, GameObject item)
 		{
@@ -48,22 +63,7 @@ namespace UnityEngineEx
 			bool a = o.activeSelf;
 			o.SetActive(false);
 
-			var c = o.AddComponent<T>();
-
-			var fields = new Dictionary<string, FieldInfo>();
-			foreach (var field in c.GetFields<SerializeField>()) {
-				fields.Add(field.Name, field);
-			}
-			foreach (var property in parameters.GetType().GetProperties()) {
-				if (fields.ContainsKey(property.Name)) {
-					var field = fields[property.Name];
-					field.SetValue(c, property.GetValue(parameters, null));
-				}
-			}
-			var awakeEx = typeof(T).GetMethod("AwakeEx", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-			if (awakeEx != null) {
-				awakeEx.Invoke(c, null);
-			}
+			T c = o.AddComponent<T>().Setup(parameters);
 
 			o.SetActive(a);
 			return c;

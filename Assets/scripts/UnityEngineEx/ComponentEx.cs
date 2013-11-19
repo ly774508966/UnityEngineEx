@@ -19,6 +19,22 @@ namespace UnityEngineEx
 			}
 			yield break;
 		}
+
+		public static T Setup<T>(this T c, object parameters) where T : Component
+		{
+			var fields = new Dictionary<string, FieldInfo>();
+			foreach (var field in c.GetFields<SerializeField>()) {
+				fields.Add(field.Name, field);
+			}
+			foreach (var property in parameters.GetType().GetProperties()) {
+				if (fields.ContainsKey(property.Name)) {
+					var field = fields[property.Name];
+					field.SetValue(c, property.GetValue(parameters, null));
+				}
+			}
+
+			return c;
+		}
 	}
 }
 
