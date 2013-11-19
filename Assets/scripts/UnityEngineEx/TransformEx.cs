@@ -5,6 +5,18 @@ namespace UnityEngineEx
 {
 	public static class TransformEx
 	{
+		public static Transform Add(this Transform transform, GameObject o)
+		{
+			var po = o.transform.position;
+			var ro = o.transform.rotation;
+			o.transform.parent = transform;
+			o.transform.localPosition = po;
+			o.transform.localRotation = ro;
+			return transform;
+		}
+
+
+
 		public static Transform Clear(this Transform transform)
 		{
 			foreach (Transform child in transform) {
