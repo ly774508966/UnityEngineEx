@@ -31,12 +31,20 @@ namespace UnityEngineEx
 			return go;
 		}
 
+		public static GameObject Instantiate(this GameObject o, GameObject instance)
+		{
+			var go = GameObject.Instantiate(instance) as GameObject;
+			go.transform.parent = o.transform;
+			return go;
+		}
+
 		public static GameObject Instantiate(this GameObject o, GameObject instance, params Tuple<Type, object>[] initializers)
 		{
 			bool a = instance.activeSelf;
 			instance.SetActive(false);
 
 			var go = GameObject.Instantiate(instance) as GameObject;
+			go.transform.parent = o.transform;
 
 			foreach (var i in initializers) {
 				var c = go.GetComponent(i.Item1);
@@ -46,7 +54,7 @@ namespace UnityEngineEx
 
 			instance.SetActive(a);
 			go.SetActive(a);
-			return o;
+			return go;
 		}
 
 
