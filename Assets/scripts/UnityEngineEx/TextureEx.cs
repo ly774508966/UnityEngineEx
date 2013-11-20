@@ -34,6 +34,9 @@ namespace UnityEngineEx
 					}
 				}
 
+			if (minx > maxx || miny > maxy)
+				return texture;
+
 			maxx++; maxy++;
 
 			if (minx < 0) minx = 0;
@@ -66,14 +69,15 @@ namespace UnityEngineEx
 				for (int x = 0; x < texture.width; x++) {
 					Color cc = c[x + y * texture.width];
 					if (cc.a < 0.1) {
+						float a = 0;
 						for (int cy = Mathf.Max(y - width, 0); cy <= Mathf.Min(y + width, texture.height - 1); cy++)
-							for (int cx = Mathf.Max(x - width, 0); cx <= Mathf.Min(x + width, texture.width - 1); cx++) {
-								cc = c[cx + cy * texture.width];
-								if (cc.a > 0.1) {
-									nc[x + y * texture.width] = Color.black;
-									goto skip;
-								}
-							}
+							for (int cx = Mathf.Max(x - width, 0); cx <= Mathf.Min(x + width, texture.width - 1); cx++)
+								a = Mathf.Max(c[cx + cy * texture.width].a, a);
+
+						if (a > 0.1) {
+							nc[x + y * texture.width] = Color.black.Alpha(a);
+							goto skip;
+						}
 					}
 					if (cc.a > 0) {
 						cc = cc.Alpha(1.0f);
