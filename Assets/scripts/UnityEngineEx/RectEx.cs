@@ -15,6 +15,11 @@ namespace UnityEngineEx
 			return float.IsNaN(rect.xMin) || float.IsNaN(rect.yMin);
 		}
 
+		public static bool IsZero(this Rect rect)
+		{
+			return rect.width == 0 || rect.height == 0;
+		}
+
 		public static Rect Extend(this Rect rect, Vector2 p)
 		{
 			if (rect.IsEmpty())
