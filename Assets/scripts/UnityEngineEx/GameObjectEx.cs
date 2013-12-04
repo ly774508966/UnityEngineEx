@@ -5,6 +5,24 @@ namespace UnityEngineEx
 {
 	public static class GameObjectEx
 	{
+		public static GameObject Instantiate(GameObject instance, params Tuple<Type, object>[] initializers)
+		{
+			bool a = instance.activeSelf;
+			instance.SetActive(false);
+
+			var go = GameObject.Instantiate(instance) as GameObject;
+
+			foreach (var i in initializers) {
+				var c = go.GetComponent(i.Item1);
+				if (c != null)
+					c.Setup(i.Item2);
+			}
+
+			instance.SetActive(a);
+			go.SetActive(a);
+			return go;
+		}
+
 		public static GameObject Instantiate(this GameObject o, string name, Vector3 po, params Type[] components)
 		{
 			GameObject i = new GameObject(name, components);
