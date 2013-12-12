@@ -5,6 +5,14 @@ namespace UnityEngineEx
 {
 	public static class GameObjectEx
 	{
+		/// <summary>
+		/// Creates child object with a given name at given local position.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="name"></param>
+		/// <param name="po"></param>
+		/// <param name="components"></param>
+		/// <returns></returns>
 		public static GameObject Create(this GameObject o, string name, Vector3 po, params Type[] components)
 		{
 			GameObject i = new GameObject(name, components);
@@ -105,6 +113,13 @@ namespace UnityEngineEx
 			return go;
 		}
 
+		/// <summary>
+		/// Add a Component to the GameObject setting SerializeFields to a parameters values.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="o"></param>
+		/// <param name="parameters"></param>
+		/// <returns></returns>
 		public static T AddComponent<T>(this GameObject o, object parameters) where T : Component
 		{
 			bool a = o.activeSelf;
@@ -116,6 +131,11 @@ namespace UnityEngineEx
 			return c;
 		}
 
+		/// <summary>
+		/// Get most accurate Bounds of the GameObject. Trying to get bounds of MeshFilter, SpriteRenderer and Renderer components in that order.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
 		public static Bounds GetBounds(this GameObject o)
 		{
 			var mesh = o.GetComponent<MeshFilter>();

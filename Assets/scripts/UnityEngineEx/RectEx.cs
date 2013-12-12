@@ -20,6 +20,12 @@ namespace UnityEngineEx
 			return rect.width == 0 || rect.height == 0;
 		}
 
+		/// <summary>
+		/// Extend Rect so p is inside rect. If Rect is empty creates new point rect.
+		/// </summary>
+		/// <param name="rect"></param>
+		/// <param name="p"></param>
+		/// <returns></returns>
 		public static Rect Extend(this Rect rect, Vector2 p)
 		{
 			if (rect.IsEmpty())
@@ -35,6 +41,12 @@ namespace UnityEngineEx
 			return new Rect(xMin, yMin, xMax - xMin, yMax - yMin);
 		}
 
+		/// <summary>
+		/// Returns normalized point in Rect space. If point is inside Rect its coordinates will be in range [0..1], otherwise point is outside.
+		/// </summary>
+		/// <param name="rect"></param>
+		/// <param name="v"></param>
+		/// <returns></returns>
 		public static Vector2 Normalize(this Rect rect, Vector2 v)
 		{
 			return new Vector2((v.x - rect.xMin) / rect.width, (v.y - rect.yMin) / rect.height);

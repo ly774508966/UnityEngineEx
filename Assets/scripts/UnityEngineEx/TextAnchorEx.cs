@@ -7,6 +7,11 @@ namespace MagicDice
 {
 	public static class TextAnchorEx
 	{
+		/// <summary>
+		/// Converts TextAnchor to a Sprite pivot.
+		/// </summary>
+		/// <param name="anchor"></param>
+		/// <returns></returns>
 		public static Vector2 ToPivot(this TextAnchor anchor)
 		{
 			float pivotx, pivoty;

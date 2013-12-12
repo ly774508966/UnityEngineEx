@@ -5,16 +5,32 @@ namespace UnityEngineEx
 {
 	public static class TextureEx
 	{
+		/// <summary>
+		/// Returns texture size in Vector2 struct.
+		/// </summary>
+		/// <param name="texture"></param>
+		/// <returns></returns>
 		public static Vector2 GetSize(this Texture2D texture)
 		{
 			return new Vector2(texture.width, texture.height);
 		}
 
+		/// <summary>
+		/// Returns texture size in Rect struct.
+		/// </summary>
+		/// <param name="texture"></param>
+		/// <returns></returns>
 		public static Rect GetRect(this Texture texture)
 		{
 			return new Rect(0, 0, texture.width, texture.height);
 		}
 
+
+		/// <summary>
+		/// Cuts off empty bixel border from a texture.
+		/// </summary>
+		/// <param name="texture"></param>
+		/// <returns></returns>
 		public static Texture2D Trim(this Texture2D texture)
 		{
 			Color[] c = texture.GetPixels();
