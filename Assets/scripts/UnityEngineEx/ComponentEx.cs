@@ -31,6 +31,9 @@ namespace UnityEngineEx
 					var field = fields[property.Name];
 					field.SetValue(c, property.GetValue(parameters, null));
 				}
+				else {
+					Debug.Log(String.Format("Property [{0}] not found int type [{1}]", property.Name, typeof(T).Name));
+				}
 			}
 
 			return c;

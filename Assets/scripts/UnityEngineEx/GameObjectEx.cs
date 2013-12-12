@@ -5,6 +5,44 @@ namespace UnityEngineEx
 {
 	public static class GameObjectEx
 	{
+		public static GameObject Create(this GameObject o, string name, Vector3 po, params Type[] components)
+		{
+			GameObject i = new GameObject(name, components);
+			i.transform.position = po;
+			o.transform.Add(i);
+			return i;
+		}
+
+		public static GameObject Create(this GameObject o, string name, params Type[] components)
+		{
+			return o.Create(name, Vector3.zero, components);
+		}
+
+		public static GameObject Create(this GameObject o, string name, Vector3 po, Mesh mesh, params Type[] components)
+		{
+			var go = o.Create(name, po, components);
+			go.AddComponent<MeshRenderer>();
+			go.AddComponent<MeshFilter>().mesh = mesh;
+			return go;
+		}
+
+		public static GameObject Create(this GameObject o, string name, Mesh mesh, params Type[] components)
+		{
+			return o.Create(name, Vector3.zero, mesh, components);
+		}
+
+		public static GameObject Create(this GameObject o, string name, Vector3 po, Sprite sprite, params Type[] components)
+		{
+			var go = o.Create(name, po, components);
+			go.AddComponent<SpriteRenderer>().sprite = sprite;
+			return go;
+		}
+
+		public static GameObject Create(this GameObject o, string name, Sprite sprite, params Type[] components)
+		{
+			return o.Create(name, Vector3.zero, sprite, components);
+		}
+
 		public static GameObject Instantiate(GameObject instance, params Tuple<Type, object>[] initializers)
 		{
 			bool a = instance.activeSelf;
@@ -21,32 +59,6 @@ namespace UnityEngineEx
 			instance.SetActive(a);
 			go.SetActive(a);
 			return go;
-		}
-
-		public static GameObject Instantiate(this GameObject o, string name, Vector3 po, params Type[] components)
-		{
-			GameObject i = new GameObject(name, components);
-			i.transform.position = po;
-			o.transform.Add(i);
-			return i;
-		}
-
-		public static GameObject Instantiate(this GameObject o, string name, params Type[] components)
-		{
-			return o.Instantiate(name, Vector3.zero, components);
-		}
-
-		public static GameObject Instantiate(this GameObject o, string name, Vector3 po, Mesh mesh, params Type[] components)
-		{
-			var go = o.Instantiate(name, po, components);
-			go.AddComponent<MeshRenderer>();
-			go.AddComponent<MeshFilter>().mesh = mesh;
-			return go;
-		}
-
-		public static GameObject Instantiate(this GameObject o, string name, Mesh mesh, params Type[] components)
-		{
-			return o.Instantiate(name, Vector3.zero, mesh, components);
 		}
 
 		public static GameObject Instantiate(this GameObject o, GameObject instance, params Tuple<Type, object>[] initializers)
