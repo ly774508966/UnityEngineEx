@@ -8,6 +8,12 @@ namespace UnityEngineEx
 {
 	public static class ComponentEx
 	{
+		/// <summary>
+		/// Lists all SerializeFields of the Component.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="c"></param>
+		/// <returns></returns>
 		public static IEnumerable<FieldInfo> GetFields<T>(this Component c)
 		{
 			foreach (var field in c.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance)) {
@@ -18,6 +24,32 @@ namespace UnityEngineEx
 				}
 			}
 			yield break;
+		}
+
+		/// <summary>
+		/// Sets SerializeFields of the Component to values form parameters object.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="c"></param>
+		/// <param name="parameters"></param>
+		/// <returns></returns>
+		public static T Setup<T>(this T c, object parameters) where T : Component
+		{
+			var fields = new Dictionary<string, FieldInfo>();
+			foreach (var field in c.GetFields<SerializeField>()) {
+				fields.Add(field.Name, field);
+			}
+			foreach (var property in parameters.GetType().GetProperties()) {
+				if (fields.ContainsKey(property.Name)) {
+					var field = fields[property.Name];
+					field.SetValue(c, property.GetValue(parameters, null));
+				}
+				else {
+					Debug.Log(String.Format("Property [{0}] not found int type [{1}]", property.Name, typeof(T).Name));
+				}
+			}
+
+			return c;
 		}
 	}
 }

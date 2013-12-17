@@ -6,6 +6,12 @@ namespace UnityEngineEx
 {
 	public static class MeshEx
 	{
+		/// <summary>
+		/// Translate all vertices of a Mesh.
+		/// </summary>
+		/// <param name="mesh"></param>
+		/// <param name="Translation"></param>
+		/// <returns></returns>
 		public static Mesh Translate(this Mesh mesh, Vector3 Translation)
 		{
 			Vector3[] vertices = new Vector3[mesh.vertexCount];
@@ -18,6 +24,12 @@ namespace UnityEngineEx
 			return mesh;
 		}
 
+		/// <summary>
+		/// Rotates all the vertices and normals of a mesh.
+		/// </summary>
+		/// <param name="mesh"></param>
+		/// <param name="Rotation"></param>
+		/// <returns></returns>
 		public static Mesh Rotate(this Mesh mesh, Quaternion Rotation)
 		{
 			Vector3[] vertices = new Vector3[mesh.vertexCount];
@@ -281,12 +293,12 @@ namespace UnityEngineEx
 				if (((vi + 1) % Rows) == 0)
 					vi++;
 
+				triangles[ti++] = vi + 1;
+				triangles[ti++] = vi + 0 + Rows;
 				triangles[ti++] = vi + 0;
-				triangles[ti++] = vi + 0 + Rows;
 				triangles[ti++] = vi + 1;
-				triangles[ti++] = vi + 1;
-				triangles[ti++] = vi + 0 + Rows;
 				triangles[ti++] = vi + 1 + Rows;
+				triangles[ti++] = vi + 0 + Rows;
 			}
 
 			mesh.vertices = vs;

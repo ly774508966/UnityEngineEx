@@ -1,4 +1,5 @@
 using UnityEngine;
+using MathEx;
 using System;
 using System.Collections.Generic;
 
@@ -183,14 +184,49 @@ namespace UnityEngineEx
 
 		#endregion
 
+		/// <summary>
+		/// Returns random vector. Max values are defined by original vector.
+		/// </summary>
+		/// <param name="v"></param>
+		/// <returns></returns>
 		public static Vector2 Random(this Vector2 v)
 		{
 			return new Vector2(UnityEngine.Random.value * v.x, UnityEngine.Random.value * v.y);
 		}
 
+		/// <summary>
+		/// Returns random vector. Max values are defined by original vector.
+		/// </summary>
+		/// <param name="v"></param>
+		/// <returns></returns>
 		public static Vector3 Random(this Vector3 v)
 		{
 			return new Vector3(UnityEngine.Random.value * v.x, UnityEngine.Random.value * v.y, UnityEngine.Random.value * v.z);
+		}
+
+		/// <summary>
+		/// Returns random vector on a Circle. Radius is determined by original vector.
+		/// </summary>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		public static Vector2 RandomOnCircle(this Vector2 v)
+		{
+			Vector2 rv = UnityEngine.Random.insideUnitCircle;
+			while (rv.x == 0 && rv.y == 0) {
+				rv = UnityEngine.Random.insideUnitCircle;
+			}
+
+			return Mul(rv.normalized, v);
+		}
+
+		/// <summary>
+		/// Returns random vector inside a Circle. Radius is determined by original vector.
+		/// </summary>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		public static Vector2 RandomInsideCircle(this Vector2 v)
+		{
+			return Mul(UnityEngine.Random.insideUnitCircle, v);
 		}
 
 		#region Vector collection enumrators
