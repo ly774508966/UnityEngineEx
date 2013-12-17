@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 namespace UnityEngineEx
 {
@@ -170,6 +171,62 @@ namespace UnityEngineEx
 		}
 
 		#region Primitive
+		
+		public class MeshBuilder
+		{
+			readonly IList<Vector3> vertices;
+			readonly IList<Vector3> normals;
+			readonly IList<Vector3> uvs;
+			
+			public MeshBuilder(int VertexCount)
+			{
+				vertices = new List<Vector3>(VertexCount);
+				normals = new List<Vector3>(VertexCount);
+			}
+			
+			IList<int> triangles;
+			IList<int> Triangles(int TriangleCount)
+			{ if (triangles == null) triangles = new List<int>();
+				return triangles;
+			}
+		}
+		
+		public class MeshBuilderIterator
+		{
+			readonly MeshBuilder mesh;
+			public MeshBuilderIterator(MeshBuilder mesh)
+			{
+				this.mesh = mesh;
+			}
+			
+			public int AddVertex(Vector3 v)
+			{
+				return 0;
+			}
+			
+			public int AddNormal(Vector3 v)
+			{
+				return 0;
+			}
+			
+			public int AddUV(Vector2 uv)
+			{
+				return 0;
+			}
+		}
+		
+		public static MeshBuilderIterator Triangle(this MeshBuilderIterator mesh)
+		{
+			mesh.AddVertex(Vector3.up);
+			mesh.AddVertex(Vector3.right.Rotate(new Vector3(0, 0, 30)));
+			
+			return mesh;
+		}
+		
+		public static MeshBuilder Quad(this MeshBuilder mesh)
+		{
+			return mesh;
+		}
 
 		public static Mesh Recangle(this Mesh mesh)
 		{
