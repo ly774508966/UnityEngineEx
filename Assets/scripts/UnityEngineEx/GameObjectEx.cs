@@ -89,6 +89,14 @@ namespace UnityEngineEx
 			return go;
 		}
 
+		/// <summary>
+		/// Instantiate new GameObject in place of GameObject.
+		/// Function fully replaces one object by another.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="instance"></param>
+		/// <param name="initializers"></param>
+		/// <returns></returns>
 		public static GameObject Reinstantiate(this GameObject o, GameObject instance, params Tuple<Type, object>[] initializers)
 		{
 			bool a = instance.activeSelf;
@@ -129,6 +137,19 @@ namespace UnityEngineEx
 
 			o.SetActive(a);
 			return c;
+		}
+
+		/// <summary>
+		/// Adds GameObject as a child to another GameObject.
+		/// Objects position and rotation are set to localPosition and localrotation.
+		/// <seealso cref="TransformEx.Add"/>
+		/// </summary>
+		/// <param name="parent"></param>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static GameObject Add(this GameObject parent, GameObject o)
+		{
+			return parent.transform.Add(o).gameObject;
 		}
 
 		/// <summary>

@@ -21,8 +21,7 @@ namespace UnityEngineEx
 			o.transform.localRotation = ro;
 			return transform;
 		}
-
-
+		
 		/// <summary>
 		/// Removes all child GameObjects.
 		/// </summary>
@@ -34,6 +33,12 @@ namespace UnityEngineEx
 				GameObject.Destroy(child.gameObject);
 			}
 
+			return transform;
+		}
+
+		public static Transform SetActive(this Transform transform, bool flag)
+		{
+			transform.gameObject.SetActive(flag);
 			return transform;
 		}
 
@@ -50,6 +55,8 @@ namespace UnityEngineEx
 
 			if (t != null)
 				return t.gameObject.GetComponent<T>();
+			else
+				Debug.Log(string.Format("No child GameObject '{0}' found.", name));
 
 			return null;
 		}
