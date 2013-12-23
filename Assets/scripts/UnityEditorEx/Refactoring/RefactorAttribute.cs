@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UnityEditorEx
+namespace UnityEditorEx.Refactoring
 {
 	public class RefactorAttribute : Attribute
 	{
