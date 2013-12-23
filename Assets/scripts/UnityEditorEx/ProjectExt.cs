@@ -1,0 +1,26 @@
+﻿#if UNITY_EDITOR
+using UnityEngine;
+using UnityEngineEx;
+using UnityEditor;
+using System.Collections;
+
+
+namespace UnityEditorEx
+{
+public class ProjectExt : MonoBehaviour
+{
+	[MenuItem("Assets/Create/Material From Texture")]
+	public static void MaterialFromTexture()
+	{
+		foreach (Object o in Selection.objects) {
+			string assetPath = AssetDatabase.GetAssetPath(o);
+			assetPath = assetPath.Substring(0, assetPath.LastIndexOf('/'));
+
+			var materail = new Material(Shader.Find("Unlit/Transparent"));
+			materail.mainTexture = o as Texture2D;
+			AssetDatabase.CreateAsset(materail, assetPath + "/" + o.name + ".mat");
+		}
+	}
+}
+}
+#endif
