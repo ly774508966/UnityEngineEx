@@ -36,6 +36,20 @@ namespace UnityEngineEx
 			return transform;
 		}
 
+		/// <summary>
+		/// Unlinks all child GameObjects.
+		/// </summary>
+		/// <param name="transform"></param>
+		/// <returns></returns>
+		public static Transform Unlink(this Transform transform)
+		{
+			foreach (Transform child in transform) {
+				child.parent = null;
+			}
+
+			return transform;
+		}
+
 #if UNITY_EDITOR
 		/// <summary>
 		/// Removes all child GameObjects.

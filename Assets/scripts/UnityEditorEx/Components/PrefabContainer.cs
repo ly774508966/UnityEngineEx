@@ -24,8 +24,7 @@ namespace UnityEditorEx.Components
 		{
 			if (prevPrefab != prefab) {
 				gameObject.transform.ClearImmidiate();
-				var child = gameObject.Instantiate(prefab, null);
-				child.SetHideFlagsRecursive(HideFlags.DontSave | HideFlags.NotEditable);
+				gameObject.Instantiate(prefab, null);
 				prevPrefab = prefab;
 			}
 		}
