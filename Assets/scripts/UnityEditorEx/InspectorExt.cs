@@ -1,30 +1,34 @@
 ﻿#if UNITY_EDITOR
-using UnityEngine;
-using UnityEngineEx;
 using UnityEditor;
-using System.Collections;
+using UnityEngine;
 
 
 namespace UnityEditorEx
 {
-public class InspectorExt : MonoBehaviour
-{
-	[MenuItem("CONTEXT/Transform/Normalize Parent")]
-	public static void NormalizeParent(MenuCommand command)
+	public class InspectorExt : MonoBehaviour
 	{
-		GameObject o = Selection.activeGameObject;
+		[MenuItem("CONTEXT/Transform/Normalize Parent")]
+		public static void NormalizeParent(MenuCommand command)
+		{
+			GameObject o = Selection.activeGameObject;
 
-		var objectPosition = o.transform.localPosition;
-		o.transform.localPosition = Vector3.zero;
+			var objectPosition = o.transform.localPosition;
+			o.transform.localPosition = Vector3.zero;
 
-		o.transform.parent.position += objectPosition;
-		foreach (Transform child in o.transform.parent) {
-			if (child.gameObject == o)
-				continue;
+			o.transform.parent.position += objectPosition;
+			foreach (Transform child in o.transform.parent) {
+				if (child.gameObject == o)
+					continue;
 
-			child.transform.localPosition -= objectPosition;
+				child.transform.localPosition -= objectPosition;
+			}
+		}
+
+		[MenuItem("CONTEXT/Transform/Distribute Objects")]
+		public static void DistributeObjects(MenuCommand command)
+		{
+			Debug.Log("***");
 		}
 	}
-}
 }
 #endif

@@ -36,6 +36,22 @@ namespace UnityEngineEx
 			return transform;
 		}
 
+#if UNITY_EDITOR
+		/// <summary>
+		/// Removes all child GameObjects.
+		/// </summary>
+		/// <param name="transform"></param>
+		/// <returns></returns>
+		public static Transform ClearImmidiate(this Transform transform)
+		{
+			foreach (Transform child in transform) {
+				GameObject.DestroyImmediate(child.gameObject);
+			}
+
+			return transform;
+		}
+#endif
+
 		public static Transform SetActive(this Transform transform, bool flag)
 		{
 			transform.gameObject.SetActive(flag);

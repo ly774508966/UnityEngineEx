@@ -1,8 +1,6 @@
 ﻿#if UNITY_EDITOR
-using UnityEngine;
-using UnityEngineEx;
 using UnityEditor;
-using System.Collections;
+using UnityEngine;
 
 
 namespace UnityEditorEx

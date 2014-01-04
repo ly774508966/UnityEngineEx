@@ -1,10 +1,34 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 namespace UnityEngineEx
 {
 	public static class GameObjectEx
 	{
+		public static IEnumerable<GameObject> GetEnumerator(this GameObject o)
+		{
+			foreach (Transform child in o.transform)
+				yield return child.gameObject;
+			yield break;
+		}
+
+		public static IEnumerable<GameObject> GetEnumeratorRecursive(this GameObject o)
+		{
+			Stack<Transform> next = new Stack<Transform>();
+
+			next.Push(o.transform);
+			while (next.Count != 0) {
+				Transform current = next.Pop();
+				foreach (Transform child in current) {
+					yield return child.gameObject;
+					next.Push(child);
+				}
+			}
+			yield break;
+		}
+
+
 		/// <summary>
 		/// Creates child object with a given name at given local position.
 		/// </summary>
@@ -76,10 +100,12 @@ namespace UnityEngineEx
 
 			var go = GameObject.Instantiate(instance) as GameObject;
 
-			foreach (var i in initializers) {
-				var c = go.GetComponent(i.Item1);
-				if (c != null)
-					c.Setup(i.Item2);
+			if (initializers != null) {
+				foreach (var i in initializers) {
+					var c = go.GetComponent(i.Item1);
+					if (c != null)
+						c.Setup(i.Item2);
+				}
 			}
 
 			o.transform.Add(go);
@@ -175,6 +201,22 @@ namespace UnityEngineEx
 			}
 
 			return new Bounds();
+		}
+
+		/// <summary>
+		/// Recursively sets HideFlags for GameObject and all it's child objects.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="flags"></param>
+		/// <returns></returns>
+		public static GameObject SetHideFlagsRecursive(this GameObject o, HideFlags flags)
+		{
+			o.hideFlags = flags;
+			foreach (GameObject child in o.GetEnumeratorRecursive()) {
+				child.hideFlags = flags;
+			}
+
+			return o;
 		}
 	}
 }
