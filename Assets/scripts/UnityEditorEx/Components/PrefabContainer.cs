@@ -29,7 +29,7 @@ namespace UnityEditorEx.Components
 			}
 		}
 
-		public void Reset()
+		public void DoReset()
 		{
 			prevPrefab = null;
 			Update();

@@ -9,7 +9,7 @@ namespace UnityEditorEx.Components
 		public override void OnInspectorGUI()
 		{
 			if (GUILayout.Button("Reset")) {
-				((PrefabContainer)target).Reset();
+				((PrefabContainer)target).DoReset();
 			}
 
 			base.OnInspectorGUI();
