@@ -24,7 +24,7 @@ namespace UnityEditorEx.Components
 		{
 			if (prevPrefab != prefab) {
 				gameObject.transform.ClearImmidiate();
-				gameObject.Instantiate(prefab, null);
+				gameObject.Instantiate(prefab, null).CallRecursive((GameObject o) => o.tag = "EditorOnly");
 				prevPrefab = prefab;
 			}
 		}

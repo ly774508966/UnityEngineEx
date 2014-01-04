@@ -204,16 +204,16 @@ namespace UnityEngineEx
 		}
 
 		/// <summary>
-		/// Recursively sets HideFlags for GameObject and all it's child objects.
+		/// Apply some Action recursively to GameObject and all its child objects.
 		/// </summary>
 		/// <param name="o"></param>
 		/// <param name="flags"></param>
 		/// <returns></returns>
-		public static GameObject SetHideFlagsRecursive(this GameObject o, HideFlags flags)
+		public static GameObject CallRecursive(this GameObject o, Action<GameObject> a)
 		{
-			o.hideFlags = flags;
+			a(o);
 			foreach (GameObject child in o.GetEnumeratorRecursive()) {
-				child.hideFlags = flags;
+				a(child);
 			}
 
 			return o;
