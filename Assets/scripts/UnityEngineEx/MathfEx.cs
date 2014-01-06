@@ -18,5 +18,15 @@ namespace UnityEngineEx
 
 			return t % length;
 		}
+
+		public static float Cbrt(float v)
+		{
+			if (v >= 0) {
+				return Mathf.Pow(v, 1/3.0f);
+			}
+			else {
+				return -Mathf.Pow(-v, 1/3.0f);
+			}
+		}
 	}
 }
