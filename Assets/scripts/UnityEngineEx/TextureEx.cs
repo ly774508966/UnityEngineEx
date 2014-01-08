@@ -26,6 +26,13 @@ namespace UnityEngineEx
 		}
 
 
+		public static Texture2D SetLine(this Texture2D texture, int y, Color color)
+		{
+			for (int i = 0; i < texture.width; i++)
+				texture.SetPixel(i, y, color);
+			return texture;
+		}
+
 		/// <summary>
 		/// Cuts off empty bixel border from a texture.
 		/// </summary>

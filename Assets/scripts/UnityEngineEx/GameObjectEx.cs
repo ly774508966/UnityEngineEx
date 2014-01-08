@@ -140,7 +140,7 @@ namespace UnityEngineEx
 			go.transform.position = o.transform.localPosition + go.transform.position;
 			go.transform.rotation = o.transform.localRotation * go.transform.rotation;
 			o.transform.parent.Add(go);
-			GameObject.Destroy(o);
+			GameObject.DestroyImmediate(o);
 
 			instance.SetActive(a);
 			go.SetActive(a);
