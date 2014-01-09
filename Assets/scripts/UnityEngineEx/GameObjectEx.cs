@@ -136,14 +136,15 @@ namespace UnityEngineEx
 					c.Setup(i.Item2);
 			}
 
+			go.SetActive(a);
 			go.name = o.name;
 			go.transform.position = o.transform.localPosition + go.transform.position;
 			go.transform.rotation = o.transform.localRotation * go.transform.rotation;
+			go.transform.localScale = o.transform.localScale;
 			o.transform.parent.Add(go);
 			GameObject.DestroyImmediate(o);
 
 			instance.SetActive(a);
-			go.SetActive(a);
 			return go;
 		}
 

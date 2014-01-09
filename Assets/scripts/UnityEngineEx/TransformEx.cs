@@ -16,9 +16,11 @@ namespace UnityEngineEx
 		{
 			var po = o.transform.position;
 			var ro = o.transform.rotation;
+			var sc = o.transform.localScale;
 			o.transform.parent = transform;
 			o.transform.localPosition = po;
 			o.transform.localRotation = ro;
+			o.transform.localScale = sc;
 			return transform;
 		}
 		

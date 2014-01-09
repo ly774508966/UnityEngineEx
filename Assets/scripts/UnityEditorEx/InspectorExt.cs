@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngineEx;
+using System;
 using SystemEx;
 using System.Collections.Generic;
 
@@ -70,6 +71,37 @@ namespace UnityEditorEx
 			}
 
 			skipDistributeObjects--;
+		}
+
+		[MenuItem("CONTEXT/Transform/Pack Objects", true)]
+		public static bool PackObjectsCehck(MenuCommand command)
+		{
+			if (Selection.gameObjects.Length <= 1)
+				return false;
+			return true;
+		}
+
+		static int skipPackObjects = 0;
+		[MenuItem("CONTEXT/Transform/Pack Objects")]
+		public static void PackObjects(MenuCommand command)
+		{
+			if (skipPackObjects == 0) {
+				skipPackObjects = Selection.gameObjects.Length;
+			}
+
+			if (skipPackObjects == Selection.gameObjects.Length) {
+				var os = Selection.gameObjects;
+				Array.Sort(os, (GameObject a, GameObject b) => a.name.CompareTo(b.name));
+				Vector3 sv = os[0].transform.localPosition;
+				Vector3 dv = os[1].transform.localPosition - os[0].transform.localPosition;
+
+				foreach (var o in os) {
+					o.transform.localPosition = sv;
+					sv += dv;
+				}
+			}
+
+			skipPackObjects--;
 		}
 	}
 }
