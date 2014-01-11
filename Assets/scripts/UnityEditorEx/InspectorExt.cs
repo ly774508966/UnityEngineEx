@@ -29,15 +29,15 @@ namespace UnityEditorEx
 		}
 
 
+		static int skipDistributeObjects = 0;
 		[MenuItem("CONTEXT/Transform/Distribute Objects", true)]
-		public static bool DistributeObjectsCehck(MenuCommand command)
+		public static bool DistributeObjectsCheck(MenuCommand command)
 		{
 			if (Selection.gameObjects.Length <= 1)
 				return false;
 			return true;
 		}
 
-		static int skipDistributeObjects = 0;
 		[MenuItem("CONTEXT/Transform/Distribute Objects")]
 		public static void DistributeObjects(MenuCommand command)
 		{
@@ -46,23 +46,12 @@ namespace UnityEditorEx
 			}
 
 			if (skipDistributeObjects == Selection.gameObjects.Length) {
-				var objects = new SortedList<Vector3, GameObject>(LambdaComparer.Create((Vector3 a, Vector3 b) => {
-					if (a.y < b.y) return -1;
-					if (a.y == b.y && a.x < b.x) return -1;
-					if (a.y == b.y && a.x == b.x) return 0;
-					return 1;
-				}));
-
-				foreach (var o in Selection.gameObjects) {
-					objects.Add(o.transform.localPosition, o);
-				}
-
-				var os = objects.Values;
+				var os = SortByX(Selection.gameObjects);
 				Vector3 first = os[0].transform.localPosition;
-				Vector3 last = os[objects.Count - 1].transform.localPosition;
+				Vector3 last = os[os.Count - 1].transform.localPosition;
 
 				float x = first.x;
-				float dx = (last.x - first.x) / (objects.Count - 1);
+				float dx = (last.x - first.x) / (os.Count - 1);
 
 				foreach (var o in os) {
 					o.transform.localPosition = o.transform.localPosition.X(x);
@@ -102,6 +91,23 @@ namespace UnityEditorEx
 			}
 
 			skipPackObjects--;
+		}
+
+
+		static IList<GameObject> SortByX(GameObject[] os)
+		{
+			var objects = new SortedList<Vector3, GameObject>(LambdaComparer.Create((Vector3 a, Vector3 b) => {
+				if (a.y < b.y) return -1;
+				if (a.y == b.y && a.x < b.x) return -1;
+				if (a.y == b.y && a.x == b.x) return 0;
+				return 1;
+			}));
+
+			foreach (var o in Selection.gameObjects) {
+				objects.Add(o.transform.localPosition, o);
+			}
+
+			return objects.Values;
 		}
 	}
 }
