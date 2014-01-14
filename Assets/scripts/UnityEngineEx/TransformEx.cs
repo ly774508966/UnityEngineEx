@@ -1,5 +1,6 @@
 using UnityEngine;
-
+using System;
+using System.Collections.Generic;
 
 namespace UnityEngineEx
 {
@@ -32,6 +33,20 @@ namespace UnityEngineEx
 		public static Transform Clear(this Transform transform)
 		{
 			foreach (Transform child in transform) {
+				GameObject.Destroy(child.gameObject);
+			}
+
+			return transform;
+		}
+
+		/// <summary>
+		/// Removes all child GameObjects.
+		/// </summary>
+		/// <param name="transform"></param>
+		/// <returns></returns>
+		public static Transform Clear(this Transform transform, Func<Transform, bool> f)
+		{
+			foreach (Transform child in transform.Find(f)) {
 				GameObject.Destroy(child.gameObject);
 			}
 
@@ -91,6 +106,16 @@ namespace UnityEngineEx
 				Debug.Log(string.Format("No child GameObject '{0}' found.", name));
 
 			return null;
+		}
+
+		public static IEnumerable<Transform> Find(this Transform transform, Func<Transform, bool> f)
+		{
+			foreach (Transform child in transform) {
+				if (f(child))
+					yield return child;
+			}
+
+			yield break;
 		}
 	}
 }

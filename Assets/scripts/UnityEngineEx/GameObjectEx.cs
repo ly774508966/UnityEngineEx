@@ -93,7 +93,7 @@ namespace UnityEngineEx
 			return go;
 		}
 
-		public static GameObject Instantiate(this GameObject o, GameObject instance, params Tuple<Type, object>[] initializers)
+		public static GameObject Instantiate(this GameObject o, GameObject instance, Vector3 po, params Tuple<Type, object>[] initializers)
 		{
 			bool a = instance.activeSelf;
 			instance.SetActive(false);
@@ -108,11 +108,17 @@ namespace UnityEngineEx
 				}
 			}
 
+			go.transform.position = po;
 			o.transform.Add(go);
 
 			instance.SetActive(a);
 			go.SetActive(a);
 			return go;
+		}
+
+		public static GameObject Instantiate(this GameObject o, GameObject instance, params Tuple<Type, object>[] initializers)
+		{
+			return o.Instantiate(instance, Vector3.zero, initializers);
 		}
 
 		/// <summary>

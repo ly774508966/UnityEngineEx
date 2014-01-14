@@ -28,5 +28,14 @@ namespace UnityEngineEx
 				return -Mathf.Pow(-v, 1/3.0f);
 			}
 		}
+
+		public static Vector3 Clamp(Vector3 value, Vector3 min, Vector3 max)
+		{
+			return new Vector3(
+				Mathf.Clamp(value.x, min.x, max.x),
+				Mathf.Clamp(value.y, min.y, max.y),
+				Mathf.Clamp(value.z, min.z, max.z)
+				);
+		}
 	}
 }
