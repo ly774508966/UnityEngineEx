@@ -17,6 +17,17 @@ namespace SystemEx
 			return false;
 		}
 
+		public static A GetAttribute<A>(this MemberInfo mi) where A : Attribute
+		{
+			foreach (var attribute in mi.GetCustomAttributes(true)) {
+				if (attribute.GetType() == typeof(A)) {
+					return (A)attribute;
+				}
+			}
+
+			return null;
+		}
+
 		/// <summary>
 		/// Lists all private fields with attribute A.
 		/// </summary>
