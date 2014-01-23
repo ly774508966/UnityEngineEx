@@ -3,7 +3,7 @@ using UnityEngineEx;
 using System;
 
 
-namespace MagicDice
+namespace UnityEngineEx
 {
 	public static class TextAnchorEx
 	{

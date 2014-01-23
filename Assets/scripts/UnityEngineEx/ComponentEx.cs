@@ -9,6 +9,15 @@ namespace UnityEngineEx
 {
 	public static class ComponentEx
 	{
+		public static T LinkSceneNodes<T>(this T c) where T : Component
+		{
+			foreach (var field in c.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
+				field.Item1.SetValue(c, c.transform.Find(field.Item2.name, field.Item1.FieldType));
+			}
+
+			return c;
+		}
+
 		/// <summary>
 		/// Sets SerializeFields of the Component to values form parameters object.
 		/// </summary>
@@ -45,6 +54,12 @@ namespace UnityEngineEx
 		public static T Find<T>(this Component c, string name) where T : Component
 		{
 			return c.transform.Find<T>(name);
+		}
+
+		public static Component SetActive(this Component c, bool flag)
+		{
+			c.gameObject.SetActive(flag);
+			return c;
 		}
 	}
 }

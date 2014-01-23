@@ -44,6 +44,22 @@ namespace SystemEx
 		}
 
 		/// <summary>
+		/// Lists all private fields with attribute A.
+		/// </summary>
+		/// <typeparam name="A"></typeparam>
+		/// <param name="t"></param>
+		/// <returns></returns>
+		public static IEnumerable<Tuple<FieldInfo, A>> GetFieldsAndAttributes<A>(this Type t) where A : Attribute
+		{
+			foreach (var field in t.GetFields(BindingFlags.NonPublic | BindingFlags.Instance)) {
+				A a = field.GetAttribute<A>();
+				if (a != null)
+					yield return new Tuple<FieldInfo, A>(field, a);
+			}
+			yield break;
+		}
+
+		/// <summary>
 		/// Lists all private methods with attribute A.
 		/// </summary>
 		/// <typeparam name="A"></typeparam>

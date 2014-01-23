@@ -108,6 +108,22 @@ namespace UnityEngineEx
 			return null;
 		}
 
+		public static object Find(this Transform transform, string name, Type type)
+		{
+			var t = transform.Find(name);
+
+			if (t != null) {
+				if (type != typeof(GameObject))
+					return t.gameObject.GetComponent(type);
+				else
+					return t.gameObject;
+			}
+			else
+				Debug.Log(string.Format("No child GameObject '{0}' found.", name));
+
+			return null;
+		}
+
 		public static IEnumerable<Transform> Find(this Transform transform, Func<Transform, bool> f)
 		{
 			foreach (Transform child in transform) {
