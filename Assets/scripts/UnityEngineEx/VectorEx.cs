@@ -36,6 +36,21 @@ namespace UnityEngineEx
 			return new Vector3(v.x, v.y, z);
 		}
 
+		public static Vector3 dX(this Vector3 v, float dx)
+		{
+			return new Vector3(v.x + dx, v.y, v.z);
+		}
+
+		public static Vector3 dY(this Vector3 v, float dy)
+		{
+			return new Vector3(v.x, v.y + dy, v.z);
+		}
+
+		public static Vector3 dZ(this Vector3 v, float dz)
+		{
+			return new Vector3(v.x, v.y, v.z + dz);
+		}
+
 		public static Vector3 xyz(this Vector2 v, float z)
 		{
 			return new Vector3(v.x, v.y, z);

@@ -34,6 +34,18 @@ namespace UnityEngineEx
 
 			return c;
 		}
+
+		/// <summary>
+		/// Finds GameObject by path name. And returns it's Component T if it exists.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="transform"></param>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public static T Find<T>(this Component c, string name) where T : Component
+		{
+			return c.transform.Find<T>(name);
+		}
 	}
 }
 
