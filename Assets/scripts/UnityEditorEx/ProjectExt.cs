@@ -19,6 +19,14 @@ public class ProjectExt : MonoBehaviour
 			AssetDatabase.CreateAsset(materail, assetPath + "/" + o.name + ".mat");
 		}
 	}
+
+	[MenuItem("Assets/Copy path to clipboard")]
+	public static void CopyAssetPathToClipboard()
+	{
+		foreach (Object o in Selection.objects) {
+			EditorGUIUtility.systemCopyBuffer = AssetDatabase.GetAssetPath(o);
+		}
+	}
 }
 }
 #endif
