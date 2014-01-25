@@ -34,7 +34,7 @@ namespace UnityEngineEx
 		public static Transform Clear(this Transform transform)
 		{
 			foreach (Transform child in transform) {
-				GameObject.Destroy(child.gameObject);
+				GameObjectEx.Destroy(child.gameObject);
 			}
 
 			return transform;
@@ -48,7 +48,7 @@ namespace UnityEngineEx
 		public static Transform Clear(this Transform transform, Func<Transform, bool> f)
 		{
 			foreach (Transform child in transform.Find(f)) {
-				GameObject.Destroy(child.gameObject);
+				GameObjectEx.Destroy(child.gameObject);
 			}
 
 			return transform;
@@ -67,22 +67,6 @@ namespace UnityEngineEx
 
 			return transform;
 		}
-
-#if UNITY_EDITOR
-		/// <summary>
-		/// Removes all child GameObjects.
-		/// </summary>
-		/// <param name="transform"></param>
-		/// <returns></returns>
-		public static Transform ClearImmidiate(this Transform transform)
-		{
-			foreach (Transform child in transform) {
-				GameObject.DestroyImmediate(child.gameObject);
-			}
-
-			return transform;
-		}
-#endif
 
 		public static Transform SetActive(this Transform transform, bool flag)
 		{

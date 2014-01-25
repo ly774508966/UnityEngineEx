@@ -28,7 +28,7 @@ namespace UnityEngineEx
 		void Update()
 		{
 			if (prevPrefab != prefab) {
-				gameObject.transform.ClearImmidiate();
+				gameObject.transform.Clear();
 				gameObject.Instantiate(prefab, null).CallRecursive((GameObject o) => o.tag = "EditorOnly");
 				prevPrefab = prefab;
 			}

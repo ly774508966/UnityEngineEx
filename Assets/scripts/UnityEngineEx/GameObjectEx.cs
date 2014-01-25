@@ -197,6 +197,21 @@ namespace UnityEngineEx
 			return go;
 		}
 
+#if !UNITY_EDITOR
+		public static void Destroy(GameObject o)
+		{
+			GameObject.Destroy(o);
+		}
+#else
+		public static void Destroy(GameObject o)
+		{
+			if (UnityEditor.EditorApplication.isPlaying)
+				GameObject.Destroy(o);
+			else
+				GameObject.Destroy(o);
+		}
+#endif
+
 		/// <summary>
 		/// Add a Component to the GameObject setting SerializeFields to a parameters values.
 		/// </summary>
