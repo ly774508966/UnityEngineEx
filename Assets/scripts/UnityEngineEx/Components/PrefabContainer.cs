@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngineEx;
 
-namespace UnityEditorEx.Components
+namespace UnityEngineEx
 {
 	[ExecuteInEditMode]
 	public class PrefabContainer : MonoBehaviour
@@ -9,6 +9,11 @@ namespace UnityEditorEx.Components
 		[SerializeField] GameObject prefab;
 
 		void Awake()
+		{
+			Execute();
+		}
+
+		public void Execute()
 		{
 #if UNITY_EDITOR
 			if (UnityEditor.EditorApplication.isPlaying)

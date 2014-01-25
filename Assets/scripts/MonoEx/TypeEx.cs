@@ -36,7 +36,7 @@ namespace SystemEx
 		/// <returns></returns>
 		public static IEnumerable<FieldInfo> GetFields<A>(this Type t) where A : Attribute
 		{
-			foreach (var field in t.GetFields(BindingFlags.NonPublic | BindingFlags.Instance)) {
+			foreach (var field in t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
 				if (field.HaveAttribute<A>())
 					yield return field;
 			}
@@ -51,7 +51,7 @@ namespace SystemEx
 		/// <returns></returns>
 		public static IEnumerable<Tuple<FieldInfo, A>> GetFieldsAndAttributes<A>(this Type t) where A : Attribute
 		{
-			foreach (var field in t.GetFields(BindingFlags.NonPublic | BindingFlags.Instance)) {
+			foreach (var field in t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
 				A a = field.GetAttribute<A>();
 				if (a != null)
 					yield return new Tuple<FieldInfo, A>(field, a);
@@ -67,7 +67,7 @@ namespace SystemEx
 		/// <returns></returns>
 		public static IEnumerable<MethodInfo> GetMethods<A>(this Type t) where A : Attribute
 		{
-			foreach (var method in t.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)) {
+			foreach (var method in t.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
 				if (method.HaveAttribute<A>())
 					yield return method;
 			}

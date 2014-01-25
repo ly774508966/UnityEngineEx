@@ -1,9 +1,8 @@
-using UnityEngine;
 using System;
-using SystemEx;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using SystemEx;
+using UnityEngine;
 
 namespace UnityEngineEx
 {
@@ -16,6 +15,15 @@ namespace UnityEngineEx
 			}
 
 			return c;
+		}
+
+		public static T LinkSceneNodes<C, T>(this C c, T o) where C : Component
+		{
+			foreach (var field in o.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
+				field.Item1.SetValue(o, c.transform.Find(field.Item2.name, field.Item1.FieldType));
+			}
+
+			return o;
 		}
 
 		/// <summary>

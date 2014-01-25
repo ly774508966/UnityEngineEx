@@ -1,11 +1,19 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
+using SystemEx;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace UnityEngineEx
 {
 	public static class GameObjectEx
 	{
+		#region Enumerators
+
+		/// <summary>
+		/// Enumerates GameObject children.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
 		public static IEnumerable<GameObject> GetEnumerator(this GameObject o)
 		{
 			foreach (Transform child in o.transform)
@@ -13,6 +21,11 @@ namespace UnityEngineEx
 			yield break;
 		}
 
+		/// <summary>
+		/// Enumerates all GameObject children recursively.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
 		public static IEnumerable<GameObject> GetEnumeratorRecursive(this GameObject o)
 		{
 			Stack<Transform> next = new Stack<Transform>();
@@ -28,6 +41,49 @@ namespace UnityEngineEx
 			yield break;
 		}
 
+		/// <summary>
+		/// Enumerates all GameObject children recursively preserving depth of recursion. 
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static IEnumerable<Tuple<GameObject, int>> GetEnumeratorRecursiveWithDepth(this GameObject o)
+		{
+			Stack<Tuple<Transform, int>> next = new Stack<Tuple<Transform, int>>();
+
+			next.Push(Tuple.Create(o.transform, 0));
+			while (next.Count != 0) {
+				var current = next.Pop();
+				foreach (Transform child in current.Item1) {
+					yield return Tuple.Create(child.gameObject, current.Item2 + 1);
+					next.Push(Tuple.Create(child, current.Item2 + 1));
+				}
+			}
+			yield break;
+		}
+
+		#endregion
+
+		#region Linkage
+
+		public static GameObject LinkSceneNodes(this GameObject c)
+		{
+			foreach (var field in c.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
+				field.Item1.SetValue(c, c.transform.Find(field.Item2.name, field.Item1.FieldType));
+			}
+
+			return c;
+		}
+
+		public static T LinkSceneNodes<T>(this GameObject c, T o)
+		{
+			foreach (var field in o.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
+				field.Item1.SetValue(o, c.transform.Find(field.Item2.name, field.Item1.FieldType));
+			}
+
+			return o;
+		}
+
+		#endregion
 
 		/// <summary>
 		/// Creates child object with a given name at given local position.
@@ -214,13 +270,27 @@ namespace UnityEngineEx
 		/// Apply some Action recursively to GameObject and all its child objects.
 		/// </summary>
 		/// <param name="o"></param>
-		/// <param name="flags"></param>
 		/// <returns></returns>
 		public static GameObject CallRecursive(this GameObject o, Action<GameObject> a)
 		{
 			a(o);
 			foreach (GameObject child in o.GetEnumeratorRecursive()) {
 				a(child);
+			}
+
+			return o;
+		}
+
+		/// <summary>
+		/// Apply some Action recursively to GameObject and all its child objects passing depth as a parameter to action.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static GameObject CallRecursive(this GameObject o, Action<GameObject, int> a)
+		{
+			a(o, 0);
+			foreach (var child in o.GetEnumeratorRecursiveWithDepth()) {
+				a(child.Item1, child.Item2);
 			}
 
 			return o;

@@ -25,6 +25,12 @@ namespace UnityEngineEx
 			return new Rect(0, 0, texture.width, texture.height);
 		}
 
+		public static Texture2D SetColumn(this Texture2D texture, int x, Color color)
+		{
+			for (int i = 0; i < texture.height; i++)
+				texture.SetPixel(x, i, color);
+			return texture;
+		}
 
 		public static Texture2D SetLine(this Texture2D texture, int y, Color color)
 		{
