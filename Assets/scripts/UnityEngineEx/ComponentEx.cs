@@ -8,23 +8,14 @@ namespace UnityEngineEx
 {
 	public static class ComponentEx
 	{
+		#region Linkage
+
 		public static T LinkSceneNodes<T>(this T c) where T : Component
 		{
-			foreach (var field in c.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
-				field.Item1.SetValue(c, c.transform.Find(field.Item2.name, field.Item1.FieldType));
-			}
-
-			return c;
+			return c.transform.LinkSceneNodes(c);
 		}
 
-		public static T LinkSceneNodes<C, T>(this C c, T o) where C : Component
-		{
-			foreach (var field in o.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
-				field.Item1.SetValue(o, c.transform.Find(field.Item2.name, field.Item1.FieldType));
-			}
-
-			return o;
-		}
+		#endregion
 
 		/// <summary>
 		/// Sets SerializeFields of the Component to values form parameters object.

@@ -25,7 +25,7 @@ namespace UnityEditorEx
 		[MenuItem("GameObject/Create Empty Child %&n")]
 		static void CreateChild()
 		{
-			Selection.activeGameObject.Create("GameObject");
+			Selection.activeGameObject = Selection.activeGameObject.Create("GameObject");
 		}
 
 

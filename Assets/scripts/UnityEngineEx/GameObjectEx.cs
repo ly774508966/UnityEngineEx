@@ -65,22 +65,9 @@ namespace UnityEngineEx
 
 		#region Linkage
 
-		public static GameObject LinkSceneNodes(this GameObject c)
-		{
-			foreach (var field in c.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
-				field.Item1.SetValue(c, c.transform.Find(field.Item2.name, field.Item1.FieldType));
-			}
-
-			return c;
-		}
-
 		public static T LinkSceneNodes<T>(this GameObject c, T o)
 		{
-			foreach (var field in o.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
-				field.Item1.SetValue(o, c.transform.Find(field.Item2.name, field.Item1.FieldType));
-			}
-
-			return o;
+			return c.transform.LinkSceneNodes(o);
 		}
 
 		#endregion

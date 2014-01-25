@@ -1,6 +1,7 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
+using SystemEx;
+using UnityEngine;
 
 namespace UnityEngineEx
 {
@@ -110,7 +111,7 @@ namespace UnityEngineEx
 
 		public static object Find(this Transform transform, string name, Type type)
 		{
-			var t = transform.Find(name);
+			var t = name != null ? transform.Find(name) : transform;
 
 			if (t != null) {
 				if (type != typeof(GameObject))
@@ -133,5 +134,18 @@ namespace UnityEngineEx
 
 			yield break;
 		}
+
+		#region Linkage
+
+		public static T LinkSceneNodes<T>(this Transform transform, T o)
+		{
+			foreach (var field in o.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
+				field.Item1.SetValue(o, transform.Find(field.Item2.name, field.Item1.FieldType));
+			}
+
+			return o;
+		}
+
+		#endregion
 	}
 }
