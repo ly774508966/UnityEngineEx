@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using SystemEx;
 using UnityEngine;
@@ -97,12 +98,8 @@ namespace UnityEngineEx
 		{
 			var t = name != null ? transform.Find(name) : transform;
 
-			if (t != null) {
-				if (type != typeof(GameObject))
-					return t.gameObject.GetComponent(type);
-				else
-					return t.gameObject;
-			}
+			if (t != null)
+				return t.gameObject.GetComponentOrThis(type);
 			else
 				Debug.Log(string.Format("No child GameObject '{0}' found.", name));
 
@@ -124,7 +121,21 @@ namespace UnityEngineEx
 		public static T LinkSceneNodes<T>(this Transform transform, T o)
 		{
 			foreach (var field in o.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
-				field.Item1.SetValue(o, transform.Find(field.Item2.name, field.Item1.FieldType));
+				if (field.Item1.FieldType.IsSubclassOf(typeof(UnityEngine.Object))) {
+					field.Item1.SetValue(o, transform.Find(field.Item2.name, field.Item1.FieldType));
+				}
+				else {
+					if (field.Item1.FieldType.IsGenericType && field.Item1.FieldType.GetGenericTypeDefinition() == typeof(IList<>)) {
+						Type nodeType = field.Item1.FieldType.GetGenericArguments()[0];
+						IList list = (IList) Activator.CreateInstance(typeof(List<>).MakeGenericType(nodeType));
+
+						foreach (Transform child in transform.Find(field.Item2.name)) {
+							list.Add(child.gameObject.GetComponentOrThis(nodeType));
+						}
+
+						field.Item1.SetValue(o, list);
+					}
+				}
 			}
 
 			return o;

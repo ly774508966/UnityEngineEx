@@ -208,7 +208,7 @@ namespace UnityEngineEx
 			if (UnityEditor.EditorApplication.isPlaying)
 				GameObject.Destroy(o);
 			else
-				GameObject.Destroy(o);
+				GameObject.DestroyImmediate(o);
 		}
 #endif
 
@@ -228,6 +228,14 @@ namespace UnityEngineEx
 
 			o.SetActive(a);
 			return c;
+		}
+
+		public static object GetComponentOrThis(this GameObject o, Type type)
+		{
+			if (type != typeof(GameObject))
+				return o.GetComponent(type);
+			else
+				return o;
 		}
 
 		/// <summary>
