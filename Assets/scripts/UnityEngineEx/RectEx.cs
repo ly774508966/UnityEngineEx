@@ -20,6 +20,16 @@ namespace UnityEngineEx
 			return rect.width == 0 || rect.height == 0;
 		}
 
+		public static Vector2 GetMin(this Rect rect)
+		{
+			return new Vector2(rect.xMin, rect.yMin);
+		}
+
+		public static Vector2 GetMax(this Rect rect)
+		{
+			return new Vector2(rect.xMax, rect.yMax);
+		}
+
 		/// <summary>
 		/// Extend Rect so p is inside rect. If Rect is empty creates new point rect.
 		/// </summary>
@@ -39,6 +49,11 @@ namespace UnityEngineEx
 			float yMax = Mathf.Max(rect.yMax, p.y);
 
 			return new Rect(xMin, yMin, xMax - xMin, yMax - yMin);
+		}
+
+		public static Rect Extend(this Rect rect, Rect r)
+		{
+			return rect.Extend(r.GetMin()).Extend(r.GetMax());
 		}
 
 		/// <summary>
