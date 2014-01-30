@@ -258,15 +258,15 @@ namespace UnityEngineEx
 		/// <returns></returns>
 		public static Bounds GetBounds(this GameObject o)
 		{
-			var mesh = o.GetComponent<MeshFilter>();
-			if (mesh != null && mesh.sharedMesh != null) {
-				return mesh.sharedMesh.bounds;
-			}
+//			var mesh = o.GetComponent<MeshFilter>();
+//			if (mesh != null && mesh.sharedMesh != null) {
+//				return mesh.sharedMesh.bounds;
+//			}
 
-			var sprite = o.GetComponent<SpriteRenderer>();
-			if (sprite != null && sprite.sprite != null) {
-				return sprite.sprite.bounds;
-			}
+//			var sprite = o.GetComponent<SpriteRenderer>();
+//			if (sprite != null && sprite.sprite != null) {
+//				return sprite.sprite.bounds;
+//			}
 
 			var renderer = o.GetComponent<Renderer>();
 			if (renderer != null) {

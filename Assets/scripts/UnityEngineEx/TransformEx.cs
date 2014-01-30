@@ -89,7 +89,7 @@ namespace UnityEngineEx
 			if (t != null)
 				return t.gameObject.GetComponent<T>();
 			else
-				Debug.Log(string.Format("No child GameObject '{0}' found.", name));
+				Debug.LogWarning(string.Format("No child GameObject '{0}' found.", name));
 
 			return null;
 		}
@@ -101,7 +101,7 @@ namespace UnityEngineEx
 			if (t != null)
 				return t.gameObject.GetComponentOrThis(type);
 			else
-				Debug.Log(string.Format("No child GameObject '{0}' found.", name));
+				Debug.LogWarning(string.Format("No child GameObject '{0}' found.", name));
 
 			return null;
 		}

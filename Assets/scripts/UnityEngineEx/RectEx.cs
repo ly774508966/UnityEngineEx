@@ -53,6 +53,8 @@ namespace UnityEngineEx
 
 		public static Rect Extend(this Rect rect, Rect r)
 		{
+			if (r.IsEmpty())
+				return rect;
 			return rect.Extend(r.GetMin()).Extend(r.GetMax());
 		}
 
