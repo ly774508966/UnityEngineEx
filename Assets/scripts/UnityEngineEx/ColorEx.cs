@@ -14,6 +14,11 @@ namespace UnityEngineEx
 		{
 			return new Color(color.r, color.g, color.b, a);
 		}
+
+		public static Color FromHex(long hex)
+		{
+			return new Color(((hex >> 16) & 0xff)/255.0f, ((hex >> 8) & 0xff)/255.0f, (hex & 0xff)/255.0f, ((hex >> 24) & 0xff)/255.0f);
+		}
 	}
 }
 
