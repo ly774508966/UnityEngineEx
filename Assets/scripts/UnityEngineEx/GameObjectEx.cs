@@ -273,6 +273,21 @@ namespace UnityEngineEx
 		}
 
 		/// <summary>
+		/// Get most accurate Bounds of the GameObject.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static Bounds GetBoundsLocal(this GameObject o)
+		{
+			var renderer = o.GetComponent<Renderer>();
+			if (renderer != null) {
+				return renderer.bounds;
+			}
+
+			return new Bounds();
+		}
+
+		/// <summary>
 		/// Apply some Action recursively to GameObject and all its child objects.
 		/// </summary>
 		/// <param name="o"></param>
