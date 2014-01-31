@@ -15,10 +15,9 @@ namespace UnityEditorEx
 
 		void OnDrawGizmos()
 		{
-			if (renderer != null) {
-				Gizmos.color = Color.green;
-				Gizmos.DrawWireCube(renderer.bounds.center, renderer.bounds.size);
-			}
+			Gizmos.color = Color.green;
+			Bounds b = gameObject.GetBounds();
+			Gizmos.DrawWireCube(b.center, b.size);
 		}
 	}
 }

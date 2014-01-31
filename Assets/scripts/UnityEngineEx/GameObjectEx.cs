@@ -252,28 +252,24 @@ namespace UnityEngineEx
 		}
 
 		/// <summary>
-		/// Get most accurate Bounds of the GameObject. Trying to get bounds of MeshFilter, SpriteRenderer and Renderer components in that order.
+		/// Get most accurate Bounds of the GameObject.
 		/// </summary>
 		/// <param name="o"></param>
 		/// <returns></returns>
 		public static Bounds GetBounds(this GameObject o)
 		{
-//			var mesh = o.GetComponent<MeshFilter>();
-//			if (mesh != null && mesh.sharedMesh != null) {
-//				return mesh.sharedMesh.bounds;
-//			}
+			Bounds b = BoundsEx.Empty;
+			o.CallRecursive((GameObject c) => {
+				if (!c.activeInHierarchy)
+					return;
 
-//			var sprite = o.GetComponent<SpriteRenderer>();
-//			if (sprite != null && sprite.sprite != null) {
-//				return sprite.sprite.bounds;
-//			}
+				var renderer = c.GetComponent<Renderer>();
+				if (renderer != null) {
+					b = b.Extend(renderer.bounds);
+				}
+			});
 
-			var renderer = o.GetComponent<Renderer>();
-			if (renderer != null) {
-				return renderer.bounds;
-			}
-
-			return new Bounds();
+			return b;
 		}
 
 		/// <summary>

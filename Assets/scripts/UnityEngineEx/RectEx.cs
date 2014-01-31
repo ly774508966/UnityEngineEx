@@ -5,10 +5,8 @@ namespace UnityEngineEx
 {
 	public static class RectEx
 	{
-		public static Rect CreateEmptyRect()
-		{
-			return new Rect(float.NaN, float.NaN, float.NaN, float.NaN);
-		}
+		public static Rect Empty = new Rect(float.NaN, float.NaN, float.NaN, float.NaN);
+		
 
 		public static bool IsEmpty(this Rect rect)
 		{
@@ -55,6 +53,7 @@ namespace UnityEngineEx
 		{
 			if (r.IsEmpty())
 				return rect;
+
 			return rect.Extend(r.GetMin()).Extend(r.GetMax());
 		}
 

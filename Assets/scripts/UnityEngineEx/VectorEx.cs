@@ -7,6 +7,10 @@ namespace UnityEngineEx
 {
 	public static class VectorEx
 	{
+		public static Vector2 Empty2 = new Vector2(float.NaN, float.NaN);
+		public static Vector3 Empty3 = new Vector3(float.NaN, float.NaN, float.NaN);
+		public static Vector4 Empty4 = new Vector4(float.NaN, float.NaN, float.NaN, float.NaN);
+
 		/// <summary>
 		/// guiZ 1 / 2 ^ (log2(float)/2)
 		/// 0.000000100000
@@ -111,14 +115,29 @@ namespace UnityEngineEx
 			return new Vector3(l.x * r.x, l.y * r.y, l.z * r.z);
 		}
 
+		public static bool IsEmpty(this Vector2 v)
+		{
+			return float.IsNaN(v.x) && float.IsNaN(v.y);
+		}
+
 		public static bool IsZero(this Vector2 v)
 		{
 			return v.x == 0 && v.y == 0;
 		}
 
+		public static bool IsEmpty(this Vector3 v)
+		{
+			return float.IsNaN(v.x) && float.IsNaN(v.y) && float.IsNaN(v.z);
+		}
+
 		public static bool IsZero(this Vector3 v)
 		{
 			return v.x == 0 && v.y == 0 && v.z == 0;
+		}
+
+		public static bool IsEmpty(this Vector4 v)
+		{
+			return float.IsNaN(v.x) && float.IsNaN(v.y) && float.IsNaN(v.z) && float.IsNaN(v.w);
 		}
 
 		public static bool IsZero(this Vector4 v)

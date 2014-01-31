@@ -109,7 +109,7 @@ namespace UnityEngineEx
 		{
 			Vector2[] uvs = new Vector2[mesh.vertexCount];
 
-			Rect bound = RectEx.CreateEmptyRect();
+			Rect bound = RectEx.Empty;
 			for (int i = 0; i < uvs.Length; i++) {
 				uvs[i] = mesh.vertices[i].xy();
 				bound = bound.Extend(uvs[i]);
@@ -128,7 +128,7 @@ namespace UnityEngineEx
 		{
 			Vector2[] uvs = new Vector2[mesh.vertexCount];
 
-			Rect bound = RectEx.CreateEmptyRect();
+			Rect bound = RectEx.Empty;
 			for (int i = 0; i < uvs.Length; i++) {
 				CylinderVector3 cv = mesh.vertices[i];
 				uvs[i] = new Vector2(cv.e, cv.n);
