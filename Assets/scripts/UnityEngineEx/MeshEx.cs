@@ -255,6 +255,11 @@ namespace UnityEngineEx
 			return mesh.Recangle(Dimensions, Vector2.one);
 		}
 
+		public static Mesh Recangle(this Mesh mesh, Vector2 Dimensions, Matrix4x4 transform)
+		{
+			return mesh.Recangle(Dimensions, Vector2.one, transform);
+		}
+
 		/// <summary>
 		/// Recangle the specified mesh, Dimensions and Grid.
 		/// </summary>
