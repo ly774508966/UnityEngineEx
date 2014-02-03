@@ -6,12 +6,14 @@ using UnityEngine;
 
 namespace UnityEditorEx.Components
 {
-	[CustomEditor(typeof(MeshRenderer))]
-	class MeshRendererEditor : Editor
+	[CustomEditor(typeof(Renderer))]
+	class RendererEditor : Editor
 	{
 		public override void OnInspectorGUI()
 		{
-			MeshRenderer t = target as MeshRenderer;
+			base.OnInspectorGUI();
+
+			Renderer t = target as Renderer;
 
 			GUILayout.BeginHorizontal();
 			GUILayout.Label("Sorting Layer");
@@ -27,8 +29,6 @@ namespace UnityEditorEx.Components
 			GUILayout.Label("Order in layer");
 			t.sortingOrder = EditorGUILayout.IntField(t.sortingOrder);
 			GUILayout.EndHorizontal();
-			
-			base.OnInspectorGUI();
 		}
 
 		// Get the sorting layer names

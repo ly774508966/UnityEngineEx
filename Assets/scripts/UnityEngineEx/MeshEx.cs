@@ -263,6 +263,11 @@ namespace UnityEngineEx
 		/// <param name="Grid">Grid.</param>
 		public static Mesh Recangle(this Mesh mesh, Vector2 Dimensions, Vector2 Grid)
 		{
+			return mesh.Recangle(Dimensions, Grid, Matrix4x4.identity);
+		}
+
+		public static Mesh Recangle(this Mesh mesh, Vector2 Dimensions, Vector2 Grid, Matrix4x4 transform)
+		{
 			Vector2 dV = new Vector2(Dimensions.x / Grid.x, Dimensions.y / Grid.y);
 			int Columns = (int)(Grid.x + 1);
 			int Rows = (int)(Grid.y + 1);
@@ -276,12 +281,13 @@ namespace UnityEngineEx
 			int uvi = 0;
 			Vector2[] uvs = new Vector2[Vertices];
 
+			Vector3 v;
 			for (int i = 0; i < Columns; i++) {
-				float x = i * dV.x;
-				for (int j = 0; j < Rows; j++) {
-					float y = j * dV.y;
-					vs[vi++] = new Vector3(x, y, 0).Sub(Dimensions/2);
-					ns[ni++] = Vector3.forward;
+				v = i * Vector3.right * dV.x - Vector3.right * Dimensions.x / 2;
+				v -= Vector3.forward * Dimensions.y / 2;
+				for (int j = 0; j < Rows; j++, v += Vector3.forward * dV.y) {					
+					vs[vi++] = transform * v;
+					ns[ni++] = transform * Vector3.up;
 					uvs[uvi++] = new Vector2(i / Grid.x, j / Grid.y);
 				}
 			}
