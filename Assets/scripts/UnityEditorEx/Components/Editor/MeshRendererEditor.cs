@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace UnityEditorEx.Components
 {
-	[CustomEditor(typeof(Renderer))]
-	class RendererEditor : Editor
+	[CustomEditor(typeof(MeshRenderer))]
+	class MeshRendererEditor : Editor
 	{
 		public override void OnInspectorGUI()
 		{
