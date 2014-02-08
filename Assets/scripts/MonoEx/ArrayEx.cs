@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SystemEx
 {
@@ -16,6 +13,18 @@ namespace SystemEx
 		{
 			Array.ForEach(array, action);
 			return array;
+		}
+
+		public static T[] Parse<T>(string value)
+		{
+			string[] tokens = value.Split(new Char[] { ':' });
+			T[] result = new T[tokens.Length];
+
+			for (int i = 0; i < result.Length; i++) {
+				result[i] = (T)Convert.ChangeType(tokens[i], typeof(T));
+			}
+
+			return result;
 		}
 	}
 }
