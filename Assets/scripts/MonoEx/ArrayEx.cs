@@ -15,6 +15,16 @@ namespace SystemEx
 			return array;
 		}
 
+		public static T[] Concat<T>(T value, T[] array)
+		{
+			T[] result = new T[array.Length + 1];
+
+			result[0] = value;
+			Array.Copy(array, 0, result, 1, array.Length);
+
+			return result;
+		}
+
 		public static T[] Parse<T>(string value)
 		{
 			string[] tokens = value.Split(new Char[] { ':' });
