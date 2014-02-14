@@ -72,6 +72,8 @@ namespace UnityEngineEx
 
 		#endregion
 
+		#region Creation
+
 		/// <summary>
 		/// Creates child object with a given name at given local position.
 		/// </summary>
@@ -118,6 +120,10 @@ namespace UnityEngineEx
 			return o.Create(name, Vector3.zero, sprite, components);
 		}
 
+		#endregion
+
+		#region Instantiation
+
 		public static GameObject Instantiate(GameObject instance, params Tuple<Type, object>[] initializers)
 		{
 			bool a = instance.activeSelf;
@@ -129,6 +135,42 @@ namespace UnityEngineEx
 				var c = go.GetComponent(i.Item1);
 				if (c != null)
 					c.Setup(i.Item2);
+			}
+
+			instance.SetActive(a);
+			go.SetActive(a);
+			return go;
+		}
+
+		public static GameObject Instantiate(GameObject instance, params Tuple<Type, IDictionary<string, object>>[] initializers)
+		{
+			bool a = instance.activeSelf;
+			instance.SetActive(false);
+
+			var go = GameObject.Instantiate(instance) as GameObject;
+
+			foreach (var i in initializers) {
+				var c = go.GetComponent(i.Item1);
+				if (c != null)
+					c.Setup(i.Item2);
+			}
+
+			instance.SetActive(a);
+			go.SetActive(a);
+			return go;
+		}
+
+		public static GameObject Instantiate(GameObject instance, params Tuple<Type, Action<object>>[] initializers)
+		{
+			bool a = instance.activeSelf;
+			instance.SetActive(false);
+
+			var go = GameObject.Instantiate(instance) as GameObject;
+
+			foreach (var i in initializers) {
+				var c = go.GetComponent(i.Item1);
+				if (c != null)
+					i.Item2(c);
 			}
 
 			instance.SetActive(a);
@@ -197,6 +239,8 @@ namespace UnityEngineEx
 			return go;
 		}
 
+		#endregion
+
 #if !UNITY_EDITOR
 		public static void Destroy(GameObject o)
 		{
@@ -225,6 +269,43 @@ namespace UnityEngineEx
 			o.SetActive(false);
 
 			T c = o.AddComponent<T>().Setup(parameters);
+
+			o.SetActive(a);
+			return c;
+		}
+
+		/// <summary>
+		/// Add a Component to the GameObject setting SerializeFields to a parameters values.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="o"></param>
+		/// <param name="parameters"></param>
+		/// <returns></returns>
+		public static T AddComponent<T>(this GameObject o, IDictionary<string, object> parameters) where T : Component
+		{
+			bool a = o.activeSelf;
+			o.SetActive(false);
+
+			T c = o.AddComponent<T>().Setup(parameters);
+
+			o.SetActive(a);
+			return c;
+		}
+
+		/// <summary>
+		/// Add a Component to the GameObject calling a ctor on it.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="o"></param>
+		/// <param name="ctor"></param>
+		/// <returns></returns>
+		public static T AddComponent<T>(this GameObject o, Action<T> ctor) where T : Component
+		{
+			bool a = o.activeSelf;
+			o.SetActive(false);
+
+			T c = o.AddComponent<T>();
+			ctor(c);
 
 			o.SetActive(a);
 			return c;

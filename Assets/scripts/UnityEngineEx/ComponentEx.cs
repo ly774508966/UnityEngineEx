@@ -44,6 +44,25 @@ namespace UnityEngineEx
 		}
 
 		/// <summary>
+		/// Sets SerializeFields of the Component to values form parameters dictionary.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="c"></param>
+		/// <param name="parameters"></param>
+		/// <returns></returns>
+		public static T Setup<T>(this T c, IDictionary<string, object> parameters) where T : Component
+		{
+			foreach (var field in c.GetType().GetFields<SerializeField>()) {
+				object value;
+				if (parameters.TryGetValue(field.Name, out value)) {
+					field.SetValue(c, value);
+				}
+			}
+
+			return c;
+		}
+
+		/// <summary>
 		/// Finds GameObject by path name. And returns it's Component T if it exists.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
