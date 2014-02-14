@@ -130,10 +130,20 @@ namespace UnityEngineEx
 						IList list = (IList) Activator.CreateInstance(typeof(List<>).MakeGenericType(nodeType));
 
 						foreach (Transform child in transform.Find(field.Item2.name)) {
-							list.Add(child.gameObject.GetComponentOrThis(nodeType));
+							if (nodeType.IsSubclassOf(typeof(UnityEngine.Object))) {
+								list.Add(child.gameObject.GetComponentOrThis(nodeType));
+							}
+							else {
+								object node = Activator.CreateInstance(nodeType);
+								list.Add(child.LinkSceneNodes(node));								
+							}
 						}
 
 						field.Item1.SetValue(o, list);
+					}
+					else {
+						object node = Activator.CreateInstance(field.Item1.FieldType);
+						field.Item1.SetValue(o, transform.LinkSceneNodes(node));
 					}
 				}
 			}
