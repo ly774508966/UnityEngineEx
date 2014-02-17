@@ -124,42 +124,96 @@ namespace UnityEngineEx
 
 		#region Instantiation
 
-		public static GameObject Instantiate(GameObject instance, params Tuple<Type, object>[] initializers)
+		public static GameObject New(this GameObject instance, params Tuple<Type, object>[] initializers)
+		{
+			GameObject go = null;
+			bool a = instance.activeSelf;
+			instance.SetActive(false);
+
+			try {
+				go = GameObject.Instantiate(instance) as GameObject;
+
+				foreach (var i in initializers) try {
+					var c = go.GetComponent(i.Item1);
+					if (c != null)
+						c.Setup(i.Item2);
+				} catch (Exception e) { Debug.LogException(e); }
+
+				go.SetActive(a);
+			} catch (Exception e) { Debug.LogException(e); }
+			
+			instance.SetActive(a);
+			return go;
+		}
+
+		public static GameObject New(this GameObject instance, params Tuple<Type, IDictionary<string, object>>[] initializers)
+		{
+			GameObject go = null;
+			bool a = instance.activeSelf;
+			instance.SetActive(false);
+
+			try {
+				go = GameObject.Instantiate(instance) as GameObject;
+
+				foreach (var i in initializers) try {
+					var c = go.GetComponent(i.Item1);
+					if (c != null)
+						c.Setup(i.Item2);
+				} catch (Exception e) { Debug.LogException(e); }
+
+				go.SetActive(a);
+			} catch (Exception e) { Debug.LogException(e); }
+
+			instance.SetActive(a);
+			return go;
+		}
+
+		public static GameObject New(this GameObject instance, params object[] initializers)
+		{
+			GameObject go = null;
+			bool a = instance.activeSelf;
+			instance.SetActive(false);
+
+			try {
+				go = GameObject.Instantiate(instance) as GameObject;
+
+				foreach (var i in initializers) try {
+					Type ct = i.GetType().GetGenericArguments()[0];
+					var c = go.GetComponentOrThis(ct);
+					if (c != null)
+						((Delegate)(i)).DynamicInvoke(c);
+				} catch (Exception e) { Debug.LogException(e); }
+
+				go.SetActive(a);			
+			} catch (Exception e) { Debug.LogException(e); }
+
+			instance.SetActive(a);
+			return go;
+		}
+
+		public static GameObject New(this GameObject instance, string name, Vector3 po, params Tuple<Type, object>[] initializers)
 		{
 			bool a = instance.activeSelf;
 			instance.SetActive(false);
 
 			var go = GameObject.Instantiate(instance) as GameObject;
 
-			foreach (var i in initializers) {
-				var c = go.GetComponent(i.Item1);
-				if (c != null)
-					c.Setup(i.Item2);
+			if (initializers != null) {
+				foreach (var i in initializers) try {
+					var c = go.GetComponent(i.Item1);
+					if (c != null)
+						c.Setup(i.Item2);
+				} catch (Exception e) { Debug.LogException(e); }
 			}
 
-			instance.SetActive(a);
 			go.SetActive(a);
+			go.transform.position = po;
+
+			instance.SetActive(a);
 			return go;
 		}
 
-		public static GameObject Instantiate(GameObject instance, params Tuple<Type, IDictionary<string, object>>[] initializers)
-		{
-			bool a = instance.activeSelf;
-			instance.SetActive(false);
-
-			var go = GameObject.Instantiate(instance) as GameObject;
-
-			foreach (var i in initializers) {
-				var c = go.GetComponent(i.Item1);
-				if (c != null)
-					c.Setup(i.Item2);
-			}
-
-			instance.SetActive(a);
-			go.SetActive(a);
-			return go;
-		}
-
+		[Obsolete("Instantiate semantics have changed.")]
 		public static GameObject Instantiate(GameObject instance, params Tuple<Type, Action<object>>[] initializers)
 		{
 			bool a = instance.activeSelf;
@@ -167,17 +221,19 @@ namespace UnityEngineEx
 
 			var go = GameObject.Instantiate(instance) as GameObject;
 
-			foreach (var i in initializers) {
+			foreach (var i in initializers) try {
 				var c = go.GetComponent(i.Item1);
 				if (c != null)
 					i.Item2(c);
-			}
+			} catch (Exception e) { Debug.LogException(e); }
+			go.SetActive(a);
+			
 
 			instance.SetActive(a);
-			go.SetActive(a);
 			return go;
 		}
 
+		[Obsolete("Instantiate semantics have changed.")]
 		public static GameObject Instantiate(this GameObject o, GameObject instance, Vector3 po, params Tuple<Type, object>[] initializers)
 		{
 			bool a = instance.activeSelf;
@@ -186,21 +242,22 @@ namespace UnityEngineEx
 			var go = GameObject.Instantiate(instance) as GameObject;
 
 			if (initializers != null) {
-				foreach (var i in initializers) {
+				foreach (var i in initializers) try {
 					var c = go.GetComponent(i.Item1);
 					if (c != null)
 						c.Setup(i.Item2);
-				}
+				} catch (Exception e) { Debug.LogException(e); }
 			}
 
+			go.SetActive(a);
 			go.transform.position = po;
 			o.transform.Add(go);
 
 			instance.SetActive(a);
-			go.SetActive(a);
 			return go;
 		}
 
+		[Obsolete("Instantiate semantics have changed.")]
 		public static GameObject Instantiate(this GameObject o, GameObject instance, params Tuple<Type, object>[] initializers)
 		{
 			return o.Instantiate(instance, Vector3.zero, initializers);
@@ -221,11 +278,11 @@ namespace UnityEngineEx
 
 			var go = GameObject.Instantiate(instance) as GameObject;
 
-			foreach (var i in initializers) {
+			foreach (var i in initializers) try {
 				var c = go.GetComponent(i.Item1);
 				if (c != null)
 					c.Setup(i.Item2);
-			}
+			} catch (Exception e) { Debug.LogException(e); }
 
 			go.SetActive(a);
 			go.name = o.name;
@@ -331,6 +388,13 @@ namespace UnityEngineEx
 		{
 			return parent.transform.Add(o).gameObject;
 		}
+
+		public static GameObject SetParent(this GameObject o, GameObject parent)
+		{
+			parent.transform.Add(o);
+			return o;
+		}
+		
 
 		/// <summary>
 		/// Get most accurate Bounds of the GameObject.

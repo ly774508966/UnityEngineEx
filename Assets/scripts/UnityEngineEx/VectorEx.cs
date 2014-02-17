@@ -69,6 +69,11 @@ namespace UnityEngineEx
 		{
 			return new Vector3(z, v.x, v.y);
 		}
+
+		public static Vector3 xzy(this Vector3 v)
+		{
+			return new Vector3(v.x, v.z, v.y);
+		}
 		
 		public static Vector2 xy(this Vector3 v)
 		{
@@ -108,6 +113,11 @@ namespace UnityEngineEx
 		public static Vector2 Mul(this Vector2 l, Vector2 r)
 		{
 			return new Vector2(l.x * r.x, l.y * r.y);
+		}
+
+		public static Vector3 Mul(this Vector3 l, Vector2 r)
+		{
+			return new Vector3(l.x * r.x, l.y * r.y, l.z);
 		}
 
 		public static Vector3 Mul(this Vector3 l, Vector3 r)
