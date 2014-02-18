@@ -193,22 +193,25 @@ namespace UnityEngineEx
 
 		public static GameObject New(this GameObject instance, string name, Vector3 po, params Tuple<Type, object>[] initializers)
 		{
+			GameObject go = null;
 			bool a = instance.activeSelf;
 			instance.SetActive(false);
 
-			var go = GameObject.Instantiate(instance) as GameObject;
+			try {
+				go = GameObject.Instantiate(instance) as GameObject;
 
-			if (initializers != null) {
-				foreach (var i in initializers) try {
-					var c = go.GetComponent(i.Item1);
-					if (c != null)
-						c.Setup(i.Item2);
-				} catch (Exception e) { Debug.LogException(e); }
-			}
+				if (initializers != null) {
+					foreach (var i in initializers) try {
+						var c = go.GetComponent(i.Item1);
+						if (c != null)
+							c.Setup(i.Item2);
+					} catch (Exception e) { Debug.LogException(e); }
+				}
 
-			go.SetActive(a);
-			go.transform.position = po;
-
+				go.transform.position = po;
+				go.SetActive(a);
+			} catch (Exception e) { Debug.LogException(e); }
+			
 			instance.SetActive(a);
 			return go;
 		}
@@ -216,18 +219,21 @@ namespace UnityEngineEx
 		[Obsolete("Instantiate semantics have changed.")]
 		public static GameObject Instantiate(GameObject instance, params Tuple<Type, Action<object>>[] initializers)
 		{
+			GameObject go = null;
 			bool a = instance.activeSelf;
 			instance.SetActive(false);
 
-			var go = GameObject.Instantiate(instance) as GameObject;
+			try {
+				go = GameObject.Instantiate(instance) as GameObject;
 
-			foreach (var i in initializers) try {
-				var c = go.GetComponent(i.Item1);
-				if (c != null)
-					i.Item2(c);
+				foreach (var i in initializers) try {
+					var c = go.GetComponent(i.Item1);
+					if (c != null)
+						i.Item2(c);
+				} catch (Exception e) { Debug.LogException(e); }
+
+				go.SetActive(a);
 			} catch (Exception e) { Debug.LogException(e); }
-			go.SetActive(a);
-			
 
 			instance.SetActive(a);
 			return go;
@@ -236,23 +242,26 @@ namespace UnityEngineEx
 		[Obsolete("Instantiate semantics have changed.")]
 		public static GameObject Instantiate(this GameObject o, GameObject instance, Vector3 po, params Tuple<Type, object>[] initializers)
 		{
+			GameObject go = null;
 			bool a = instance.activeSelf;
 			instance.SetActive(false);
 
-			var go = GameObject.Instantiate(instance) as GameObject;
+			try {
+				go = GameObject.Instantiate(instance) as GameObject;
 
-			if (initializers != null) {
-				foreach (var i in initializers) try {
-					var c = go.GetComponent(i.Item1);
-					if (c != null)
-						c.Setup(i.Item2);
-				} catch (Exception e) { Debug.LogException(e); }
-			}
+				if (initializers != null) {
+					foreach (var i in initializers) try {
+						var c = go.GetComponent(i.Item1);
+						if (c != null)
+							c.Setup(i.Item2);
+					} catch (Exception e) { Debug.LogException(e); }
+				}
 
-			go.SetActive(a);
-			go.transform.position = po;
-			o.transform.Add(go);
-
+				go.transform.position = po;
+				o.transform.Add(go);
+				go.SetActive(a);
+			} catch (Exception e) { Debug.LogException(e); }
+			
 			instance.SetActive(a);
 			return go;
 		}
@@ -273,24 +282,27 @@ namespace UnityEngineEx
 		/// <returns></returns>
 		public static GameObject Reinstantiate(this GameObject o, GameObject instance, params Tuple<Type, object>[] initializers)
 		{
+			GameObject go = null;
 			bool a = instance.activeSelf;
 			instance.SetActive(false);
 
-			var go = GameObject.Instantiate(instance) as GameObject;
+			try {
+				go = GameObject.Instantiate(instance) as GameObject;
 
-			foreach (var i in initializers) try {
-				var c = go.GetComponent(i.Item1);
-				if (c != null)
-					c.Setup(i.Item2);
+				foreach (var i in initializers) try {
+					var c = go.GetComponent(i.Item1);
+					if (c != null)
+						c.Setup(i.Item2);
+				} catch (Exception e) { Debug.LogException(e); }
+
+				go.name = o.name;
+				go.transform.position = o.transform.localPosition + go.transform.position;
+				go.transform.rotation = o.transform.localRotation * go.transform.rotation;
+				go.transform.localScale = o.transform.localScale;
+				o.transform.parent.Add(go);
+				GameObject.DestroyImmediate(o);
+				go.SetActive(a);				
 			} catch (Exception e) { Debug.LogException(e); }
-
-			go.SetActive(a);
-			go.name = o.name;
-			go.transform.position = o.transform.localPosition + go.transform.position;
-			go.transform.rotation = o.transform.localRotation * go.transform.rotation;
-			go.transform.localScale = o.transform.localScale;
-			o.transform.parent.Add(go);
-			GameObject.DestroyImmediate(o);
 
 			instance.SetActive(a);
 			return go;
