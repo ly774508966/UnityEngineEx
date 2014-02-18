@@ -127,15 +127,17 @@ namespace UnityEngineEx
 				else {
 					if (field.Item1.FieldType.IsGenericType && field.Item1.FieldType.GetGenericTypeDefinition() == typeof(IList<>)) {
 						Type nodeType = field.Item1.FieldType.GetGenericArguments()[0];
-						IList list = (IList) Activator.CreateInstance(typeof(List<>).MakeGenericType(nodeType));
+						if (!nodeType.IsVisible) Debug.LogError(nodeType.FullName + " should be declared public or it will break Mono builds.");
 
+						IList list = (IList) Activator.CreateInstance(typeof(List<>).MakeGenericType(nodeType));
+								
 						foreach (Transform child in transform.Find(field.Item2.name)) {
 							if (nodeType.IsSubclassOf(typeof(UnityEngine.Object))) {
 								list.Add(child.gameObject.GetComponentOrThis(nodeType));
 							}
 							else {
-								object node = Activator.CreateInstance(nodeType);
-								list.Add(child.LinkSceneNodes(node));								
+								object node = Activator.CreateInstance(nodeType);								
+								list.Add(child.LinkSceneNodes(node));																
 							}
 						}
 
