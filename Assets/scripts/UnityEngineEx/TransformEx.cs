@@ -34,8 +34,22 @@ namespace UnityEngineEx
 		/// <returns></returns>
 		public static Transform Clear(this Transform transform)
 		{
-			foreach (Transform child in transform) {
-				GameObjectEx.Destroy(child.gameObject);
+#if UNITY_EDITOR
+			if (!UnityEditor.EditorApplication.isPlaying) {
+				List<GameObject> objects = new List<GameObject>();
+				foreach (Transform child in transform) {
+					objects.Add(child.gameObject);
+				}
+				foreach (GameObject o in objects) {
+					GameObjectEx.Destroy(o);
+				}
+			}
+			else
+#endif
+			{
+				foreach (Transform child in transform) {
+					GameObjectEx.Destroy(child.gameObject);
+				}
 			}
 
 			return transform;
@@ -48,10 +62,23 @@ namespace UnityEngineEx
 		/// <returns></returns>
 		public static Transform Clear(this Transform transform, Func<Transform, bool> f)
 		{
-			foreach (Transform child in transform.Find(f)) {
-				GameObjectEx.Destroy(child.gameObject);
+#if UNITY_EDITOR
+			if (!UnityEditor.EditorApplication.isPlaying) {
+				List<GameObject> objects = new List<GameObject>();
+				foreach (Transform child in transform.Find(f)) {
+					objects.Add(child.gameObject);
+				}
+				foreach (GameObject o in objects) {
+					GameObjectEx.Destroy(o);
+				}
 			}
-
+			else
+#endif
+			{
+				foreach (Transform child in transform.Find(f)) {
+					GameObjectEx.Destroy(child.gameObject);
+				}
+			}
 			return transform;
 		}
 
