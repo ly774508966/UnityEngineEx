@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using UnityEngineEx;
 using System;
@@ -119,4 +118,3 @@ namespace UnityEditorEx
 		}
 	}
 }
-#endif
