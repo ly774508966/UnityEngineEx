@@ -225,6 +225,21 @@ namespace UnityEngineEx
 			yield break;
 		}
 
+		public static IEnumerable<Vector3> Ellipse(this Vector3 v, Vector2 Radius, int Sectors)
+		{
+			return v.Ellipse(Radius, Sectors, 0);
+		}
+
+		public static IEnumerable<Vector3> Ellipse(this Vector3 v, Vector2 Radius, int Sectors, float dA0)
+		{
+			float dA = 2 * Mathf.PI / Sectors;
+			for (int i = 0; i < Sectors; i++) {
+				float a = dA0 + i * dA;
+				yield return v + new Vector3(Mathf.Cos(a), Mathf.Sin(a), 0).Mul(Radius);
+			}
+			yield break;
+		}
+
 		public static IEnumerable<Vector2> Lerp(this Vector2 a, Vector2 b, float dT)
 		{
 			float t = 0;
