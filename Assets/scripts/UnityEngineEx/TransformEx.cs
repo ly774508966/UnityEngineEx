@@ -120,7 +120,17 @@ namespace UnityEngineEx
 
 		public static T LinkSceneNodes<T>(this Transform transform, T o)
 		{
-			foreach (var field in o.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
+			if (o.GetType().HaveAttribute<LinkToSceneAttribute>()) {
+				foreach (var field in o.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
+					if (!field.Item1.FieldType.IsSubclassOf(typeof(UnityEngine.Object))) {
+						Debug.LogWarning(field.Item1.Name + " is not a UnityObject. Only Component and GameObject members can be linked for type.");
+						continue;
+					}
+
+					field.Item1.SetValue(o, transform.Find(field.Item2.name, field.Item1.FieldType));
+				}
+			}
+			else foreach (var field in o.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
 				if (field.Item1.FieldType.IsSubclassOf(typeof(UnityEngine.Object))) {
 					field.Item1.SetValue(o, transform.Find(field.Item2.name, field.Item1.FieldType));
 				}
