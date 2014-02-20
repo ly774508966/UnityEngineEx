@@ -273,7 +273,7 @@ namespace UnityEngineEx
 
 		public static Mesh Recangle(this Mesh mesh, Vector2 Dimensions, Vector2 Grid, Matrix4x4 transform)
 		{
-			Vector2 dV = new Vector2(Dimensions.x / Grid.x, Dimensions.y / Grid.y);
+			Vector2 dV = Dimensions.Div(Grid);
 			int Columns = (int)(Grid.x + 1);
 			int Rows = (int)(Grid.y + 1);
 			int Vertices = Columns * Rows;
@@ -315,6 +315,111 @@ namespace UnityEngineEx
 			mesh.vertices = vs;
 			mesh.normals = ns;
 			mesh.uv = uvs;
+			mesh.triangles = triangles;
+
+			return mesh;
+		}
+
+		public static Mesh Cube(this Mesh mesh, Vector3 Dimensions)
+		{
+			return mesh.Cube(Dimensions, Matrix4x4.identity);
+		}
+
+		public static Mesh Cube(this Mesh mesh, Vector3 Dimensions, Matrix4x4 transform)
+		{
+			//Vector3 dV = Dimensions.Div(Grid);
+			Vector3 hD = Dimensions / 2;
+			int Width = 2; //(int)(Grid.x + 1);
+			int Height = 2; //(int)(Grid.y + 1);
+			int Depth = 2; //(int)(Grid.z + 1);
+			int Vertices = 2 * (Width * Height + Width * Depth + Height * Depth) - 4 * (Width + Height + Depth - 3);
+			int Triangles = 12; //(int)(2 * (Grid.x * Grid.y + Grid.x * Grid.z + Grid.y * Grid.z) * 2);
+
+			int vi = 0;
+			Vector3[] vs = new Vector3[Vertices];
+
+			Vector3 v;
+			/*
+			for (int i = 0; i < Columns; i++) {
+				v = i * Vector3.right * dV.x - Vector3.right * Dimensions.x / 2;
+				v -= Vector3.forward * Dimensions.y / 2;
+				for (int j = 0; j < Rows; j++, v += Vector3.forward * dV.y) {					
+					vs[vi++] = transform * v;
+					ns[ni++] = transform * Vector3.up;
+					uvs[uvi++] = new Vector2(i / Grid.x, j / Grid.y);
+				}
+			}
+			 */
+			vs[vi++] = transform * new Vector3( hD.x,  hD.y, -hD.z);
+			vs[vi++] = transform * new Vector3( hD.x, -hD.y, -hD.z);
+			vs[vi++] = transform * new Vector3(-hD.x, -hD.y, -hD.z);
+			vs[vi++] = transform * new Vector3(-hD.x,  hD.y, -hD.z);
+			vs[vi++] = transform * new Vector3( hD.x,  hD.y,  hD.z);
+			vs[vi++] = transform * new Vector3( hD.x, -hD.y,  hD.z);
+			vs[vi++] = transform * new Vector3(-hD.x, -hD.y,  hD.z);
+			vs[vi++] = transform * new Vector3(-hD.x,  hD.y,  hD.z);
+			
+
+			vi = 0;
+			int ti = 0;
+			int[] triangles = new int[Triangles * 3];
+			/*
+			for (int i = 0; i < Triangles / 2; i++, vi++) {
+				if (((vi + 1) % Rows) == 0)
+					vi++;
+
+				triangles[ti++] = vi + 1;
+				triangles[ti++] = vi + 0 + Rows;
+				triangles[ti++] = vi + 0;
+				triangles[ti++] = vi + 1;
+				triangles[ti++] = vi + 1 + Rows;
+				triangles[ti++] = vi + 0 + Rows;
+			}
+			 */
+			triangles[ti++] = 0;
+			triangles[ti++] = 2;
+			triangles[ti++] = 1;
+			triangles[ti++] = 0;
+			triangles[ti++] = 3;
+			triangles[ti++] = 2;
+
+			triangles[ti++] = 4;
+			triangles[ti++] = 1;
+			triangles[ti++] = 5;
+			triangles[ti++] = 4;
+			triangles[ti++] = 0;
+			triangles[ti++] = 1;
+
+			triangles[ti++] = 7;
+			triangles[ti++] = 5;
+			triangles[ti++] = 6;
+			triangles[ti++] = 7;
+			triangles[ti++] = 4;
+			triangles[ti++] = 5;
+
+			triangles[ti++] = 3;
+			triangles[ti++] = 6;
+			triangles[ti++] = 2;
+			triangles[ti++] = 3;
+			triangles[ti++] = 7;
+			triangles[ti++] = 6;
+
+			triangles[ti++] = 4;
+			triangles[ti++] = 3;
+			triangles[ti++] = 0;
+			triangles[ti++] = 4;
+			triangles[ti++] = 7;
+			triangles[ti++] = 3;
+
+			triangles[ti++] = 1;
+			triangles[ti++] = 6;
+			triangles[ti++] = 5;
+			triangles[ti++] = 1;
+			triangles[ti++] = 2;
+			triangles[ti++] = 6;
+
+
+			mesh.vertices = vs;
 			mesh.triangles = triangles;
 
 			return mesh;

@@ -125,6 +125,30 @@ namespace UnityEngineEx
 			return new Vector3(l.x * r.x, l.y * r.y, l.z * r.z);
 		}
 
+		public static Vector2 Div(this Vector2 l, Vector2 r)
+		{
+			return new Vector2(l.x / r.x, l.y / r.y);
+		}
+
+		public static Vector3 Div(this Vector3 l, Vector2 r)
+		{
+			return new Vector3(l.x / r.x, l.y / r.y, l.z);
+		}
+
+		public static Vector3 Div(this Vector3 l, Vector3 r)
+		{
+			return new Vector3(l.x / r.x, l.y / r.y, l.z / r.z);
+		}
+
+		#region Boolean operation
+
+		public static Vector3 Or(this Vector3 l, Vector3 r)
+		{
+			return new Vector3(r.x != 0 ? r.x : l.x, r.y != 0 ? r.y : l.y, r.z != 0 ? r.z : l.z);
+		}
+
+		#endregion
+
 		public static bool IsEmpty(this Vector2 v)
 		{
 			return float.IsNaN(v.x) && float.IsNaN(v.y);

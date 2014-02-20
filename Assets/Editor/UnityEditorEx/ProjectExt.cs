@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 
@@ -29,4 +28,3 @@ public class ProjectExt : MonoBehaviour
 	}
 }
 }
-#endif
