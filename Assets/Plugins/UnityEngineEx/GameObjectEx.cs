@@ -1,5 +1,4 @@
 ﻿using System;
-using SystemEx;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -216,7 +215,7 @@ namespace UnityEngineEx
 			return go;
 		}
 
-		[Obsolete("Instantiate semantics have changed.")]
+		//[Obsolete("Instantiate semantics have changed.")]
 		public static GameObject Instantiate(GameObject instance, params Tuple<Type, Action<object>>[] initializers)
 		{
 			GameObject go = null;
@@ -239,7 +238,7 @@ namespace UnityEngineEx
 			return go;
 		}
 
-		[Obsolete("Instantiate semantics have changed.")]
+		//[Obsolete("Instantiate semantics have changed.")]
 		public static GameObject Instantiate(this GameObject o, GameObject instance, Vector3 po, params Tuple<Type, object>[] initializers)
 		{
 			GameObject go = null;
@@ -266,7 +265,7 @@ namespace UnityEngineEx
 			return go;
 		}
 
-		[Obsolete("Instantiate semantics have changed.")]
+		//[Obsolete("Instantiate semantics have changed.")]
 		public static GameObject Instantiate(this GameObject o, GameObject instance, params Tuple<Type, object>[] initializers)
 		{
 			return o.Instantiate(instance, Vector3.zero, initializers);
@@ -308,6 +307,39 @@ namespace UnityEngineEx
 			return go;
 		}
 
+#if MONO_BUG_IS_FIXED
+		public static GameObject Reinstantiate(this GameObject o, GameObject instance, params object[] initializers)
+#else
+		public static GameObject Reinstantiate2(this GameObject o, GameObject instance, params object[] initializers)
+#endif
+		{
+			GameObject go = null;
+			bool a = instance.activeSelf;
+			instance.SetActive(false);
+			
+			try {
+				go = GameObject.Instantiate(instance) as GameObject;
+
+				foreach (var i in initializers) try {
+					Type ct = i.GetType().GetGenericArguments()[0];
+					var c = go.GetComponentOrThis(ct);
+					if (c != null)
+						((Delegate)(i)).DynamicInvoke(c);
+				} catch (Exception e) { Debug.LogException(e); }
+
+				go.name = o.name;
+				go.transform.position = o.transform.localPosition + go.transform.position;
+				go.transform.rotation = o.transform.localRotation * go.transform.rotation;
+				go.transform.localScale = o.transform.localScale;
+				o.transform.parent.Add(go);
+				GameObject.DestroyImmediate(o);
+				go.SetActive(a);				
+			} catch (Exception e) { Debug.LogException(e); }
+			
+			instance.SetActive(a);
+			return go;
+		}
+				
 		#endregion
 
 #if !UNITY_EDITOR
