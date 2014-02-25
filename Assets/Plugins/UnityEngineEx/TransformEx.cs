@@ -56,9 +56,10 @@ namespace UnityEngineEx
 		}
 
 		/// <summary>
-		/// Removes all child GameObjects.
+		/// Removes all child GameObjects filtered by f.
 		/// </summary>
 		/// <param name="transform"></param>
+		/// <param name = "f"></param>
 		/// <returns></returns>
 		public static Transform Clear(this Transform transform, Func<Transform, bool> f)
 		{
@@ -115,8 +116,8 @@ namespace UnityEngineEx
 
 			if (t != null)
 				return t.gameObject.GetComponent<T>();
-			else
-				Debug.LogWarning(string.Format("No child GameObject '{0}' found.", name));
+
+			Debug.LogWarning(string.Format("No child GameObject '{0}' found.", name));
 
 			return null;
 		}
@@ -127,8 +128,8 @@ namespace UnityEngineEx
 
 			if (t != null)
 				return t.gameObject.GetComponentOrThis(type);
-			else
-				Debug.LogWarning(string.Format("No child GameObject '{0}' found.", name));
+
+			Debug.LogWarning(string.Format("No child GameObject '{0}' found.", name));
 
 			return null;
 		}
