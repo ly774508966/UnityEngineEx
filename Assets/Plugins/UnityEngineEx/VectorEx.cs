@@ -210,6 +210,21 @@ namespace UnityEngineEx
 			yield break;
 		}
 
+		public static IEnumerable<Vector2> Circle(this Vector2 v, float Radius, int Sectors)
+		{
+			return v.Circle(Radius, Sectors, 0);
+		}
+
+		public static IEnumerable<Vector2> Circle(this Vector2 v, float Radius, int Sectors, float dA0)
+		{
+			float dA = 2 * Mathf.PI / Sectors;
+			for (int i = 0; i < Sectors; i++) {
+				float a = dA0 + i * dA;
+				yield return v + Radius * (new Vector2(Mathf.Cos(a), Mathf.Sin(a)));
+			}
+			yield break;
+		}
+
 		public static IEnumerable<Vector3> Circle(this Vector3 v, float Radius, int Sectors)
 		{
 			return v.Circle(Radius, Sectors, 0);
@@ -221,6 +236,21 @@ namespace UnityEngineEx
 			for (int i = 0; i < Sectors; i++) {
 				float a = dA0 + i * dA;
 				yield return v + Radius * (new Vector3(Mathf.Cos(a), Mathf.Sin(a), 0));
+			}
+			yield break;
+		}
+
+		public static IEnumerable<Vector2> Ellipse(this Vector2 v, Vector2 Radius, int Sectors)
+		{
+			return v.Ellipse(Radius, Sectors, 0);
+		}
+
+		public static IEnumerable<Vector2> Ellipse(this Vector2 v, Vector2 Radius, int Sectors, float dA0)
+		{
+			float dA = 2 * Mathf.PI / Sectors;
+			for (int i = 0; i < Sectors; i++) {
+				float a = dA0 + i * dA;
+				yield return v + new Vector2(Mathf.Cos(a), Mathf.Sin(a)).Mul(Radius);
 			}
 			yield break;
 		}
