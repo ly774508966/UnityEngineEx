@@ -25,6 +25,16 @@ namespace UnityEngineEx
 			get { return new Vector3(0, 0, 1.0f / (2 << 8)); }
 		}
 
+		public static Vector2 X(this Vector2 v, float x)
+		{
+			return new Vector2(x, v.y);
+		}
+
+		public static Vector2 Y(this Vector2 v, float y)
+		{
+			return new Vector2(v.x, y);
+		}
+
 		public static Vector3 X(this Vector3 v, float x)
 		{
 			return new Vector3(x, v.y, v.z);

@@ -122,6 +122,18 @@ namespace UnityEngineEx
 			return null;
 		}
 
+		public static GameObject FindGameObject(this Transform transform, string name)
+		{
+			var t = name != null ? transform.Find(name) : transform;
+
+			if (t != null)
+				return t.gameObject;
+
+			Debug.LogWarning(string.Format("No child GameObject '{0}' found.", name));
+
+			return null;
+		}
+
 		public static object Find(this Transform transform, string name, Type type)
 		{
 			var t = name != null ? transform.Find(name) : transform;

@@ -74,10 +74,20 @@ namespace UnityEngineEx
 			return c.transform.Find<T>(name);
 		}
 
+		public static GameObject FindGameObject(this Component c, string name)
+		{
+			return c.transform.FindGameObject(name);
+		}
+
 		public static Component SetActive(this Component c, bool flag)
 		{
 			c.gameObject.SetActive(flag);
 			return c;
+		}
+
+		public static Bounds GetBounds(this Component c)
+		{
+			return c.gameObject.GetBounds();
 		}
 	}
 }
