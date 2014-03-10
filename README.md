@@ -122,15 +122,16 @@ just not to make many simple MonoBehaviurs for trivial tasks it is possible to l
 
 	public class Page : MonoBehaviour
 	{
-		// It's ok to make this structire public, private, or internal
-		struct Portrait
+		// It's ok to make this class public, private, or internal
+		// no struct are allowed here
+		class Portrait
 		{
 			[LinkToScene("Icon")] SpriteRenderer icon;			
 		}
 
-		// WARN: this struct must have public (or internal) visibility or Mono will fail to link it in WebPlayer builds.
+		// WARN: this class must have public (or internal) visibility or Mono will fail to link it in WebPlayer builds.
 		// beacuse it is used in IList<> linkage.
-		public struct Description
+		public class Description
 		{
 			[LinkToScene] GameObject gameObject; // LinkToScene without "name" will link to object itself.
 			[LinkToScene("Icon")] SpriteRenderer icon;
@@ -155,7 +156,7 @@ just not to make many simple MonoBehaviurs for trivial tasks it is possible to l
 
 also any GameObject can be linked to any class or structure
 
-	public struct Description
+	public class Description
 	{
 		[LinkToScene] GameObject gameObject; // LinkToScene without "name" will link to object itself.
 		[LinkToScene("Icon")] SpriteRenderer icon;
