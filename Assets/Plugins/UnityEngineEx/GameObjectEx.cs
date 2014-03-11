@@ -119,6 +119,18 @@ namespace UnityEngineEx
 			return o.Create(name, Vector3.zero, sprite, components);
 		}
 
+		public static GameObject Create(this GameObject o, string name, Vector3 po, string text, params Type[] components)
+		{
+			var go = o.Create(name, po, components);
+			go.AddComponent<TextMesh>().text = text;
+			return go;
+		}
+
+		public static GameObject Create(this GameObject o, string name, string text, params Type[] components)
+		{
+			return o.Create(name, Vector3.zero, text, components);
+		}
+
 		#endregion
 
 		#region Instantiation

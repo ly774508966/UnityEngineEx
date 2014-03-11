@@ -36,5 +36,10 @@ namespace UnityEngineEx
 				Mathf.Clamp(value.z, min.z, max.z)
 				);
 		}
+
+		public static int Round(float f)
+		{
+			return (int)(f + 0.5f);
+		}
 	}
 }

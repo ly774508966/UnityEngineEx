@@ -209,6 +209,16 @@ namespace UnityEngineEx
 			return Quaternion.Euler(euler) * v;
 		}
 
+		public static int Clamp(this Vector2 v, int f)
+		{
+			return Mathf.Clamp(f, (int)v.x, (int)v.y);
+		}
+
+		public static float Clamp(this Vector2 v, float f)
+		{
+			return Mathf.Clamp(f, v.x, v.y);
+		}
+
 		#region Vector enumrators
 
 		public static IEnumerable<Vector3> Line(this Vector3 v, Vector3 Direction, float Step, float Distance)

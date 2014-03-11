@@ -25,6 +25,19 @@ namespace UnityEngineEx
 			return new Rect(0, 0, texture.width, texture.height);
 		}
 
+		public static Texture2D Fill(this Texture2D texture, Color color)
+		{
+			Color[] pixels = texture.GetPixels();
+
+			for (int i = 0; i < pixels.Length; i++)
+				pixels[i] = color;
+
+			texture.SetPixels(pixels);
+			texture.Apply();
+
+			return texture;
+		}
+
 		public static Texture2D SetColumn(this Texture2D texture, int x, Color color)
 		{
 			for (int i = 0; i < texture.height; i++)
@@ -36,6 +49,88 @@ namespace UnityEngineEx
 		{
 			for (int i = 0; i < texture.width; i++)
 				texture.SetPixel(i, y, color);
+			return texture;
+		}
+
+		public static Texture2D Circle(this Texture2D texture, Vector2 position, float radius, Color color)
+		{
+			return texture;
+		}
+
+		public static Texture2D Ellipse(this Texture2D texture, Vector2 position, Vector2 radius, Color color)
+		{
+			var p = position;
+			var s = texture.GetSize();
+			int w = (int) s.x;
+			var sx = new Vector2(0, s.x - 1);
+			var sy = new Vector2(0, s.y - 1);
+			Color[] pixels = texture.GetPixels();
+
+			// from: ftp://pc.fk0.name/pub/books/programming/bezier-ellipse.pdf
+
+			int cX = MathfEx.Round(position.x);
+			int cY = MathfEx.Round(position.y);
+			int TwoASquare = MathfEx.Round(2*radius.x*radius.x);
+			int TwoBSquare = MathfEx.Round(2*radius.y*radius.y);
+			int X = MathfEx.Round(radius.x);
+			int Y = 0;
+			int XChange = MathfEx.Round(radius.y*radius.y*(1 - 2*radius.x));
+			int YChange = MathfEx.Round(radius.x*radius.x);
+			int EllipseError = 0;
+			int StoppingX = MathfEx.Round(TwoBSquare*radius.x);
+			int StoppingY = 0;
+			
+			int o;
+			while (StoppingX >= StoppingY) {
+				o = sy.Clamp(cY - Y) * w;
+				for (int i = sx.Clamp(cX - X); i <= sx.Clamp(cX + X); i++)
+					pixels[i + o] = color;
+				o = sy.Clamp(cY + Y) * w;
+				for (int i = sx.Clamp(cX - X); i <= sx.Clamp(cX + X); i++)
+					pixels[i + o] = color;
+
+				Y++;
+				StoppingY += TwoASquare;
+				EllipseError += YChange;
+				YChange += TwoASquare;
+				if ((2*EllipseError + XChange) > 0 ) {
+					X--;
+					StoppingX -= TwoBSquare;
+					EllipseError += XChange;
+					XChange += TwoBSquare;
+				}
+			}
+
+			X = 0;
+			Y = MathfEx.Round(radius.y);
+			XChange = MathfEx.Round(radius.y*radius.y);
+			YChange = MathfEx.Round(radius.x*radius.x*(1 - 2*radius.y));
+			EllipseError = 0;
+			StoppingX = 0;
+			StoppingY = MathfEx.Round(TwoASquare*radius.y);
+			while ( StoppingX <= StoppingY ) {
+				o = sy.Clamp(cY - Y) * w;
+				for (int i = sx.Clamp(cX - X); i <= sx.Clamp(cX + X); i++)
+					pixels[i + o] = color;
+				o = sy.Clamp(cY + Y) * w;
+				for (int i = sx.Clamp(cX - X); i <= sx.Clamp(cX + X); i++)
+					pixels[i + o] = color;
+
+				X++;
+				StoppingX += TwoBSquare;
+				EllipseError += XChange;
+				XChange += TwoBSquare;
+				if ((2*EllipseError + YChange) > 0 ) {
+					Y--;
+					StoppingY -= TwoASquare;
+					EllipseError += YChange;
+					YChange += TwoASquare;
+				}
+			}
+
+			texture.SetPixels(pixels);
+			texture.Apply();
+
 			return texture;
 		}
 
