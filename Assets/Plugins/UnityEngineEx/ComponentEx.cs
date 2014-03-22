@@ -17,6 +17,12 @@ namespace UnityEngineEx
 
 		#endregion
 
+		public static T Decompose<T>(this T c, ActionContainer i) where T : Component
+		{
+			c.gameObject.Decompose(i);
+			return c;
+		}
+
 		/// <summary>
 		/// Sets SerializeFields of the Component to values form parameters object.
 		/// </summary>

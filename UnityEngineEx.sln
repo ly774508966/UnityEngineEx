@@ -1,0 +1,60 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{E147590B-D71B-77C2-04EC-4A0244FB8A03}") = "UnityEngineEx", "Assembly-CSharp-firstpass.csproj", "{85E8A87C-62D2-B705-19A2-35E9148E10A7}"
+EndProject
+Project("{E147590B-D71B-77C2-04EC-4A0244FB8A03}") = "UnityEngineEx", "Assembly-CSharp.csproj", "{BD7603A4-4AD5-F636-ED96-6A8F5CBA4696}"
+EndProject
+Project("{E147590B-D71B-77C2-04EC-4A0244FB8A03}") = "UnityEngineEx", "Assembly-CSharp-Editor.csproj", "{DE02E1C9-7152-7272-32DF-0BF1EC2A9170}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{85E8A87C-62D2-B705-19A2-35E9148E10A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85E8A87C-62D2-B705-19A2-35E9148E10A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85E8A87C-62D2-B705-19A2-35E9148E10A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85E8A87C-62D2-B705-19A2-35E9148E10A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD7603A4-4AD5-F636-ED96-6A8F5CBA4696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD7603A4-4AD5-F636-ED96-6A8F5CBA4696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD7603A4-4AD5-F636-ED96-6A8F5CBA4696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD7603A4-4AD5-F636-ED96-6A8F5CBA4696}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE02E1C9-7152-7272-32DF-0BF1EC2A9170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE02E1C9-7152-7272-32DF-0BF1EC2A9170}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE02E1C9-7152-7272-32DF-0BF1EC2A9170}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE02E1C9-7152-7272-32DF-0BF1EC2A9170}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+		GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.IndentPreprocessorDirectives = False
+		$2.BeforeMethodDeclarationParentheses = False
+		$2.BeforeMethodCallParentheses = False
+		$2.BeforeConstructorDeclarationParentheses = False
+		$2.BeforeDelegateDeclarationParentheses = False
+		$2.NewParentheses = False
+		$2.SpacesBeforeBrackets = False
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabsToSpaces = False
+		$3.inheritsSet = VisualStudio
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+		$0.StandardHeader = $4
+		$4.Text = 
+		$4.IncludeInNewFiles = True
+	EndGlobalSection
+
+EndGlobal

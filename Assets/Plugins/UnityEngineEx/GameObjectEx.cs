@@ -1,4 +1,5 @@
 ﻿using System;
+using SystemEx;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -179,7 +180,7 @@ namespace UnityEngineEx
 			return go;
 		}
 
-		public static GameObject New(this GameObject instance, params object[] initializers)
+		public static GameObject New(this GameObject instance, params ActionContainer[] initializers)
 		{
 			GameObject go = null;
 			bool a = instance.activeSelf;
@@ -189,10 +190,7 @@ namespace UnityEngineEx
 				go = GameObject.Instantiate(instance) as GameObject;
 
 				foreach (var i in initializers) try {
-					Type ct = i.GetType().GetGenericArguments()[0];
-					var c = go.GetComponentOrThis(ct);
-					if (c != null)
-						((Delegate)(i)).DynamicInvoke(c);
+					go.Decompose(i);
 				} catch (Exception e) { Debug.LogException(e); }
 
 				go.SetActive(a);			
@@ -486,6 +484,18 @@ namespace UnityEngineEx
 			}
 
 			return new Bounds();
+		}
+
+		public static GameObject Decompose(this GameObject o, ActionContainer i)
+		{
+			var prms = new object[i.args.Length];
+
+			for (int ai = 0; ai < i.args.Length; ai++)
+				prms[ai] = o.GetComponentOrThis(i.args[ai]);
+
+			i.DynamicInvoke(prms);
+
+			return o;
 		}
 
 		/// <summary>
