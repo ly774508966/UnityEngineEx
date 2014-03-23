@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class Example : MonoBehaviour
 {
-	[LinkToScene("Lamps")] IList<MeshRenderer> lamps;
-	[LinkToScene("Button")] Button button;
+	[Component("Lamps")] IList<MeshRenderer> lamps;
+	[Component("Button")] Button button;
 
 	bool lampsAreOn = false;
 	Color[] lampColors = new Color[] {
@@ -17,7 +17,7 @@ public class Example : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		this.LinkSceneNodes();
+		this.Decompose();
 
 		button.OnCommand = () => {
 			if (!lampsAreOn) {

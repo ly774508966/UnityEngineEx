@@ -8,20 +8,26 @@ namespace UnityEngineEx
 {
 	public static class ComponentEx
 	{
-		#region Linkage
+		#region Decompose
 
-		public static T LinkSceneNodes<T>(this T c) where T : Component
+		public static T Decompose<T>(this T c) where T : Component
 		{
-			return c.transform.LinkSceneNodes(c);
+			return c.transform.Decompose(c);
 		}
-
-		#endregion
 
 		public static T Decompose<T>(this T c, ActionContainer i) where T : Component
 		{
 			c.gameObject.Decompose(i);
 			return c;
 		}
+
+		public static T Decompose<T>(this T c, params ActionContainer[] i) where T : Component
+		{
+			c.gameObject.Decompose(i);
+			return c;
+		}
+
+		#endregion
 
 		/// <summary>
 		/// Sets SerializeFields of the Component to values form parameters object.

@@ -63,11 +63,31 @@ namespace UnityEngineEx
 
 		#endregion
 
-		#region Linkage
+		#region Dissolve
 
-		public static T LinkSceneNodes<T>(this GameObject c, T o)
+		public static GameObject Decompose(this GameObject o, ActionContainer i)
 		{
-			return c.transform.LinkSceneNodes(o);
+			var prms = new object[i.args.Length];
+
+			for (int ai = 0; ai < i.args.Length; ai++)
+				prms[ai] = o.GetComponentOrThis(i.args[ai]);
+
+			i.DynamicInvoke(prms);
+
+			return o;
+		}
+
+		public static GameObject Decompose(this GameObject o, params ActionContainer[] i)
+		{
+			for (int ii = 0; ii < i.Length; ii++)
+				o.Decompose(i[ii]);
+
+			return o;
+		}
+
+		public static T Decompose<T>(this GameObject c, T o)
+		{
+			return c.transform.Decompose(o);
 		}
 
 		#endregion
@@ -484,18 +504,6 @@ namespace UnityEngineEx
 			}
 
 			return new Bounds();
-		}
-
-		public static GameObject Decompose(this GameObject o, ActionContainer i)
-		{
-			var prms = new object[i.args.Length];
-
-			for (int ai = 0; ai < i.args.Length; ai++)
-				prms[ai] = o.GetComponentOrThis(i.args[ai]);
-
-			i.DynamicInvoke(prms);
-
-			return o;
 		}
 
 		/// <summary>

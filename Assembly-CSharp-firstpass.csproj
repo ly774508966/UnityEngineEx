@@ -56,7 +56,7 @@
      <Compile Include="Assets\Plugins\MonoEx\TypeEx.cs" />
      <Compile Include="Assets\Plugins\MonoEx\_.cs" />
      <Compile Include="Assets\Plugins\UnityEngineEx\AnimationEx.cs" />
-     <Compile Include="Assets\Plugins\UnityEngineEx\Attributes\LinkToSceneAttribute.cs" />
+     <Compile Include="Assets\Plugins\UnityEngineEx\Attributes\ComponentAttribute.cs" />
      <Compile Include="Assets\Plugins\UnityEngineEx\BoundsEx.cs" />
      <Compile Include="Assets\Plugins\UnityEngineEx\ColorEx.cs" />
      <Compile Include="Assets\Plugins\UnityEngineEx\ComponentEx.cs" />

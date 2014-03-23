@@ -158,10 +158,10 @@ namespace UnityEngineEx
 
 		#region Linkage
 
-		public static T LinkSceneNodes<T>(this Transform transform, T o)
+		public static T Decompose<T>(this Transform transform, T o)
 		{
-			if (o.GetType().HaveAttribute<LinkToSceneAttribute>()) {
-				foreach (var field in o.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
+			if (o.GetType().HaveAttribute<ComponentAttribute>()) {
+				foreach (var field in o.GetType().GetFieldsAndAttributes<ComponentAttribute>()) {
 					if (!field.Item1.FieldType.IsSubclassOf(typeof(UnityEngine.Object))) {
 						Debug.LogWarning(field.Item1.Name + " is not a UnityObject. Only Component and GameObject members can be linked for type.");
 						continue;
@@ -170,7 +170,7 @@ namespace UnityEngineEx
 					field.Item1.SetValue(o, transform.Find(field.Item2.name, field.Item1.FieldType));
 				}
 			}
-			else foreach (var field in o.GetType().GetFieldsAndAttributes<LinkToSceneAttribute>()) {
+			else foreach (var field in o.GetType().GetFieldsAndAttributes<ComponentAttribute>()) {
 				if (field.Item1.FieldType.IsSubclassOf(typeof(UnityEngine.Object))) {
 					field.Item1.SetValue(o, transform.Find(field.Item2.name, field.Item1.FieldType));
 				}
@@ -187,7 +187,7 @@ namespace UnityEngineEx
 							}
 							else {
 								object node = Activator.CreateInstance(nodeType);								
-								list.Add(child.LinkSceneNodes(node));																
+								list.Add(child.Decompose(node));																
 							}
 						}
 
@@ -195,7 +195,7 @@ namespace UnityEngineEx
 					}
 					else {
 						object node = Activator.CreateInstance(field.Item1.FieldType);
-						field.Item1.SetValue(o, transform.LinkSceneNodes(node));
+						field.Item1.SetValue(o, transform.Decompose(node));
 					}
 				}
 			}
