@@ -53,12 +53,12 @@ It was known as `scene linkage` mechanism.
 
 	public class Description : MonoBehaviour
 	{
-		[LinkToScene("Icon")] SpriteRenderer icon;
-		[LinkToScene("Description")] TextMesh description;
+		[Component("Icon")] SpriteRenderer icon;
+		[Component("Description")] TextMesh description;
 		
 		void Awake()
 		{
-			this.LinkSceneNodes(); // this call does actual linkage
+			this.Decompose(); // this decompose object to itself
 
 			// so
 			// "Icon" child node will be found and icon set to it's PriteRenderer component if it exists.
@@ -73,7 +73,7 @@ It was known as `scene linkage` mechanism.
 		}
 	}
 
-list of objects can be linked also. `LinkSceneNodes` handles list creation by itself.
+list of objects can be decomposed also. `Decompose` handles list creation by itself.
 
 
 	public class Page : MonoBehaviour
@@ -99,7 +99,7 @@ list of objects can be linked also. `LinkSceneNodes` handles list creation by it
 		}
 	}
 
-just not to make many simple MonoBehaviurs for trivial tasks it is possible to link GameObjects to standalone classes
+just not to make many simple MonoBehaviurs for trivial tasks it is possible to decompose GameObjects to standalone classes
 
 	public class Page : MonoBehaviour
 	{
@@ -110,8 +110,8 @@ just not to make many simple MonoBehaviurs for trivial tasks it is possible to l
 			[Component("Icon")] SpriteRenderer icon;			
 		}
 
-		// WARN: this class must have public (or internal) visibility or Mono will fail to link it in WebPlayer builds.
-		// beacuse it is used in IList<> linkage.
+		// WARN: this class must have public (or internal) visibility or Mono will fail to decompose it in WebPlayer builds.
+		// beacuse it is used in IList<> component.
 		public class Description
 		{
 			[Component] GameObject gameObject; // Component without "name" will link to object itself.
@@ -135,7 +135,7 @@ just not to make many simple MonoBehaviurs for trivial tasks it is possible to l
 		}
 	}
 
-also any GameObject can be linked to any class or structure
+also any GameObject can be decomposed to any class or structure
 
 	public class Description
 	{
@@ -148,6 +148,23 @@ also any GameObject can be linked to any class or structure
 	instance.Decompose(description);
 	// or one in line
 	var description = instance.Decompose(new Description());
+
+and finally GameObject can be decomposed to a structure of its components with simplified syntax
+
+
+	[Component]
+	public class Description
+	{
+		GameObject gameObject;
+		MeshRenderer renderer;
+		MeshCollider collider;
+	}
+
+	var description = new Description();
+	instance.Decompose(description);
+	// or one in line
+	var description = instance.Decompose(new Description());
+
 
 
 
@@ -163,6 +180,12 @@ Any object can be dynamicaly extended by a Component by calling new AddComponent
 	instance.AddComponent<MyOtherComponent>(new {
 		somePrivateSerializeFiled = "Hi there"
 	});
+
+`ActionContainer` also can by used as `AddComponent` constructor
+
+	instance.AddComponent<MyOtherComponent>(_.a((MyOtherComponent moc, MeshFilter mf) => {
+		moc.Initialize(mf.sharedMesh);
+	}));
 
 
 
@@ -190,8 +213,8 @@ Extension method `CallRecursive` recursively calls provided `Action` on GameObje
 Also many other extensions
 --------------------------
 
-Vector extensions in VectorEx. GameObject enumerators. Dictionary data loaders. Some Unity API "fixes". And Editor extensions like "Svae All",
-resource path to clipboard, object path to clipboard and other stuff.
+Vector extensions in VectorEx. GameObject enumerators. Dictionary data loaders.
+
 
 Unity editor extensions
 -----------------------
