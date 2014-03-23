@@ -74,6 +74,47 @@ namespace UnityEngineEx
 			return c;
 		}
 
+		public static T AddComponent<T>(this Component c, object parameters) where T : Component
+		{
+			return c.gameObject.AddComponent<T>(parameters);
+		}
+
+		/// <summary>
+		/// Add a Component to the GameObject setting SerializeFields to a parameters values.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="o"></param>
+		/// <param name="parameters"></param>
+		/// <returns></returns>
+		public static T AddComponent<T>(this Component c, IDictionary<string, object> parameters) where T : Component
+		{
+			return c.gameObject.AddComponent<T>(parameters);
+		}
+
+		/// <summary>
+		/// Add a Component to the GameObject calling a ctor on it.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="o"></param>
+		/// <param name="ctor"></param>
+		/// <returns></returns>
+		public static T AddComponent<T>(this Component c, Action<T> ctor) where T : Component
+		{
+			return c.gameObject.AddComponent<T>(ctor);
+		}
+
+		/// <summary>
+		/// Add a Component to the GameObject calling a ctor on it.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="o"></param>
+		/// <param name="ctor"></param>
+		/// <returns></returns>
+		public static T AddComponent<T>(this Component c, ActionContainer ctor) where T : Component
+		{
+			return c.gameObject.AddComponent<T>(ctor);
+		}
+
 		/// <summary>
 		/// Finds GameObject by path name. And returns it's Component T if it exists.
 		/// </summary>

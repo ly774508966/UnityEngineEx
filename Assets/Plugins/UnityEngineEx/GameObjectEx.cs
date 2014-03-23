@@ -442,6 +442,34 @@ namespace UnityEngineEx
 			return c;
 		}
 
+		/// <summary>
+		/// Add a Component to the GameObject calling a ctor on it.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="o"></param>
+		/// <param name="ctor"></param>
+		/// <returns></returns>
+		public static T AddComponent<T>(this GameObject o, ActionContainer ctor) where T : Component
+		{
+			bool a = o.activeSelf;
+			o.SetActive(false);
+
+			T c = o.AddComponent<T>();
+
+			object[] prms = new object[ctor.args.Length];
+			for (int ai = 0; ai < ctor.args.Length; ai++) {
+				if (ctor.args[ai] != typeof(T))
+					prms[ai] = o.GetComponentOrThis(ctor.args[ai]);
+				else
+					prms[ai] = c;
+			}
+
+			ctor.DynamicInvoke(prms);
+
+			o.SetActive(a);
+			return c;
+		}
+
 		public static object GetComponentOrThis(this GameObject o, Type type)
 		{
 			if (type != typeof(GameObject))
