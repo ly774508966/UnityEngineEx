@@ -36,7 +36,7 @@ Multiple object initializers are supported by `Decompose` mechanism
 Decompose
 --------
 
-Every object can be decomposed to it's components. Dissolving is the process of extracting objects `Components` and passing them as the parameters to decompose function.
+Every object can be decomposed to it's components. Decomposition is the process of extracting objects `Components` and passing them as the parameters to decompose function.
 
 For example if GameObject `obj` have MeshRenderer, MeshCollider and MyBehaviour components it can be decomposed by calling Decompose function
 	
@@ -48,7 +48,7 @@ For example if GameObject `obj` have MeshRenderer, MeshCollider and MyBehaviour 
 If GameObject does not have requested Component `null` will be passed as a parameter. Multiple decompose functions can be applied to GameObject - they will be called in order of declaration.
 This behaviour is used in `GameObject.New` funcion.
 
-Another variant of dissolving is dissolving to and object. By calling `Decompose` with some tagged object as argument it can be decomposed to its `Components` storing each in objects member.
+Another variant of decomposition is decomposition to an object. By calling `Decompose` with some tagged object as argument it can be decomposed to its `Components` storing each in objects member.
 It was known as `scene linkage` mechanism.
 
 	public class Description : MonoBehaviour
