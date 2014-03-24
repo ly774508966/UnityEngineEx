@@ -63,7 +63,7 @@ namespace UnityEngineEx
 
 		#endregion
 
-		#region Dissolve
+		#region Decompose
 
 		public static GameObject Decompose(this GameObject o, ActionContainer i)
 		{
@@ -113,6 +113,13 @@ namespace UnityEngineEx
 		public static GameObject Create(this GameObject o, string name, params Type[] components)
 		{
 			return o.Create(name, Vector3.zero, components);
+		}
+
+		public static GameObject Create(this GameObject o, string name, ActionContainer ctor, params Type[] components)
+		{
+			var go = o.Create(name, Vector3.zero, components);
+			go.Decompose(ctor);
+			return go;
 		}
 
 		public static GameObject Create(this GameObject o, string name, Vector3 po, Mesh mesh, params Type[] components)
