@@ -158,7 +158,7 @@ namespace UnityEngineEx
 
 		#region Linkage
 
-		public static T Decompose<T>(this Transform transform, T o)
+		public static T Dissolve<T>(this Transform transform, T o)
 		{
 			if (o.GetType().HaveAttribute<ComponentAttribute>()) {
 				foreach (var field in o.GetType().GetFieldsAndAttributes<ComponentAttribute>()) {
@@ -187,7 +187,7 @@ namespace UnityEngineEx
 							}
 							else {
 								object node = Activator.CreateInstance(nodeType);								
-								list.Add(child.Decompose(node));																
+								list.Add(child.Dissolve(node));																
 							}
 						}
 
@@ -195,7 +195,7 @@ namespace UnityEngineEx
 					}
 					else {
 						object node = Activator.CreateInstance(field.Item1.FieldType);
-						field.Item1.SetValue(o, transform.Decompose(node));
+						field.Item1.SetValue(o, transform.Dissolve(node));
 					}
 				}
 			}

@@ -1,6 +1,6 @@
 ﻿using System;
-using SystemEx;
 using System.Collections.Generic;
+using SystemEx;
 using UnityEngine;
 
 namespace UnityEngineEx
@@ -63,9 +63,15 @@ namespace UnityEngineEx
 
 		#endregion
 
-		#region Decompose
+		#region Dissolve
 
-		public static GameObject Decompose(this GameObject o, ActionContainer i)
+		public static GameObject Dissolve<T>(this GameObject o, Action<T> i)
+		{
+			i((T)o.GetComponentOrThis(typeof(T)));
+			return o;
+		}
+
+		public static GameObject Dissolve(this GameObject o, ActionContainer i)
 		{
 			var prms = new object[i.args.Length];
 
@@ -77,17 +83,17 @@ namespace UnityEngineEx
 			return o;
 		}
 
-		public static GameObject Decompose(this GameObject o, params ActionContainer[] i)
+		public static GameObject Dissolve(this GameObject o, params ActionContainer[] i)
 		{
 			for (int ii = 0; ii < i.Length; ii++)
-				o.Decompose(i[ii]);
+				o.Dissolve(i[ii]);
 
 			return o;
 		}
 
-		public static T Decompose<T>(this GameObject c, T o)
+		public static T Dissolve<T>(this GameObject c, T o)
 		{
-			return c.transform.Decompose(o);
+			return c.transform.Dissolve(o);
 		}
 
 		#endregion
@@ -118,7 +124,7 @@ namespace UnityEngineEx
 		public static GameObject Create(this GameObject o, string name, ActionContainer ctor, params Type[] components)
 		{
 			var go = o.Create(name, Vector3.zero, components);
-			go.Decompose(ctor);
+			go.Dissolve(ctor);
 			return go;
 		}
 
@@ -217,7 +223,7 @@ namespace UnityEngineEx
 				go = GameObject.Instantiate(instance) as GameObject;
 
 				foreach (var i in initializers) try {
-					go.Decompose(i);
+					go.Dissolve(i);
 				} catch (Exception e) { Debug.LogException(e); }
 
 				go.SetActive(a);			

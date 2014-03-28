@@ -31,25 +31,24 @@ is called.
 
 `_.a(...)` is a helper function from `SystemEx` namespace assisting in conversion of `lambda` functions to `ActionContainer`.
 
-Multiple object initializers are supported by `Decompose` mechanism
+Multiple object initializers are supported by `Dissolve` mechanism
 
-Decompose
+Dissolve
 --------
 
 Every object can be decomposed to it's components. Decomposition is the process of extracting objects `Components` and passing them as the parameters to decompose function.
 
-For example if GameObject `obj` have MeshRenderer, MeshCollider and MyBehaviour components it can be decomposed by calling Decompose function
+For example if GameObject `obj` have MeshRenderer, MeshCollider and MyBehaviour components it can be decomposed by calling `Dissolve` function
 	
 	GameObject obj = ...;
-	obj.Decompose(_.a((MeshRenderer mr, MeshCollider mc, MyBehaviour mb) => {
+	obj.Dissolve(_.a((MeshRenderer mr, MeshCollider mc, MyBehaviour mb) => {
 		// do something...
 	}));
 
 If GameObject does not have requested Component `null` will be passed as a parameter. Multiple decompose functions can be applied to GameObject - they will be called in order of declaration.
 This behaviour is used in `GameObject.New` funcion.
 
-Another variant of decomposition is decomposition to an object. By calling `Decompose` with some tagged object as argument it can be decomposed to its `Components` storing each in objects member.
-It was known as `scene linkage` mechanism.
+Another variant of decomposition is decomposition to an object. By calling `Dissolve` with some tagged object as argument it can be decomposed to its `Components` storing each in objects member.
 
 	public class Description : MonoBehaviour
 	{
@@ -58,7 +57,7 @@ It was known as `scene linkage` mechanism.
 		
 		void Awake()
 		{
-			this.Decompose(); // this decompose object to itself
+			this.Dissolve(); // this decompose object to itself
 
 			// so
 			// "Icon" child node will be found and icon set to it's PriteRenderer component if it exists.
@@ -73,7 +72,7 @@ It was known as `scene linkage` mechanism.
 		}
 	}
 
-list of objects can be decomposed also. `Decompose` handles list creation by itself.
+list of objects can be decomposed also. `Dissolve` handles list creation by itself.
 
 
 	public class Page : MonoBehaviour
@@ -82,7 +81,7 @@ list of objects can be decomposed also. `Decompose` handles list creation by its
 		
 		void Awake()
 		{
-			this.Decompose(); // this cdecompose object to itself
+			this.Dissolve(); // this decompose object to itself
 
 			// equivalent to code
 			// descriptions = new List<Description>();
@@ -124,7 +123,7 @@ just not to make many simple MonoBehaviurs for trivial tasks it is possible to d
 		
 		void Awake()
 		{
-			this.Decompose(); // this decompose object to itself
+			this.Dissolve(); // this decompose object to itself
 		}
 
 		void Start()
@@ -145,9 +144,9 @@ also any GameObject can be decomposed to any class or structure
 	}
 
 	var description = new Description();
-	instance.Decompose(description);
+	instance.Dissolve(description);
 	// or one in line
-	var description = instance.Decompose(new Description());
+	var description = instance.Dissolve(new Description());
 
 and finally GameObject can be decomposed to a structure of its components with simplified syntax
 
@@ -161,9 +160,9 @@ and finally GameObject can be decomposed to a structure of its components with s
 	}
 
 	var description = new Description();
-	instance.Decompose(description);
+	instance.Dissolve(description);
 	// or one in line
-	var description = instance.Decompose(new Description());
+	var description = instance.Dissolve(new Description());
 
 
 

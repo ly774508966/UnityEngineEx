@@ -8,22 +8,28 @@ namespace UnityEngineEx
 {
 	public static class ComponentEx
 	{
-		#region Decompose
+		#region Dissolve
 
-		public static T Decompose<T>(this T c) where T : Component
+		public static T Dissolve<T>(this T c) where T : Component
 		{
-			return c.transform.Decompose(c);
+			return c.transform.Dissolve(c);
 		}
 
-		public static T Decompose<T>(this T c, ActionContainer i) where T : Component
+		public static T Dissolve<T>(this T c, Action<T> i) where T : Component
 		{
-			c.gameObject.Decompose(i);
+			c.gameObject.Dissolve(i);
 			return c;
 		}
 
-		public static T Decompose<T>(this T c, params ActionContainer[] i) where T : Component
+		public static T Dissolve<T>(this T c, ActionContainer i) where T : Component
 		{
-			c.gameObject.Decompose(i);
+			c.gameObject.Dissolve(i);
+			return c;
+		}
+
+		public static T Dissolve<T>(this T c, params ActionContainer[] i) where T : Component
+		{
+			c.gameObject.Dissolve(i);
 			return c;
 		}
 
@@ -72,6 +78,11 @@ namespace UnityEngineEx
 			}
 
 			return c;
+		}
+
+		public static T AddComponent<T>(this Component c) where T : Component
+		{
+			return c.gameObject.AddComponent<T>();
 		}
 
 		public static T AddComponent<T>(this Component c, object parameters) where T : Component

@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using UnityEngineEx;
-using System;
+﻿using System;
 using SystemEx;
-using System.Collections;
+using UnityEngine;
+using UnityEngineEx;
 
 [RequireComponent(typeof(MeshCollider))]
 public class Button : MonoBehaviour
@@ -11,7 +10,7 @@ public class Button : MonoBehaviour
 
 	void Start()
 	{
-		this.Decompose(_.a((MeshCollider mc, MeshFilter mf) => {
+		this.Dissolve(_.a((MeshCollider mc, MeshFilter mf) => {
 			if (mf != null) {
 				mc.sharedMesh = mf.sharedMesh;
 			}

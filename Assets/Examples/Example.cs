@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using SystemEx;
+using UnityEngine;
 using UnityEngineEx;
-using System.Collections.Generic;
 
 public class Example : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class Example : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		this.Decompose();
+		this.Dissolve();
 
 		button.OnCommand = () => {
 			if (!lampsAreOn) {
@@ -35,6 +36,10 @@ public class Example : MonoBehaviour
 				lampsAreOn = false;
 			}
 		};
+
+
+		lamps[0].AddComponent<MyComponent>().Dissolve(_.a((GameObject go) => Debug.Log(string.Format("*** {0} is dissolved.", go.name))));
+		lamps[1].AddComponent<MyComponent>(_.a((GameObject go) => Debug.Log(string.Format("*** {0} is dissolved.", go.name))));
 	}
 
 
