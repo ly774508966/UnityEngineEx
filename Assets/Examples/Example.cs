@@ -38,7 +38,7 @@ public class Example : MonoBehaviour
 		};
 
 
-		lamps[0].AddComponent<MyComponent>().Dissolve(_.a((GameObject go) => Debug.Log(string.Format("*** {0} is dissolved.", go.name))));
+		lamps[0].AddComponent<MyComponent>().Dissolve((GameObject go) => Debug.Log(string.Format("*** {0} is dissolved.", go.name)));
 		lamps[1].AddComponent<MyComponent>(_.a((GameObject go) => Debug.Log(string.Format("*** {0} is dissolved.", go.name))));
 	}
 

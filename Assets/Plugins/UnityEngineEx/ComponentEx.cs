@@ -15,7 +15,7 @@ namespace UnityEngineEx
 			return c.transform.Dissolve(c);
 		}
 
-		public static T Dissolve<T>(this T c, Action<T> i) where T : Component
+		public static T Dissolve<T, U>(this T c, Action<U> i) where T : Component
 		{
 			c.gameObject.Dissolve(i);
 			return c;
