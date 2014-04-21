@@ -4,6 +4,13 @@ namespace SystemEx
 {
 	public static class ArrayEx
 	{
+		public static T[] Initialize<T>(this T[] array, T value)
+		{
+			for (int i = 0; i < array.Length; i++)
+				array[i] = value;
+			return array;
+		}
+
 		public static bool Contains<T>(this T[] array, T value)
 		{
 			return Array.IndexOf(array, value) != -1;
