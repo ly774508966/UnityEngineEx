@@ -22,6 +22,12 @@ namespace SystemEx
 			return array;
 		}
 
+		public static T[] Sort<T>(this T[] array, Comparison<T> c)
+		{
+			Array.Sort(array, c);
+			return array;
+		}
+
 		public static T[] Concat<T>(T value, T[] array)
 		{
 			T[] result = new T[array.Length + 1];
@@ -42,6 +48,6 @@ namespace SystemEx
 			}
 
 			return result;
-		}
+		}		
 	}
 }

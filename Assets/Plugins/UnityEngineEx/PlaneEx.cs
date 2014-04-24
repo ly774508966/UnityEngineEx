@@ -21,6 +21,19 @@ namespace UnityEngineEx
 			r = VectorEx.Empty3;
 			return false;
 		}
+
+		public static Vector3 Project(this Plane plane, Vector3 p)
+		{
+			if (plane.normal.z == 1)
+				return p.Z(0);
+			if (plane.normal.y == 1)
+				return p.Y(0);
+			if (plane.normal.x == 1)
+				return p.X(0);
+
+			var dist = plane.GetDistanceToPoint(p);
+			return p - plane.normal * dist;
+		}
 	}
 }
 

@@ -399,6 +399,14 @@ namespace UnityEngineEx
 		}
 
 		#endregion
+
+		public static Vector2 ToBarycentric(this Vector2 v, Vector2 a, Vector2 b, Vector2 c)
+		{
+			float d = (b.y - c.y)*(a.x - c.x) + (b.x - c.x)*(a.y - c.y);
+			float x = ((b.y - c.y)*(v.x - c.x) + (b.x - c.x)*(v.y - c.y)) / d;
+			float y = ((c.y - a.y)*(v.x - c.x) + (c.x - a.x)*(v.y - c.y)) / d;
+			return new Vector2(x, y);
+		}
 	}
 }
 
