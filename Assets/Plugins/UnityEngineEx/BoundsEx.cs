@@ -4,7 +4,7 @@ namespace UnityEngineEx
 {
 	public static class BoundsEx
 	{
-		public static Bounds Empty = new Bounds(VectorEx.Empty3, VectorEx.Empty3);
+		public static Bounds Empty = new Bounds(VectorEx.empty3, VectorEx.empty3);
 		
 		public static bool IsEmpty(this Bounds bounds)
 		{

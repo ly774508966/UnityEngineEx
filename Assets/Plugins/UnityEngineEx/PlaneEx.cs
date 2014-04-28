@@ -18,7 +18,7 @@ namespace UnityEngineEx
 			}
 
 			d = float.NaN;
-			r = VectorEx.Empty3;
+			r = VectorEx.empty3;
 			return false;
 		}
 

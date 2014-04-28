@@ -6,9 +6,10 @@ namespace UnityEngineEx
 {
 	public static class VectorEx
 	{
-		public static Vector2 Empty2 = new Vector2(float.NaN, float.NaN);
-		public static Vector3 Empty3 = new Vector3(float.NaN, float.NaN, float.NaN);
-		public static Vector4 Empty4 = new Vector4(float.NaN, float.NaN, float.NaN, float.NaN);
+		public static Vector2 empty2 = new Vector2(float.NaN, float.NaN);
+		public static Vector2 zero2 = new Vector2(0, 0);
+		public static Vector3 empty3 = new Vector3(float.NaN, float.NaN, float.NaN);
+		public static Vector4 empty4 = new Vector4(float.NaN, float.NaN, float.NaN, float.NaN);
 
 		/// <summary>
 		/// guiZ 1 / 2 ^ (log2(float)/2)
@@ -47,6 +48,16 @@ namespace UnityEngineEx
 		public static Vector3 Z(this Vector3 v, float z)
 		{
 			return new Vector3(v.x, v.y, z);
+		}
+
+		public static Vector2 dX(this Vector2 v, float dx)
+		{
+			return new Vector2(v.x + dx, v.y);
+		}
+
+		public static Vector2 dY(this Vector2 v, float dy)
+		{
+			return new Vector2(v.x, v.y + dy);
 		}
 
 		public static Vector3 dX(this Vector3 v, float dx)
