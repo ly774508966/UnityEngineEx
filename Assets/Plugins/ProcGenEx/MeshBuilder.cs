@@ -14,16 +14,12 @@ namespace ProcGenEx
 		public List<Vector2> uvs = null;
 		public List<int> triangles = null;
 
-		private List<List<int>> v2t = null;
-			
 		public MeshBuilder(int VertexCount, int TriangleCount)
 		{
 			vertices = new List<Vector3>(VertexCount);
 			normals = new List<Vector3>(VertexCount);
 			uvs = new List<Vector2>(VertexCount);
 			triangles = new List<int>(TriangleCount * 3);
-
-			v2t = new List<List<int>>(VertexCount);
 		}
 
 		public Mesh ToMesh()
@@ -42,8 +38,8 @@ namespace ProcGenEx
 
 		public void Grow(int VertexCount, int TriangleCount)
 		{
-			int dvc = Math.Min(vertices.Capacity, vertices.Count + VertexCount);
-			int dtc = Math.Min(triangles.Capacity, triangles.Count + TriangleCount * 3);
+			int dvc = Math.Max(vertices.Capacity, vertices.Count + VertexCount);
+			int dtc = Math.Max(triangles.Capacity, triangles.Count + TriangleCount * 3);
 			vertices.Capacity = dvc;
 			normals.Capacity = dvc;
 			uvs.Capacity = dvc;
@@ -68,10 +64,11 @@ namespace ProcGenEx
 			return result;
 		}
 
-		public int[] AddQuad(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
+		public int[] AddQuad(Vector3 a, Vector3 b, Vector3 c, Vector3 d, ref int[] result)
 		{
-			int[] result = new int[4];
-
+			if (result == null)
+				result = new int[4];
+			
 			var n = Vector3.Cross((c - a), (a - b));
 
 			Grow(4, 2);
@@ -81,10 +78,27 @@ namespace ProcGenEx
 			result[3] = CreateVertex(d, n);
 
 			MakeQuad(result[0], result[1], result[2], result[3]);
-
+			
 			return result;
 		}
 
+		public int[] AddQuad(Vector3[] v, Vector2[] uv, ref int[] result)
+		{
+			if (result == null)
+				result = new int[4];
+			
+			var n = Vector3.Cross((v[2] - v[0]), (v[0] - v[1]));
+
+			Grow(4, 2);
+			result[0] = CreateVertex(v[0], n, uv[0]);
+			result[1] = CreateVertex(v[1], n, uv[1]);
+			result[2] = CreateVertex(v[2], n, uv[2]);
+			result[3] = CreateVertex(v[3], n, uv[3]);
+
+			MakeQuad(result[0], result[1], result[2], result[3]);
+			
+			return result;
+		}
 
 		public int[] AddPlane(Plane p, Vector3 origin, Vector2 size, Vector2i step)
 		{
@@ -130,9 +144,10 @@ namespace ProcGenEx
 
 		public int CreateVertex(Vector3 v, Vector3 n)
 		{
-			return CreateVertex(v, n, Vector2.zero);
+			return CreateVertex(v, n, VectorEx.empty2);
 		}
 
+		static int b = 0;
 		public int CreateVertex(Vector3 v, Vector3 n, Vector2 u)
 		{
 			var vi = vertices.Count;
@@ -140,7 +155,6 @@ namespace ProcGenEx
 			vertices.Add(v);
 			normals.Add(n);
 			uvs.Add(u);
-			v2t.Add(new List<int>());
 
 			return vi;
 		}
@@ -157,10 +171,6 @@ namespace ProcGenEx
 			triangles.Add(a);
 			triangles.Add(b);
 			triangles.Add(c);
-
-			v2t[a].Add(ti);
-			v2t[b].Add(ti);
-			v2t[c].Add(ti);
 		}
 
 		public void MakeQuad(int a, int b, int c, int d)
@@ -285,6 +295,11 @@ namespace ProcGenEx
 
 		public void UVMapPlane(Plane plane, Vector3 forward, int[] vs)
 		{
+			UVMapPlane(plane, forward, AaBb2.one, vs);
+		}
+
+		public void UVMapPlane(Plane plane, Vector3 forward, AaBb2 uvrect, int[] vs)
+		{
 			Vector2[] pvs = new Vector2[vs.Length];
 
 			AaBb2 b = AaBb2.empty;
@@ -296,7 +311,7 @@ namespace ProcGenEx
 
 			Debug.Log(b);
 			for (int i = 0; i < vs.Length; i++) {
-				uvs[vs[i]] = (pvs[i] - b.a).Div(b.size);
+				uvs[vs[i]] = uvrect.a + uvrect.size.Mul((pvs[i] - b.a).Div(b.size));
 				Debug.Log(uvs[vs[i]]);
 			}
 		}
