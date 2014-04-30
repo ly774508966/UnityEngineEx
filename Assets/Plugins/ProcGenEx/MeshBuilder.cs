@@ -50,9 +50,16 @@ namespace ProcGenEx
 
 		public int[] AddTriangle(Vector3 a, Vector3 b, Vector3 c)
 		{
-			int[] result = new int[3];
+			int[] result = null;
+			return AddTriangle(a, b, c, ref result);
+		}
 
-			var n = Vector3.Cross((c - a), (a - b));
+		public int[] AddTriangle(Vector3 a, Vector3 b, Vector3 c, ref int[] result)
+		{		
+			if (result == null)
+				result = new int[3];
+
+			var n = Vector3.Cross((c - a), (a - b)).normalized;
 
 			Grow(3, 1);
 			result[0] = CreateVertex(a, n);
@@ -64,12 +71,41 @@ namespace ProcGenEx
 			return result;
 		}
 
+		public int[] AddTriangle(Vector3[] v, Vector2[] uv)
+		{
+			int[] result = null;
+			return AddTriangle(v, uv, ref result);
+		}
+
+		public int[] AddTriangle(Vector3[] v, Vector2[] uv, ref int[] result)
+		{
+			if (result == null)
+				result = new int[3];
+			
+			var n = Vector3.Cross((v[2] - v[0]), (v[0] - v[1])).normalized;
+
+			Grow(3, 1);
+			result[0] = CreateVertex(v[0], n, uv[0]);
+			result[1] = CreateVertex(v[1], n, uv[1]);
+			result[2] = CreateVertex(v[2], n, uv[2]);
+
+			MakeTriangle(result[0], result[1], result[2]);
+			
+			return result;
+		}
+
+		public int[] AddQuad(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
+		{
+			int[] result = null;
+			return AddQuad(a, b, c, d, ref result);
+		}
+
 		public int[] AddQuad(Vector3 a, Vector3 b, Vector3 c, Vector3 d, ref int[] result)
 		{
 			if (result == null)
 				result = new int[4];
 			
-			var n = Vector3.Cross((c - a), (a - b));
+			var n = Vector3.Cross((c - a), (a - b)).normalized;
 
 			Grow(4, 2);
 			result[0] = CreateVertex(a, n);
@@ -82,12 +118,18 @@ namespace ProcGenEx
 			return result;
 		}
 
+		public int[] AddQuad(Vector3[] v, Vector2[] uv)
+		{
+			int[] result = null;
+			return AddQuad(v, uv, ref result);
+		}
+
 		public int[] AddQuad(Vector3[] v, Vector2[] uv, ref int[] result)
 		{
 			if (result == null)
 				result = new int[4];
 			
-			var n = Vector3.Cross((v[2] - v[0]), (v[0] - v[1]));
+			var n = Vector3.Cross((v[2] - v[0]), (v[0] - v[1])).normalized;
 
 			Grow(4, 2);
 			result[0] = CreateVertex(v[0], n, uv[0]);
@@ -147,7 +189,6 @@ namespace ProcGenEx
 			return CreateVertex(v, n, VectorEx.empty2);
 		}
 
-		static int b = 0;
 		public int CreateVertex(Vector3 v, Vector3 n, Vector2 u)
 		{
 			var vi = vertices.Count;
