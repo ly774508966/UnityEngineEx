@@ -150,14 +150,29 @@ namespace UnityEngineEx
 			return new Vector2(l.x / r.x, l.y / r.y);
 		}
 
+		public static Vector2 Div(this Vector2 l, float x, float y)
+		{
+			return new Vector2(l.x / x, l.y / y);
+		}
+
 		public static Vector3 Div(this Vector3 l, Vector2 r)
 		{
 			return new Vector3(l.x / r.x, l.y / r.y, l.z);
 		}
 
+		public static Vector3 Div(this Vector3 l, float x, float y)
+		{
+			return new Vector3(l.x / x, l.y / y, l.z);
+		}
+
 		public static Vector3 Div(this Vector3 l, Vector3 r)
 		{
 			return new Vector3(l.x / r.x, l.y / r.y, l.z / r.z);
+		}
+
+		public static Vector3 Div(this Vector3 l, float x, float y, float z)
+		{
+			return new Vector3(l.x / x, l.y / y, l.z / z);
 		}
 
 		#region Boolean operation
