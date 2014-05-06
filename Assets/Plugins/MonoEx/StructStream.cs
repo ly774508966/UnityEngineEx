@@ -35,6 +35,14 @@ namespace SystemEx
 			return r;
 		}
 
+		public T[] Read<T>(int count) where T : struct
+		{
+			T[] r = new T[count];
+			for (int i = 0; i < r.Length; i++)
+				r[i] = Read<T>();
+			return r;
+		}
+
 		public void Skip<T>()
 		{
 			Skip<T>(1);
