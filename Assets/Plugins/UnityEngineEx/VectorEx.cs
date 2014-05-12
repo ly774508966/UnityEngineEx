@@ -25,6 +25,20 @@ namespace UnityEngineEx
 			get { return new Vector3(0, 0, 1.0f / (2 << 8)); }
 		}
 
+		public static int quad(this Vector2 v)
+		{
+			if (v.x > 0)
+				if (v.y > 0)
+					return 0;
+				else
+					return 1;
+			else
+				if (v.y < 0)
+					return 2;
+				else
+					return 3;
+		}
+
 		public static Vector2 X(this Vector2 v, float x)
 		{
 			return new Vector2(x, v.y);
@@ -242,6 +256,11 @@ namespace UnityEngineEx
 		public static float Clamp(this Vector2 v, float f)
 		{
 			return Mathf.Clamp(f, v.x, v.y);
+		}
+
+		public static Vector2 Clamp(this Vector2 v, Vector2 min, Vector2 max)
+		{
+			return MathfEx.Clamp(v, min, max);
 		}
 
 		#region Vector enumrators
