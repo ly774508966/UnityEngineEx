@@ -94,6 +94,14 @@ namespace UnityEngineEx
 			return new Vector3(v.x, v.y, z);
 		}
 
+		public static Vector3[] xyz(this Vector2[] vs, float z)
+		{
+			var r = new Vector3[vs.Length];
+			for (int i = 0; i < vs.Length; i++)
+				r[i] = vs[i].xyz(z);
+			return r;
+		}
+
 		public static Vector3 xzy(this Vector2 v, float z)
 		{
 			return new Vector3(v.x, z, v.y);
