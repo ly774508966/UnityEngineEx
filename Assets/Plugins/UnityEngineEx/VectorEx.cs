@@ -460,6 +460,16 @@ namespace UnityEngineEx
 			float y = ((c.y - a.y)*(v.x - c.x) + (c.x - a.x)*(v.y - c.y)) / d;
 			return new Vector2(x, y);
 		}
+
+		public static Vector4 CalcST(this Vector2 v, AaBb2 rect)
+		{
+			return new Vector4(
+				rect.size.x / v.x,
+				rect.size.y / v.y,
+				rect.a.x / v.x,
+				rect.a.y / v.y
+				);
+		}
 	}
 }
 
