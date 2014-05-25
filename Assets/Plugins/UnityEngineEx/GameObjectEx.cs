@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SystemEx;
+using MathEx;
 using UnityEngine;
 
 namespace UnityEngineEx

@@ -43,21 +43,14 @@
   <ItemGroup>
     <Compile Include="Assets\Plugins\UnityEngineEx\AnimationEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\Attributes\ComponentAttribute.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\BoundsEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\ColorEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\ComponentEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\Components\PrefabContainer.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\CoroutineEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\GameObjectEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\MathfEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\Matrix4x4Ex.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\MeshEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\MonoBehaviourEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\PlaneEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\PlayerPrefsEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\PolarVector.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\QuaternionEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\RectEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\RendererEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\ResolutionEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\ResourcesEx.cs" />
@@ -66,7 +59,6 @@
     <Compile Include="Assets\Plugins\UnityEngineEx\TextAnchorEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\TextureEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\TransformEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\VectorEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

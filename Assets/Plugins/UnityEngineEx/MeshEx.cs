@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MathEx;
 using UnityEngine;
 
 namespace UnityEngineEx
