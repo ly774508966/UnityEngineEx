@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0E848885-8D82-42A3-8AC7-4057DED4213D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UnityEditorEx</RootNamespace>
+    <AssemblyName>UnityEditorEx</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Assets\Editor\Assemblies\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Assets\Editor\Assemblies\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Editor\UnityEditorEx\Components\MeshRendererEditor.cs" />
+    <Compile Include="Assets\Editor\UnityEditorEx\Components\ObjectGizmoz.cs" />
+    <Compile Include="Assets\Editor\UnityEditorEx\Components\PrefabContainerEditor.cs" />
+    <Compile Include="Assets\Editor\UnityEditorEx\Components\TransformEditor.cs" />
+    <Compile Include="Assets\Editor\UnityEditorEx\EditorExt.cs" />
+    <Compile Include="Assets\Editor\UnityEditorEx\InspectorExt.cs" />
+    <Compile Include="Assets\Editor\UnityEditorEx\ProjectExt.cs" />
+    <Compile Include="Assets\Editor\UnityEditorEx\Refactoring\RefactorAttribute.cs" />
+    <Compile Include="Assets\Editor\UnityEditorEx\SpriteExt.cs" />
+    <Compile Include="Assets\Editor\UnityEditorEx\TransformExt.cs" />
+    <Compile Include="Properties\AssemblyInfo.UnityEditor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="UnityEngineEx.csproj">
+      <Project>{5ddef78f-3298-4583-adf8-21421e4b29f9}</Project>
+      <Name>UnityEngineEx</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Editor\UnityEditorEx\EventLog.tcs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
