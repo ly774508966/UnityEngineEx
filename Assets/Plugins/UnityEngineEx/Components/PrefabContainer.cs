@@ -39,6 +39,10 @@ namespace UnityEngineEx
 			prevPrefab = null;
 			Update();
 		}
+#else
+		public void DoReset()
+		{
+		}
 #endif
 	}
 }

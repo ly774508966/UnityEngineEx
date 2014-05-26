@@ -56,11 +56,28 @@
     <Compile Include="Assets\Editor\UnityEditorEx\SpriteExt.cs" />
     <Compile Include="Assets\Editor\UnityEditorEx\TransformExt.cs" />
     <Compile Include="Properties\AssemblyInfo.UnityEditor.cs" />
+    <Compile Include="src\TransformEx.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MathEx\MathEx.csproj">
+      <Project>{8d8a06e5-abfb-49a8-851a-070fcf5339aa}</Project>
+      <Name>MathEx</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\MathEx\MathEx.UnityEngine.csproj">
+      <Project>{d707c31e-1c84-42a1-9790-3ebbf75ea645}</Project>
+      <Name>MathEx.UnityEngine</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemEx\SystemEx.csproj">
+      <Project>{0271e27f-e614-4b0f-af16-05d2d2781b7f}</Project>
+      <Name>SystemEx</Name>
+      <Private>False</Private>
+    </ProjectReference>
     <ProjectReference Include="UnityEngineEx.csproj">
       <Project>{5ddef78f-3298-4583-adf8-21421e4b29f9}</Project>
       <Name>UnityEngineEx</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

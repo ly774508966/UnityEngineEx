@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Assets\Assemblies\</OutputPath>
+    <OutputPath>..\..\Assets\Plugins\Assemblies\</OutputPath>
     <DefineConstants>TRACE;DEBUG;NET35</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Assets\Assemblies\</OutputPath>
+    <OutputPath>..\..\Assets\Plugins\Assemblies\</OutputPath>
     <DefineConstants>TRACE;NET35</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -65,6 +65,7 @@
     <ProjectReference Include="..\MathEx\MathEx.csproj">
       <Project>{8d8a06e5-abfb-49a8-851a-070fcf5339aa}</Project>
       <Name>MathEx</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\MathEx\MathEx.UnityEngine.csproj">
       <Project>{d707c31e-1c84-42a1-9790-3ebbf75ea645}</Project>
@@ -73,6 +74,7 @@
     <ProjectReference Include="..\SystemEx\SystemEx.csproj">
       <Project>{0271e27f-e614-4b0f-af16-05d2d2781b7f}</Project>
       <Name>SystemEx</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
