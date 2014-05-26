@@ -9,3 +9,6 @@
 /*.userprefs
 /*.pidb
 /*.booproj
+Assembly-*.csproj
+UnityEngineEx-csharp.sln
+UnityEngineEx.sln
