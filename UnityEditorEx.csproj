@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug.UnityEditorEx\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\Release.UnityEditorEx\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -36,11 +36,11 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>C:\Program Files %28x86%29\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>C:\Program Files %28x86%29\Unity\Editor\Data\Managed\UnityEditor.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -60,22 +60,22 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MathEx\MathEx.csproj">
-      <Project>{8d8a06e5-abfb-49a8-851a-070fcf5339aa}</Project>
+      <Project>{8D8A06E5-ABFB-49A8-851A-070FCF5339AA}</Project>
       <Name>MathEx</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\MathEx\MathEx.UnityEngine.csproj">
-      <Project>{d707c31e-1c84-42a1-9790-3ebbf75ea645}</Project>
+      <Project>{D707C31E-1C84-42A1-9790-3EBBF75EA645}</Project>
       <Name>MathEx.UnityEngine</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\SystemEx\SystemEx.csproj">
-      <Project>{0271e27f-e614-4b0f-af16-05d2d2781b7f}</Project>
+      <Project>{0271E27F-E614-4B0F-AF16-05D2D2781B7F}</Project>
       <Name>SystemEx</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="UnityEngineEx.csproj">
-      <Project>{5ddef78f-3298-4583-adf8-21421e4b29f9}</Project>
+      <Project>{5DDEF78F-3298-4583-ADF8-21421E4B29F9}</Project>
       <Name>UnityEngineEx</Name>
       <Private>False</Private>
     </ProjectReference>
