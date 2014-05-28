@@ -1,3 +1,4 @@
+bin/
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -12,3 +13,4 @@
 Assembly-*.csproj
 UnityEngineEx-csharp.sln
 UnityEngineEx.sln
+.project
