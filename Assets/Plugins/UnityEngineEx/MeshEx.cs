@@ -176,7 +176,7 @@ namespace UnityEngineEx
 			return mesh;
 		}
 
-		public static Mesh Finalize(this Mesh mesh)
+		public static Mesh Apply(this Mesh mesh)
 		{
 			mesh.Optimize();
 			mesh.RecalculateBounds();
