@@ -1,0 +1,6 @@
+[submodule "Libraries/MathEx"]
+	path = Libraries/MathEx
+	url = git@lufthansa:yatagarasu/mathex.git
+[submodule "Libraries/SystemEx"]
+	path = Libraries/SystemEx
+	url = git@lufthansa:yatagarasu/systemex.git
