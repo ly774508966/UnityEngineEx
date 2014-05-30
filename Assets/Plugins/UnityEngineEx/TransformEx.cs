@@ -160,7 +160,7 @@ namespace UnityEngineEx
 
 		public static T Dissolve<T>(this Transform transform, T o)
 		{
-			if (o.GetType().HaveAttribute<ComponentAttribute>()) {
+			if (o.GetType().HasAttribute<ComponentAttribute>()) {
 				foreach (var field in o.GetType().GetFieldsAndAttributes<ComponentAttribute>()) {
 					if (!field.Item1.FieldType.IsSubclassOf(typeof(UnityEngine.Object))) {
 						Debug.LogWarning(field.Item1.Name + " is not a UnityObject. Only Component and GameObject members can be linked for type.");
