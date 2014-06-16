@@ -8,6 +8,6 @@ cd .\Libraries\MathEx\
 	git pull origin master
 cd ..\..
 
-git add *
+git add -A
 git commit
 git push
