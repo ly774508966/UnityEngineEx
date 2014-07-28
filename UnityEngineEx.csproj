@@ -57,6 +57,8 @@
     <Compile Include="Assets\Plugins\UnityEngineEx\ResourcesEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\SetRenderQueue.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\SpriteRendererEx.cs" />
+    <Compile Include="Assets\Plugins\UnityEngineEx\StateMachine\Program.cs" />
+    <Compile Include="Assets\Plugins\UnityEngineEx\StateMachine\State.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\TextAnchorEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\TextureEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\TransformEx.cs" />
