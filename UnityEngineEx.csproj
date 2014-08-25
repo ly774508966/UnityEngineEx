@@ -52,16 +52,16 @@
     <Compile Include="Assets\Plugins\UnityEngineEx\MeshEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\MonoBehaviourEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\PlayerPrefsEx.cs" />
+    <Compile Include="Assets\Plugins\UnityEngineEx\RandomEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\RendererEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\ResolutionEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\ResourcesEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\SetRenderQueue.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\SpriteRendererEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\StateMachine\Program.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\StateMachine\State.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\TextAnchorEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\TextureEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\TransformEx.cs" />
+    <Compile Include="Assets\Plugins\UnityEngineEx\Watch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
