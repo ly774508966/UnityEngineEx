@@ -8,7 +8,7 @@ namespace UnityEngineEx
 	{
 		protected virtual void Awake()
 		{
-
+			this.Dissolve();
 		}
 
 		protected virtual void Start()
