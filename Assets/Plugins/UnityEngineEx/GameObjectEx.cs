@@ -492,6 +492,18 @@ namespace UnityEngineEx
 				return o;
 		}
 
+		public static object GetComponentOrAdd(this GameObject o, Type type)
+		{
+			if (type != typeof(GameObject)) {
+				var c = o.GetComponent(type);
+				if (c == null)
+					c = o.AddComponent(type);
+				return c;
+			}
+			else
+				return o;
+		}
+
 		/// <summary>
 		/// Adds GameObject as a child to another GameObject.
 		/// Objects position and rotation are set to localPosition and localrotation.

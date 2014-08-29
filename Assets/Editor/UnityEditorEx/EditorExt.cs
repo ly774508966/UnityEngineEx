@@ -15,19 +15,6 @@ namespace UnityEditorEx
 		}
 
 	
-		[MenuItem("GameObject/Create Empty Child %&n", true)]
-		static bool CreateChildCheck()
-		{
-			return Selection.activeGameObject != null;
-		}
-
-		[MenuItem("GameObject/Create Empty Child %&n")]
-		static void CreateChild()
-		{
-			Selection.activeGameObject = Selection.activeGameObject.Create("GameObject");
-		}
-
-
 		[MenuItem("GameObject/Copy path to clipboard %&c", true)]
 		static bool CopyPathToClipboardCheck()
 		{
