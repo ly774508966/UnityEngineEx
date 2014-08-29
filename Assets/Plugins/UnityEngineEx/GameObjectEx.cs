@@ -124,7 +124,12 @@ namespace UnityEngineEx
 
 		public static GameObject Create(this GameObject o, string name, ActionContainer ctor, params Type[] components)
 		{
-			var go = o.Create(name, Vector3.zero, components);
+			return o.Create(name, Vector3.zero, ctor, components);
+		}
+
+		public static GameObject Create(this GameObject o, string name, Vector3 po, ActionContainer ctor, params Type[] components)
+		{
+			var go = o.Create(name, po, components);
 			go.Dissolve(ctor);
 			return go;
 		}
