@@ -264,6 +264,22 @@ namespace UnityEngineEx
 			return go;
 		}
 
+		public static GameObject New(this GameObject instance, GameObject parent, params ActionContainer[] initializers)
+		{
+			return instance.New(
+				ArrayEx.Concat(
+					_.a((Transform t) => { t.parent = parent.transform; })
+					, initializers));
+		}
+
+		public static GameObject New(this GameObject instance, GameObject parent, Vector3 po, params ActionContainer[] initializers)
+		{
+			return instance.New(
+				ArrayEx.Concat(
+					_.a((Transform t) => { t.parent = parent.transform; t.localPosition = po; })
+					, initializers));
+		}
+
 		//[Obsolete("Instantiate semantics have changed.")]
 		public static GameObject Instantiate(GameObject instance, params Tuple<Type, Action<object>>[] initializers)
 		{

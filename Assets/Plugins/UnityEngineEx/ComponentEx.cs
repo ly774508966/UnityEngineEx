@@ -80,6 +80,8 @@ namespace UnityEngineEx
 			return c;
 		}
 
+		
+
 		public static T AddComponent<T>(this Component c) where T : Component
 		{
 			return c.gameObject.AddComponent<T>();

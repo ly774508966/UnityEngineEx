@@ -50,6 +50,7 @@
     <Compile Include="Assets\Plugins\UnityEngineEx\CoroutineEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\DebugEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\GameObjectEx.cs" />
+    <Compile Include="Assets\Plugins\UnityEngineEx\ListEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\MeshEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\MonoBehaviourEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\PlayerPrefsEx.cs" />
