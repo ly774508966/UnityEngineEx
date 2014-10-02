@@ -44,6 +44,7 @@
     <Compile Include="Assets\Plugins\UnityEngineEx\AnimationEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\Attributes\BehaviourFunctionAttribute.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\Attributes\ComponentAttribute.cs" />
+    <Compile Include="Assets\Plugins\UnityEngineEx\CameraEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\ColorEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\ComponentEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\Components\PrefabContainer.cs" />
