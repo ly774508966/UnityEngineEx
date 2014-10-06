@@ -29,6 +29,19 @@ namespace UnityEngineEx
 			return null;
 		}
 
+		public static string GetResourcePath(string path)
+		{
+			var p = Path.GetDirectoryName(path);
+			if (p.StartsWith(resourcePath)) {
+				return p.Substring(resourcePath.Length + 1) + "/" + Path.GetFileNameWithoutExtension(path);
+			}
+			if (p.StartsWith("Assets/Resources")) {
+				return p.Substring("Assets/Resources".Length + 1) + "/" + Path.GetFileNameWithoutExtension(path);
+			}
+
+			return null;
+		}
+
 		public static T Load<T>(string path) where T : class
 		{
 			if (path == ".color") {
