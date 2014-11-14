@@ -256,6 +256,7 @@ namespace UnityEngineEx
 					} catch (Exception e) { Debug.LogException(e); }
 				}
 
+				go.name = name;
 				go.transform.position = po;
 				go.SetActive(a);
 			} catch (Exception e) { Debug.LogException(e); }

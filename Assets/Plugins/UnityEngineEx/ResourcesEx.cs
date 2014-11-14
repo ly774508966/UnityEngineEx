@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using SystemEx;
 using UnityEngine;
 
 namespace UnityEngineEx
@@ -12,11 +13,12 @@ namespace UnityEngineEx
 
 		static ResourcesEx()
 		{
-			string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-			UriBuilder uri = new UriBuilder(codeBase);
-			string path = Uri.UnescapeDataString(uri.Path);
-			projectPath = Path.GetFullPath(new Uri(Path.Combine(Path.GetDirectoryName(path), "../..")).AbsolutePath);
-			resourcePath = Path.GetFullPath(new Uri(Path.Combine(Path.GetDirectoryName(path), "../../Assets/Resources")).AbsolutePath);
+			//string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+			//UriBuilder uri = new UriBuilder(codeBase);
+			//string path = Uri.UnescapeDataString(uri.Path);
+
+			projectPath = Path.GetFullPath(new Uri(Path.Combine(Application.dataPath, "..")).AbsolutePath);
+			resourcePath = Path.GetFullPath(new Uri(Path.Combine(Application.dataPath, "Resources")).AbsolutePath);
 		}
 
 		public static string GetAssetPath(string path)
