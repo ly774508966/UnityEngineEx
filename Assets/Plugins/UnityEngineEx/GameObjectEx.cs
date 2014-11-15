@@ -239,6 +239,31 @@ namespace UnityEngineEx
 			return go;
 		}
 
+		public static GameObject New(this GameObject instance, string name, params Tuple<Type, object>[] initializers)
+		{
+			GameObject go = null;
+			bool a = instance.activeSelf;
+			instance.SetActive(false);
+
+			try {
+				go = GameObject.Instantiate(instance) as GameObject;
+
+				if (initializers != null) {
+					foreach (var i in initializers) try {
+						var c = go.GetComponent(i.Item1);
+						if (c != null)
+							c.Setup(i.Item2);
+					} catch (Exception e) { Debug.LogException(e); }
+				}
+
+				go.name = name;
+				go.SetActive(a);
+			} catch (Exception e) { Debug.LogException(e); }
+
+			instance.SetActive(a);
+			return go;
+		}
+
 		public static GameObject New(this GameObject instance, string name, Vector3 po, params Tuple<Type, object>[] initializers)
 		{
 			GameObject go = null;
@@ -260,7 +285,7 @@ namespace UnityEngineEx
 				go.transform.position = po;
 				go.SetActive(a);
 			} catch (Exception e) { Debug.LogException(e); }
-			
+
 			instance.SetActive(a);
 			return go;
 		}
