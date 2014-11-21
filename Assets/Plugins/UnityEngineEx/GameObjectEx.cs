@@ -531,6 +531,8 @@ namespace UnityEngineEx
 			return c;
 		}
 
+
+
 		public static object GetComponentOrThis(this GameObject o, Type type)
 		{
 			if (type != typeof(GameObject))

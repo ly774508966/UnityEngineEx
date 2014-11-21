@@ -108,7 +108,6 @@ namespace UnityEngineEx
 		/// Add a Component to the GameObject calling a ctor on it.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
-		/// <param name="o"></param>
 		/// <param name="ctor"></param>
 		/// <returns></returns>
 		public static T AddComponent<T>(this Component c, Action<T> ctor) where T : Component
@@ -120,7 +119,6 @@ namespace UnityEngineEx
 		/// Add a Component to the GameObject calling a ctor on it.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
-		/// <param name="o"></param>
 		/// <param name="ctor"></param>
 		/// <returns></returns>
 		public static T AddComponent<T>(this Component c, ActionContainer ctor) where T : Component
@@ -132,7 +130,6 @@ namespace UnityEngineEx
 		/// Finds GameObject by path name. And returns it's Component T if it exists.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
-		/// <param name="transform"></param>
 		/// <param name="name"></param>
 		/// <returns></returns>
 		public static T Find<T>(this Component c, string name) where T : Component
