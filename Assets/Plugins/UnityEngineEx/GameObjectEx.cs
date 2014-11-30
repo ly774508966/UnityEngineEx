@@ -455,24 +455,6 @@ namespace UnityEngineEx
 		/// <param name="o"></param>
 		/// <param name="parameters"></param>
 		/// <returns></returns>
-		public static T AddComponent<T>(this GameObject o, object parameters) where T : Component
-		{
-			bool a = o.activeSelf;
-			o.SetActive(false);
-
-			T c = o.AddComponent<T>().Setup(parameters);
-
-			o.SetActive(a);
-			return c;
-		}
-
-		/// <summary>
-		/// Add a Component to the GameObject setting SerializeFields to a parameters values.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="o"></param>
-		/// <param name="parameters"></param>
-		/// <returns></returns>
 		public static T AddComponent<T>(this GameObject o, IDictionary<string, object> parameters) where T : Component
 		{
 			bool a = o.activeSelf;
@@ -531,7 +513,29 @@ namespace UnityEngineEx
 			return c;
 		}
 
+		/// <summary>
+		/// Adds a component passing arguments to it's Counstructor method.
+		/// So emulating a constructor call.
+		/// Component should implement IConstructable interface and handle construction in Constructor method.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="o">GameObject to add component to.</param>
+		/// <param name="args">Arguments to a constructor.</param>
+		/// <returns>Returns new;y added component.</returns>
+		public static T AddComponent<T>(this GameObject o, params object[] args) where T : Component, IConstructable
+		{
+			bool a = o.activeSelf;
+			try	{
+				o.SetActive(false);
 
+				T c = o.AddComponent<T>();
+				c.Constructor(args);
+				return c;
+			}
+			finally {
+				o.SetActive(a);
+			}
+		}
 
 		public static object GetComponentOrThis(this GameObject o, Type type)
 		{
@@ -613,6 +617,7 @@ namespace UnityEngineEx
 		/// Apply some Action recursively to GameObject and all its child objects.
 		/// </summary>
 		/// <param name="o"></param>
+		/// <param name="a"></param>
 		/// <returns></returns>
 		public static GameObject CallRecursive(this GameObject o, Action<GameObject> a)
 		{
@@ -628,6 +633,7 @@ namespace UnityEngineEx
 		/// Apply some Action recursively to GameObject and all its child objects passing depth as a parameter to action.
 		/// </summary>
 		/// <param name="o"></param>
+		/// <param name="a"></param>
 		/// <returns></returns>
 		public static GameObject CallRecursive(this GameObject o, Action<GameObject, int> a)
 		{

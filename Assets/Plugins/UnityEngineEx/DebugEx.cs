@@ -19,5 +19,15 @@ namespace UnityEngineEx
         {
             Debug.Log(string.Format(message, args));
         }
+
+		public void LogWarning(string message, params object[] args)
+		{
+			Debug.LogWarning(string.Format(message, args));
+		}
+
+		public void LogError(string message, params object[] args)
+		{
+			Debug.LogError(string.Format(message, args));
+		}
     }
 }

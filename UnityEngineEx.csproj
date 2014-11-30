@@ -38,7 +38,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>$(UNITY_PATH)/Data/Managed/UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -67,6 +67,7 @@
     <Compile Include="Assets\Plugins\UnityEngineEx\TextureEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\TransformEx.cs" />
     <Compile Include="Assets\Plugins\UnityEngineEx\Watch.cs" />
+    <Compile Include="IConstructable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

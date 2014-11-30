@@ -36,11 +36,11 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>C:\Program Files %28x86%29\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>$(UNITY_PATH)\Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>C:\Program Files %28x86%29\Unity\Editor\Data\Managed\UnityEditor.dll</HintPath>
+      <HintPath>$(UNITY_PATH)\Data\Managed\UnityEditor.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
