@@ -15,4 +15,11 @@ namespace UnityEngineEx
 			this.name = name;
 		}
 	}
+
+	public class AddComponentAttribute : Attribute
+	{
+		public AddComponentAttribute()
+		{
+		}
+	}
 }
