@@ -69,7 +69,7 @@ namespace UnityEngineEx
 		protected virtual void Start()
 		{
 			if (mbd == null) {
-				LoggerEx.LogError("MonoBehaviourDescription is not found, possibly Awake was not properly overrided.");
+				Log.Error("MonoBehaviourDescription is not found, possibly Awake was not properly overrided.");
 			}
 
 			foreach (var m in mbd.start) {
@@ -90,7 +90,7 @@ namespace UnityEngineEx
 		protected virtual void Update()
 		{
 			if (mbd == null) {
-				LoggerEx.LogError("MonoBehaviourDescription is not found, possibly Awake was not properly overrided.");
+				Log.Error("MonoBehaviourDescription is not found, possibly Awake was not properly overrided.");
 			}
 
 			foreach (var m in mbd.update) {
