@@ -41,32 +41,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plugins\UnityEngineEx\AnimationEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\Attributes\BehaviourFunctionAttribute.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\Attributes\ComponentAttribute.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\CameraEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\ColorEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\ComponentEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\Components\PrefabContainer.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\CoroutineEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\DebugEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\GameObjectEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\ListEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\MeshEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\MonoBehaviourEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\PlayerPrefsEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\RandomEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\RendererEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\ResolutionEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\ResourcesEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\SetRenderQueue.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\SpriteRendererEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\TextAnchorEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\TextureEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\TransformEx.cs" />
-    <Compile Include="Assets\Plugins\UnityEngineEx\Watch.cs" />
     <Compile Include="IConstructable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\AnimationEx.cs" />
+    <Compile Include="src\Attributes\BehaviourFunctionAttribute.cs" />
+    <Compile Include="src\Attributes\ComponentAttribute.cs" />
+    <Compile Include="src\CameraEx.cs" />
+    <Compile Include="src\ColorEx.cs" />
+    <Compile Include="src\ComponentEx.cs" />
+    <Compile Include="src\Components\PrefabContainer.cs" />
+    <Compile Include="src\CoroutineEx.cs" />
+    <Compile Include="src\DebugEx.cs" />
+    <Compile Include="src\GameObjectEx.cs" />
+    <Compile Include="src\ListEx.cs" />
+    <Compile Include="src\MeshEx.cs" />
+    <Compile Include="src\MonoBehaviourEx.cs" />
+    <Compile Include="src\PlayerPrefsEx.cs" />
+    <Compile Include="src\RandomEx.cs" />
+    <Compile Include="src\RendererEx.cs" />
+    <Compile Include="src\ResolutionEx.cs" />
+    <Compile Include="src\ResourcesEx.cs" />
+    <Compile Include="src\SetRenderQueue.cs" />
+    <Compile Include="src\SpriteRendererEx.cs" />
+    <Compile Include="src\TextAnchorEx.cs" />
+    <Compile Include="src\TextureEx.cs" />
+    <Compile Include="src\TransformEx.cs" />
+    <Compile Include="src\Watch.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(SolutionDir)\Libraries\MathEx\MathEx.csproj">

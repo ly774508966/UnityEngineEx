@@ -43,18 +43,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Editor\UnityEditorEx\Components\MeshRendererEditor.cs" />
-    <Compile Include="Assets\Editor\UnityEditorEx\Components\ObjectGizmoz.cs" />
-    <Compile Include="Assets\Editor\UnityEditorEx\Components\PrefabContainerEditor.cs" />
-    <Compile Include="Assets\Editor\UnityEditorEx\Components\TransformEditor.cs" />
-    <Compile Include="Assets\Editor\UnityEditorEx\EditorExt.cs" />
-    <Compile Include="Assets\Editor\UnityEditorEx\InspectorExt.cs" />
-    <Compile Include="Assets\Editor\UnityEditorEx\ProjectExt.cs" />
-    <Compile Include="Assets\Editor\UnityEditorEx\Refactoring\RefactorAttribute.cs" />
-    <Compile Include="Assets\Editor\UnityEditorEx\SpriteExt.cs" />
-    <Compile Include="Assets\Editor\UnityEditorEx\TransformExt.cs" />
     <Compile Include="Properties\AssemblyInfo.UnityEditor.cs" />
-    <Compile Include="src\TransformEx.cs" />
+    <Compile Include="src.editor\Components\MeshRendererEditor.cs" />
+    <Compile Include="src.editor\Components\ObjectGizmoz.cs" />
+    <Compile Include="src.editor\Components\PrefabContainerEditor.cs" />
+    <Compile Include="src.editor\Components\TransformEditor.cs" />
+    <Compile Include="src.editor\EditorExt.cs" />
+    <Compile Include="src.editor\InspectorExt.cs" />
+    <Compile Include="src.editor\ProjectExt.cs" />
+    <Compile Include="src.editor\Refactoring\RefactorAttribute.cs" />
+    <Compile Include="src.editor\SpriteExt.cs" />
+    <Compile Include="src.editor\TransformEx.cs" />
+    <Compile Include="src.editor\TransformExt.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(SolutionDir)\Libraries\MathEx\MathEx.csproj">
@@ -79,7 +79,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Editor\UnityEditorEx\EventLog.tcs" />
+    <None Include="src.editor\EventLog.tcs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
