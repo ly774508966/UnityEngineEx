@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace UnityEngineEx
+namespace UnityEngineEx.Attributes
 {
-	public interface IConstructable
+	public class ContexFieldAttribute : Attribute
 	{
-		void Constructor(params object[] args);
 	}
 }

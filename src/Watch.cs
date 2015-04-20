@@ -10,7 +10,7 @@ namespace UnityEngineEx
 	public class UnityClockProvider : IClockProvider
 	{
 		public float tick { get { return getTick(); } }
-
+		public float hwtick { get { return Time.realtimeSinceStartup; } }
 
 
 		public UnityClockProvider()

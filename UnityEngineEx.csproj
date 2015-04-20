@@ -21,7 +21,8 @@
     <DefineConstants>TRACE;DEBUG;NET35</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>doc\UnityEngineEx.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,18 +37,25 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\Libraries\UnityEngineEx\Libraries\UnityEngine\UnityEngine.dll</HintPath>
+      <HintPath>Libraries\UnityEngine\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\UnityEngine\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IConstructable.cs" />
+    <Compile Include="src\ColorBlockEx.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\IConstructable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\AnimationEx.cs" />
     <Compile Include="src\Attributes\BehaviourFunctionAttribute.cs" />
     <Compile Include="src\Attributes\ComponentAttribute.cs" />
+    <Compile Include="src\Attributes\ContexFieldAttribute.cs" />
     <Compile Include="src\CameraEx.cs" />
-    <Compile Include="src\ColorEx.cs" />
     <Compile Include="src\ComponentEx.cs" />
     <Compile Include="src\Components\PrefabContainer.cs" />
     <Compile Include="src\CoroutineEx.cs" />
@@ -69,17 +77,17 @@
     <Compile Include="src\Watch.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(SolutionDir)\Libraries\MathEx\MathEx.csproj">
+    <ProjectReference Include="..\MathEx\MathEx.csproj">
       <Project>{8d8a06e5-abfb-49a8-851a-070fcf5339aa}</Project>
       <Name>MathEx</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="$(SolutionDir)\Libraries\MathEx\MathEx.UnityEngine.csproj">
+    <ProjectReference Include="..\MathEx\MathEx.UnityEngine.csproj">
       <Project>{d707c31e-1c84-42a1-9790-3ebbf75ea645}</Project>
       <Name>MathEx.UnityEngine</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="$(SolutionDir)\Libraries\SystemEx\SystemEx.csproj">
+    <ProjectReference Include="..\SystemEx\SystemEx.csproj">
       <Project>{0271e27f-e614-4b0f-af16-05d2d2781b7f}</Project>
       <Name>SystemEx</Name>
       <Private>False</Private>
