@@ -48,6 +48,7 @@
     <Compile Include="src.editor\Components\ObjectGizmoz.cs" />
     <Compile Include="src.editor\Components\PrefabContainerEditor.cs" />
     <Compile Include="src.editor\Components\TransformEditor.cs" />
+    <Compile Include="src.editor\Editor.cs" />
     <Compile Include="src.editor\EditorExt.cs" />
     <Compile Include="src.editor\InspectorExt.cs" />
     <Compile Include="src.editor\ProjectExt.cs" />
