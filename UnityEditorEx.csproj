@@ -34,11 +34,11 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="UnityEditor">
-      <HintPath>$(ProjectDir)\Libraries\UnityEngine\UnityEditor.dll</HintPath>
+      <HintPath>$(SolutionDir)Libraries\UnityAssemblies\UnityEditor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>$(ProjectDir)\Libraries\UnityEngine\UnityEngine.dll</HintPath>
+      <HintPath>$(SolutionDir)Libraries\UnityAssemblies\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -58,17 +58,17 @@
     <Compile Include="src.editor\TransformExt.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(SolutionDir)\Libraries\MathEx\MathEx.csproj">
+    <ProjectReference Include="$(SolutionDir)Libraries\MathEx\MathEx.csproj">
       <Project>{8D8A06E5-ABFB-49A8-851A-070FCF5339AA}</Project>
       <Name>MathEx</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="$(SolutionDir)\Libraries\MathEx\MathEx.UnityEngine.csproj">
+    <ProjectReference Include="$(SolutionDir)Libraries\MathEx\MathEx.UnityEngine.csproj">
       <Project>{D707C31E-1C84-42A1-9790-3EBBF75EA645}</Project>
       <Name>MathEx.UnityEngine</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="$(SolutionDir)\Libraries\SystemEx\SystemEx.csproj">
+    <ProjectReference Include="$(SolutionDir)Libraries\SystemEx\SystemEx.csproj">
       <Project>{0271E27F-E614-4B0F-AF16-05D2D2781B7F}</Project>
       <Name>SystemEx</Name>
       <Private>False</Private>

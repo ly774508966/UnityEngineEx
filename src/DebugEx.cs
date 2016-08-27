@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UnityEngineEx
 {
-	public class UnityLogger : ILogger
+	public class UnityLogger : SystemEx.ILogger
 	{
 		public void Info(string message, params object[] args)
 		{

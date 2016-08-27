@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5DDEF78F-3298-4583-ADF8-21421E4B29F9}</ProjectGuid>
+    <ProjectGuid>{E323793C-989D-4E1E-8F78-96C6D5ED6CAA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UnityEngineEx</RootNamespace>
@@ -37,11 +37,11 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="UnityEngine">
-      <HintPath>$(ProjectDir)\Libraries\UnityEngine\UnityEngine.dll</HintPath>
+      <HintPath>$(SolutionDir)Libraries\UnityAssemblies\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>$(ProjectDir)\Libraries\UnityEngine\UnityEngine.UI.dll</HintPath>
+      <HintPath>$(SolutionDir)Libraries\UnityAssemblies\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -77,17 +77,17 @@
     <Compile Include="src\Watch.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MathEx\MathEx.csproj">
+    <ProjectReference Include="$(SolutionDir)Libraries\MathEx\MathEx.csproj">
       <Project>{8d8a06e5-abfb-49a8-851a-070fcf5339aa}</Project>
       <Name>MathEx</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\MathEx\MathEx.UnityEngine.csproj">
+    <ProjectReference Include="$(SolutionDir)Libraries\MathEx\MathEx.UnityEngine.csproj">
       <Project>{d707c31e-1c84-42a1-9790-3ebbf75ea645}</Project>
       <Name>MathEx.UnityEngine</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\SystemEx\SystemEx.csproj">
+    <ProjectReference Include="$(SolutionDir)Libraries\SystemEx\SystemEx.csproj">
       <Project>{0271e27f-e614-4b0f-af16-05d2d2781b7f}</Project>
       <Name>SystemEx</Name>
       <Private>False</Private>
